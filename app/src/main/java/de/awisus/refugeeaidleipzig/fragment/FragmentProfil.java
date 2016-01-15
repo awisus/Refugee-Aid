@@ -26,10 +26,10 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
     ////////////////////////////////////////////////////////////////////////////////
 
     private FragmentBedarfNeu fragmentBedarfNeu;
-    private View view;
 
     private TextView tvName;
     private TextView tvEinrichtung;
+    private TextView tvBedarfe;
 
     private Button btAbmelden;
 
@@ -54,19 +54,19 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profil, container, false);
-        this.view = view;
 
-        initUI();
+        initUI(view);
         initNutzerInfo();
 
         return view;
     }
 
-    private void initUI() {
+    private void initUI(View view) {
         fragmentBedarfNeu = FragmentBedarfNeu.newInstance(nutzer);
 
         tvName = (TextView) view.findViewById(R.id.tvName);
         tvEinrichtung = (TextView) view.findViewById(R.id.tvEinrichtung);
+        tvBedarfe = (TextView) view.findViewById(R.id.tvBedarfe);
 
         btAbmelden = (Button) view.findViewById(R.id.btAbmelden);
         btAbmelden.setOnClickListener(this);
@@ -97,7 +97,6 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
 
     private void updateBedarfe() {
         if(nutzer != null) {
-            TextView tvBedarfe = (TextView) view.findViewById(R.id.tvBedarfe);
             String bedarfe;
             if ((bedarfe = nutzer.getBedarfeAlsString()) == null) {
                 tvBedarfe.setText(R.string.string_keine_bedarfe);
