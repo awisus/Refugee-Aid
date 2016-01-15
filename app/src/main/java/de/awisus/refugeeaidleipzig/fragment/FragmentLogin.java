@@ -17,7 +17,11 @@ import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 
 /**
- * Created by Jens Awisus on 15.01.16.
+ * Created on 15.01.16.
+ *
+ * A login fragment with a text field for the user name and a spinner with all accomodations to
+ * choose
+ * @author Jens Awisus
  */
 public class FragmentLogin extends DialogFragment implements DialogInterface.OnClickListener {
 
