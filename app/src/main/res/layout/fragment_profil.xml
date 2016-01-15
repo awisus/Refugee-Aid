@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_header_height"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:id="@+id/linearLayout"
+        android:background="@drawable/side_nav_bar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="[NAME]"
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/tvName"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="false"
+            android:layout_above="@+id/tvEinrichtung"
+            android:layout_alignParentStart="false"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="[Einrichtung]"
+            android:id="@+id/tvEinrichtung"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        app:backgroundTint="@color/colorPrimary"
+        app:elevation="8dp"
+        android:id="@+id/fab_plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:src="@android:drawable/ic_menu_add"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="false"
+        android:layout_alignBottom="@+id/linearLayout"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="-28dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_below="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="[Bedarfe]"
+            android:id="@+id/tvBedarfe" />
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        app:fabSize="mini"
+        app:backgroundTint="@color/rot"
+        app:elevation="8dp"
+        android:id="@+id/fab_minus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:src="@android:drawable/ic_menu_delete"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="24dp"
+        android:layout_below="@+id/fab_plus"
+        android:layout_marginTop="48dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_abmelden"
+        android:id="@+id/button"
+        android:textColor="@color/weiss"
+        android:background="@color/rot"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/activity_horizontal_margin" />
+</RelativeLayout>
