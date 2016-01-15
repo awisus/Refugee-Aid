@@ -180,13 +180,9 @@ public class Unterkunft {
     /**
      * Getter looking for an existing resident in this accomodation
      * @param suchname name of desired resident
-     * @param unterkunft name of desired resident
-     * @return null, if accommodation differs or if resident is not found by name; resident else
+     * @return null, if resident is not found by name; resident else
      */
-    public Nutzer getBewohner(String suchname, Unterkunft unterkunft) {
-        if(unterkunft != this) {
-            return null;
-        }
+    public Nutzer getBewohner(String suchname) {
         for(Nutzer nutzer : bewohner) {
             if(nutzer.getName().equals(suchname)) {
                 return nutzer;
