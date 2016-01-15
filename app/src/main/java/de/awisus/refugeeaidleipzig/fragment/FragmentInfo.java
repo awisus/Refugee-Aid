@@ -11,13 +11,38 @@ import android.widget.TextView;
 import de.awisus.refugeeaidleipzig.R;
 
 /**
- * Created by Jens Awisus on 12.01.16.
+ * Created on 12.01.16.
+ *
+ * Class being a blue print for all kinds of windows simply there to show a title and a content
+ * string
+ * @author Jens Awisus
  */
 public class FragmentInfo extends DialogFragment implements DialogInterface.OnClickListener {
 
+      ////////////////////////////////////////////////////////////////////////////////
+     // Attributes //////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * String to be set as title
+     */
     private String titel;
+
+    /**
+     * String to be set as content
+     */
     private String inhalt;
 
+      ////////////////////////////////////////////////////////////////////////////////
+     // Constructor /////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Static factory Method initialising with title and content
+     * @param titel desired title string
+     * @param inhalt desired content
+     * @return Fragment making up information window
+     */
     public static FragmentInfo newInstance(String titel, String inhalt) {
         FragmentInfo frag = new FragmentInfo();
         frag.titel = titel;
@@ -25,6 +50,17 @@ public class FragmentInfo extends DialogFragment implements DialogInterface.OnCl
         return frag;
     }
 
+      ////////////////////////////////////////////////////////////////////////////////
+     // View creation ///////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Called when this dialogue is created; Android-specific
+     * Infaltes the layout, initialises text fields and sets their texts as well as the positive
+     * button
+     * @param savedInstanceState Bundle of saved instance state
+     * @return dialogue created by the AlertDialog.Builder
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -42,6 +78,16 @@ public class FragmentInfo extends DialogFragment implements DialogInterface.OnCl
         return builder.create();
     }
 
+      ////////////////////////////////////////////////////////////////////////////////
+     // Listener ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Listens to clicks on dialogue buttons
+     * just closing the window
+     * @param dialog DialogInterface
+     * @param which number indicating the pressed button
+     */
     @Override
     public void onClick(DialogInterface dialog, int which) {
         getDialog().cancel();

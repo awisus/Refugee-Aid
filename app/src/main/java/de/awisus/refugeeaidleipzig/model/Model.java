@@ -38,7 +38,7 @@ public class Model extends Observable {
     private HashMap<Marker, Unterkunft> mapUnterkuenfte;
 
     /**
-     * Current user (can be null, if not logged in)
+     * Current user (may be null, if not logged in)
      */
     private Nutzer nutzerAktuell;
 
@@ -66,7 +66,7 @@ public class Model extends Observable {
      * @param unterkunft user's accomodation
      */
     public void anmelden(String name, Unterkunft unterkunft) {
-        Nutzer bewohner = unterkunft.getBewohner(name.trim());
+        Nutzer bewohner = unterkunft.findeBewohner(name.trim());
         if(bewohner != null) {
             nutzerAktuell = bewohner;
         } else {
@@ -79,7 +79,8 @@ public class Model extends Observable {
     }
 
     /**
-     * Log-out method setting user to null. Notifies with FALSE, to inform Observer about logout
+     * Log-out method setting user to null
+     * Notifies with FALSE, to inform Observer about logout
      */
     public void abmelden() {
         nutzerAktuell = null;
@@ -88,7 +89,7 @@ public class Model extends Observable {
     }
 
     /**
-     * Checking, whether is user is logged on (not equal to NULL)
+     * Checking, whether user is logged on (not equal to NULL)
      * @return true, if user is logged on; false else
      */
     public boolean angemeldet() {
@@ -97,6 +98,7 @@ public class Model extends Observable {
 
     /**
      * Method for adding pre-known accommodations dynamically to the model
+     * new MarkerOption with name and geographic coordinates of accommodation stored
      * @param unterkunft accommodations to be added
      */
     public void addUnterkunft(Unterkunft unterkunft) {
@@ -109,7 +111,7 @@ public class Model extends Observable {
     }
 
     /**
-     * Method for adding MapMarkers to the HashMap fpr easy information retrieval.
+     * Method for adding MapMarkers to the HashMap for easy information retrieval.
      * Clears HashMap, if a very new set of Markers is to be stores (happens, if MapFragment is
      * newly created in Android view code)
      * @param marke Marker for Map
@@ -124,7 +126,7 @@ public class Model extends Observable {
     }
 
       ////////////////////////////////////////////////////////////////////////////////
-     // Getters & Setters ///////////////////////////////////////////////////////////
+     // Getters /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -146,7 +148,7 @@ public class Model extends Observable {
     }
 
     /**
-     * Getting accommodation list
+     * Get accommodation list
      * @return accommodation list
      */
     public LinkedList<Unterkunft> getUnterkuenfte() {

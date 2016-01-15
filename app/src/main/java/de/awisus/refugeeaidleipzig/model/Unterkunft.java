@@ -144,7 +144,7 @@ public class Unterkunft {
      * Getter for number of residents
      * @return number of residents
      */
-    public int getBewohner() {
+    public int findeBewohner() {
         return bewohner.size();
     }
 
@@ -182,7 +182,7 @@ public class Unterkunft {
      * @param suchname name of desired resident
      * @return null, if resident is not found by name; resident else
      */
-    public Nutzer getBewohner(String suchname) {
+    public Nutzer findeBewohner(String suchname) {
         for(Nutzer nutzer : bewohner) {
             if(nutzer.getName().equals(suchname)) {
                 return nutzer;
