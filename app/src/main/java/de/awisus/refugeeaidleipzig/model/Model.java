@@ -8,12 +8,14 @@ import java.util.LinkedList;
 import java.util.Observable;
 
 /**
- * Created by Jens Awisus on 12.01.16.
+ * Created on 12.01.16.
  *
  * Class modelling the problem.
  * Simply is made up by a mapping of pre-given accommodations and GoogleMaps-specific Markers for
  * the map.
  * In the second place, this class stores an active user logged on or is not.
+ * This class extends Observable to provide Observers with information about user login und logout
+ * @author Jens Awisus
  */
 public class Model extends Observable {
 
@@ -55,7 +57,7 @@ public class Model extends Observable {
     }
 
       ////////////////////////////////////////////////////////////////////////////////
-     // Methods //////////////////////////////////////////////////////////////////
+     // Methods /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
