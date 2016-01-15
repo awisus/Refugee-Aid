@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import de.awisus.refugeeaidleipzig.R;
 
+/**
+ * Created by Jens Awisus on 12.01.16.
+ */
 public class FragmentInfo extends DialogFragment implements DialogInterface.OnClickListener {
 
     private String titel;

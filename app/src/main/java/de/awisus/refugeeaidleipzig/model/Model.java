@@ -17,6 +17,10 @@ import java.util.Observable;
  */
 public class Model extends Observable {
 
+      ////////////////////////////////////////////////////////////////////////////////
+     // Attributes //////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
     /**
      * List of MarkerOptions storing information for each Marker to each accommodations
      */
@@ -37,6 +41,10 @@ public class Model extends Observable {
      */
     private Nutzer nutzerAktuell;
 
+      ////////////////////////////////////////////////////////////////////////////////
+     // Constructor /////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
     /**
      * public constructor initialising lists and the HashMap
      */
@@ -45,6 +53,10 @@ public class Model extends Observable {
         unterkuenfte = new LinkedList<>();
         mapUnterkuenfte = new HashMap<>();
     }
+
+      ////////////////////////////////////////////////////////////////////////////////
+     // Methods //////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Log-In method to log in a user by creation with name and its accommodation
@@ -101,7 +113,7 @@ public class Model extends Observable {
      * Method for adding MapMarkers to the HashMap fpr easy information retrieval.
      * Clears HashMap, if a very new set of Markers is to be stores (happens, if MapFragment is
      * newly created in Android view code)
-     * @param marke Marker for Ma
+     * @param marke Marker for Map
      * @param position Iterator indicating position in accommodation list to check for "full" Map
      */
     public void addMarke(Marker marke, int position) {
@@ -111,6 +123,10 @@ public class Model extends Observable {
         }
         mapUnterkuenfte.put(marke, unterkunft);
     }
+
+      ////////////////////////////////////////////////////////////////////////////////
+     // Getters & Setters ///////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Getter method for specific MarkerOption in MarkerOption list

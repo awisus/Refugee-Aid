@@ -18,8 +18,10 @@
 
     <string name="nav_titel_ueber">Über</string>
 
+    <string name="titel_login">Anmelden</string>
     <string name="titel_bedarf_neu">Neuen Bedarf angeben</string>
 
+    <string name="dialog_login">Anmelden</string>
     <string name="dialog_hinzufuegen">Hinzufügen</string>
     <string name="dialog_abbrechen">Abbrechen</string>
     <string name="dialog_ok">In Ordnung</string>

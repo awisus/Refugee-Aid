@@ -11,6 +11,9 @@ import android.widget.EditText;
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 
+/**
+ * Created by Jens Awisus on 12.01.16.
+ */
 public class FragmentBedarfNeu extends DialogFragment implements DialogInterface.OnClickListener {
 
     private EditText etBedarfNeu;

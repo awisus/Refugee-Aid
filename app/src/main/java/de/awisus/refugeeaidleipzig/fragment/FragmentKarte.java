@@ -18,6 +18,9 @@ import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 
+/**
+ * Created by Jens Awisus on 11.01.16.
+ */
 public class FragmentKarte extends Fragment implements OnMapReadyCallback {
 
     private Model model;

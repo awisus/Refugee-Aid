@@ -14,6 +14,9 @@ import java.util.Observer;
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 
+/**
+ * Created by Jens Awisus on 12.01.16.
+ */
 public class FragmentProfil extends Fragment implements Observer, View.OnClickListener {
 
     private FragmentBedarfNeu fragmentBedarfNeu;

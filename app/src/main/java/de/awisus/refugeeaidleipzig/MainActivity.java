@@ -18,20 +18,28 @@ import java.io.IOException;
 
 import de.awisus.refugeeaidleipzig.fragment.FragmentInfo;
 import de.awisus.refugeeaidleipzig.fragment.FragmentKarte;
+import de.awisus.refugeeaidleipzig.fragment.FragmentLogin;
 import de.awisus.refugeeaidleipzig.fragment.FragmentProfil;
 import de.awisus.refugeeaidleipzig.model.Model;
-import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 
+/**
+ * Created by Jens Awisus on 11.01.16.
+ */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+      ////////////////////////////////////////////////////////////////////////////////
+     // Attributes //////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
 
     private DrawerLayout drawer;
     private FragmentInfo fragUeber;
+    private FragmentLogin fragAnmelden;
 
     private Model model;
 
       ////////////////////////////////////////////////////////////////////////////////
-     // Oberflaeche erzeugen ////////////////////////////////////////////////////////
+     // View creation ///////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
     @Override
@@ -49,31 +57,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getResources().getString(R.string.nav_titel_ueber),
                 getResources().getString(R.string.info)
         );
+
+        fragAnmelden = FragmentLogin.newInstance(model);
     }
 
     private void initModel() {
+
+        // initialise the model
         model = new Model();
 
+        // try to retrieve read accommodations from json file
         try {
             RessourcenLader lader = new RessourcenLader(this);
 
+            // run through all retrieved accommodations
             Unterkunft[] unterkuenfte = lader.getUnterkuenfte();
             for(int i = 0; i < unterkuenfte.length; i++) {
                 Unterkunft unterkunft = unterkuenfte[i];
 
-                // Eintrag in HashMap des Models
+                // Insert into model's HashMap of Markers and accommodations
                 model.addUnterkunft(unterkunft);
             }
         } catch (IOException | JSONException e) {
+            // Exception: inform user and return
             Toast.makeText(this, R.string.warnung_laden, Toast.LENGTH_SHORT).show();
             return;
         }
-
-        Nutzer dummy = new Nutzer("Jens Awisus", model.getUnterkunft(2));
-        dummy.addBedarf("Kuchen");
-        dummy.addBedarf("Bettdecke");
-
-        model.anmelden(dummy);
     }
 
     private Toolbar initToolbar() {
@@ -83,8 +92,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initNavigationDrawer(Toolbar toolbar) {
-
-        // Navigation Drawer
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar,
@@ -99,8 +106,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initContainer() {
-
-        // Fragment fuer Kartenansicht
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container, FragmentKarte.newInstance(model));
         transaction.commit();
@@ -122,12 +127,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = (item.getItemId());
+
+        // Show user profile if logged on
         if(id == R.id.nav_profil) {
-            wechsleFragment(R.id.fragment_container, FragmentProfil.newInstance(model.getNutzerAktuell()));
+            if(model.angemeldet()) {
+                wechsleFragment(FragmentProfil.newInstance(model.getNutzerAktuell()));
+            } else { // Else, show log on dialogue
+                fragAnmelden.show(getSupportFragmentManager(), "Anmelden");
+            }
         }
+
+        // Switch to Google Map
         if(id == R.id.nav_karte) {
-            wechsleFragment(R.id.fragment_container, FragmentKarte.newInstance(model));
+            wechsleFragment(FragmentKarte.newInstance(model));
         }
+
+        // Show About Dialogue
         if(id == R.id.nav_ueber) {
             fragUeber.show(getSupportFragmentManager(), "Info");
         }
@@ -136,9 +151,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    private void wechsleFragment(int container, Fragment fragment) {
+    private void wechsleFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(container, fragment);
+        transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();
     }
 }
