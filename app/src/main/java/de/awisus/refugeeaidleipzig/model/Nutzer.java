@@ -15,7 +15,7 @@ public class Nutzer extends Observable {
 
 
     public Nutzer(String name, Unterkunft unterkunft) {
-        this.name = name;
+        this.name = name.trim();
         this.unterkunft = unterkunft;
 
         bedarfe = new LinkedList<>();
@@ -42,10 +42,6 @@ public class Nutzer extends Observable {
 
     public Unterkunft getUnterkunft() {
         return unterkunft;
-    }
-
-    public LinkedList<String> getBedarfe() {
-        return bedarfe;
     }
 
     public String getBedarfeAlsString() {

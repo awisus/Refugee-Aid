@@ -35,7 +35,20 @@ public class Unterkunft {
             unterkunft.latLng = new LatLng(json.getDouble("laengengrad"), json.getDouble("breitengrad"));
         }
 
+        if(unterkunft.name != null) {
+            unterkunft.name = unterkunft.name.trim();
+        }
+
         return unterkunft;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o != null && o instanceof Unterkunft) {
+            Unterkunft unterkunft = (Unterkunft) o;
+            return unterkunft.name.equals(this.name);
+        }
+        return super.equals(o);
     }
 
 
@@ -71,8 +84,13 @@ public class Unterkunft {
         }
     }
 
-    public LinkedList<Nutzer> getNutzer() {
-        return bewohner;
+    public Nutzer getBewohner(String suchname, Unterkunft unterkunft) {
+        for(Nutzer nutzer : bewohner) {
+            if(nutzer.getName().equals(suchname) && nutzer.getUnterkunft().equals(unterkunft)) {
+                return nutzer;
+            }
+        }
+        return null;
     }
 
     public boolean hatBedarf() {

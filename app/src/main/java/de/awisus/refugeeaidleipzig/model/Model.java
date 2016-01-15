@@ -65,7 +65,12 @@ public class Model extends Observable {
      * @param unterkunft user's accomodation
      */
     public void anmelden(String name, Unterkunft unterkunft) {
-        nutzerAktuell = new Nutzer(name, unterkunft);
+        Nutzer bewohner = getBewohner(name.trim(), unterkunft);
+        if(bewohner != null) {
+            nutzerAktuell = bewohner;
+        } else {
+            nutzerAktuell = new Nutzer(name, unterkunft);
+        }
 
         // report change to Observer
         setChanged();
@@ -153,5 +158,15 @@ public class Model extends Observable {
      */
     public Nutzer getNutzerAktuell() {
         return nutzerAktuell;
+    }
+
+    public Nutzer getBewohner(String suchname, Unterkunft unterkunft) {
+        for(Unterkunft heim : unterkuenfte) {
+            Nutzer bewohner = heim.getBewohner(suchname, unterkunft);
+            if(bewohner != null) {
+                return bewohner;
+            }
+        }
+        return null;
     }
 }
