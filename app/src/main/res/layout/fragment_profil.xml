@@ -88,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_abmelden"
-        android:id="@+id/button"
+        android:id="@+id/btAbmelden"
         android:textColor="@color/weiss"
         android:background="@color/rot"
         android:layout_alignParentBottom="true"

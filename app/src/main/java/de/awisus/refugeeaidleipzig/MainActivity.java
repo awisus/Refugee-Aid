@@ -122,7 +122,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void update(Observable observable, Object data) {
-        wechsleFragment(FragmentProfil.newInstance(model.getNutzerAktuell()));
+        // Check whether model returns log in or log off by user
+        Boolean anmeldung = (Boolean) data;
+        if(anmeldung.equals(Boolean.TRUE)) {    // Show profile on log in
+            wechsleFragment(FragmentProfil.newInstance(model));
+        } else {                                // return to map on log off
+            wechsleFragment(FragmentKarte.newInstance(model));
+        }
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -145,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Show user profile if logged on
         if(id == R.id.nav_profil) {
             if(model.angemeldet()) {
-                wechsleFragment(FragmentProfil.newInstance(model.getNutzerAktuell()));
+                wechsleFragment(FragmentProfil.newInstance(model));
             } else { // Else, show log on dialogue
                 fragAnmelden.show(getSupportFragmentManager(), "Anmelden");
             }

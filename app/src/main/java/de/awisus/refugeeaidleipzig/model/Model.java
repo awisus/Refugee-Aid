@@ -60,6 +60,7 @@ public class Model extends Observable {
 
     /**
      * Log-In method to log in a user by creation with name and its accommodation
+     * Notifies with TRUE, to inform Observer about login
      * @param name user name
      * @param unterkunft user's accomodation
      */
@@ -68,16 +69,16 @@ public class Model extends Observable {
 
         // report change to Observer
         setChanged();
-        notifyObservers();
+        notifyObservers(Boolean.TRUE);
     }
 
     /**
-     * Log-out method setting user to null
+     * Log-out method setting user to null. Notifies with FALSE, to inform Observer about logout
      */
     public void abmelden() {
         nutzerAktuell = null;
         setChanged();
-        notifyObservers();
+        notifyObservers(Boolean.FALSE);
     }
 
     /**
