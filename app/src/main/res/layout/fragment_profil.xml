@@ -85,12 +85,12 @@
         android:layout_marginTop="48dp" />
 
     <Button
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_abmelden"
         android:id="@+id/btAbmelden"
-        android:textColor="@color/weiss"
-        android:background="@color/rot"
+        android:textColor="@color/rot"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/activity_horizontal_margin" />
 </RelativeLayout>
