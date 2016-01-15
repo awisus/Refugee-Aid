@@ -110,31 +110,31 @@
   {
     "name" : "Riebeckstraße",
     "groesse" : 115,
-    "laengengrad" : 51.329749,
-    "breitengrad" : 12.404620
+    "laengengrad" : 51.329756, 
+    "breitengrad" : 12.404588
   },
   {
     "name" : "Riesaer Straße",
     "groesse" : 200,
-    "laengengrad" : 51.345881,
-    "breitengrad" : 12.470476
+    "laengengrad" : 51.345901, 
+    "breitengrad" : 12.470443
   },
   {
     "name" : "Torgauer Straße",
     "groesse" : 390,
-    "laengengrad" : 51.379641,
-    "breitengrad" : 12.393494
+    "laengengrad" : 51.358051,
+    "breitengrad" : 12.438996
   },
   {
     "name" : "Zschortauer Straße",
     "groesse" : 200,
-    "laengengrad" : 51.346899,
-    "breitengrad" : 12.316197
+    "laengengrad" : 51.379675,
+    "breitengrad" : 12.393376
   },
   {
     "name" : "Zweenfurter Straße",
     "groesse" : 102,
-    "laengengrad" : 51.340358,
-    "breitengrad" : 12.431780
+    "laengengrad" : 51.345417,
+    "breitengrad" : 12.431935
   }
 ]}
