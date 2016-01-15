@@ -47,7 +47,7 @@ public class Model extends Observable {
     }
 
     /**
-     * Log-In method to log in a user by creation with name and accommodations
+     * Log-In method to log in a user by creation with name and its accommodation
      * @param name user name
      * @param unterkunft user's accomodation
      */
