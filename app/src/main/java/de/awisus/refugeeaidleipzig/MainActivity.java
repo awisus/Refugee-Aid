@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(id == R.id.nav_profil) {
             if(model.angemeldet()) {
                 wechsleFragment(FragmentProfil.newInstance(model));
-            } else { // Else, show log on dialogue
+            } else { // Else, show login dialogue
                 fragAnmelden.show(getSupportFragmentManager(), "Anmelden");
             }
         }

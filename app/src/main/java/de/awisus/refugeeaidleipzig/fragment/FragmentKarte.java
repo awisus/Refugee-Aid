@@ -94,7 +94,12 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback {
                 Unterkunft unterkunft = model.getUnterkunft(marke);
                 String detail = getResources().getString(R.string.string_plaetze) + " ";
                 detail += unterkunft.getGroesse();
+                detail += "\n";
+                detail += getResources().getString(R.string.string_bewohner) + " ";
+                detail += unterkunft.getBewohner();
+
                 detail += "\n\n";
+
                 detail += unterkunft.hatBedarf()
                         ? getResources().getString(R.string.string_bedarfe) + " "
                         + unterkunft.getBedarfeAlsString()

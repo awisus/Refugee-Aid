@@ -18,17 +18,17 @@ public class Nutzer extends Observable {
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Username
+     * User name
      */
     private String name;
 
     /**
-     * Accommodation where this user stays in
+     * Accommodation this user stays in
      */
     private Unterkunft unterkunft;
 
     /**
-     * List of needs being uttered
+     * List of needs being uttered to the public
      */
     private LinkedList<String> bedarfe;
 
@@ -37,8 +37,8 @@ public class Nutzer extends Observable {
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Public constructor to instantiate with name and accommodation; instantiates list of needs
-     * processes login into given accommodation
+     * Public constructor to instantiate with name and accommodation
+     * instantiates list of needs, processes login into given accommodation
      * @param name user name
      * @param unterkunft accommodation
      */

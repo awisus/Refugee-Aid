@@ -30,12 +30,12 @@ public class Unterkunft {
     private LatLng latLng;
 
     /**
-     * Space
+     * Space availyble for residents
      */
     private int groesse;
 
     /**
-     * List of reseidents
+     * List of residents
      */
     private LinkedList<Nutzer> bewohner;
 
@@ -85,12 +85,12 @@ public class Unterkunft {
     }
 
       ////////////////////////////////////////////////////////////////////////////////
-     // Methoden ////////////////////////////////////////////////////////////////////
+     // Methods /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Overridden equals function.
-     * @param o Obejct to compare with
+     * @param o Object to compare with
      * @return true, if o is accommodation and has same name; super.equals() else
      */
     @Override
@@ -138,6 +138,14 @@ public class Unterkunft {
      */
     public int getGroesse() {
         return groesse;
+    }
+
+    /**
+     * Getter for number of residents
+     * @return number of residents
+     */
+    public int getBewohner() {
+        return bewohner.size();
     }
 
     /**

@@ -29,6 +29,7 @@
     <string name="string_keine_bedarfe">Kein Bedarf</string>
     <string name="string_bedarfe">Bedarf: </string>
     <string name="string_plaetze">Plätze: </string>
+    <string name="string_bewohner">Bewohner: </string>
 
     <string name="button_abmelden">Abmelden</string>
 
