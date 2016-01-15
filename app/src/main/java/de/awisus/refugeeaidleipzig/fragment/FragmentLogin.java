@@ -66,7 +66,7 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
     }
 
     private void initSpinnerAdapter() {
-        ArrayAdapter<Unterkunft> adapter = new ArrayAdapter<Unterkunft>(
+        ArrayAdapter<Unterkunft> adapter = new ArrayAdapter<>(
                 context,
                 android.R.layout.simple_spinner_item,
                 model.getUnterkuenfte()

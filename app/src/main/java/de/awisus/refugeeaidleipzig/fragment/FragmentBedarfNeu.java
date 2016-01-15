@@ -87,7 +87,8 @@ public class FragmentBedarfNeu extends DialogFragment implements DialogInterface
         if(which == DialogInterface.BUTTON_POSITIVE) {
             String eingabe = etBedarfNeu.getText().toString();
             if(eingabe != null) {
-                if(eingabe.trim() != null && !eingabe.trim().equals("")) {
+                eingabe = eingabe.trim();
+                if(eingabe != null && !eingabe.equals("")) {
                     nutzer.addBedarf(eingabe);
                 }
             }
