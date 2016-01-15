@@ -15,6 +15,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
 import de.awisus.refugeeaidleipzig.fragment.FragmentInfo;
 import de.awisus.refugeeaidleipzig.fragment.FragmentKarte;
@@ -26,7 +28,7 @@ import de.awisus.refugeeaidleipzig.model.Unterkunft;
 /**
  * Created by Jens Awisus on 11.01.16.
  */
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Observer {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
@@ -65,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // initialise the model
         model = new Model();
+
+        // this Activity listens to model changes (login and logout)
+        model.addObserver(this);
 
         // try to retrieve read accommodations from json file
         try {
@@ -109,6 +114,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container, FragmentKarte.newInstance(model));
         transaction.commit();
+    }
+
+      ////////////////////////////////////////////////////////////////////////////////
+     // Observer ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void update(Observable observable, Object data) {
+        wechsleFragment(FragmentProfil.newInstance(model.getNutzerAktuell()));
     }
 
       ////////////////////////////////////////////////////////////////////////////////

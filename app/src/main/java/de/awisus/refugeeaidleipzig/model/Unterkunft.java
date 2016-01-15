@@ -84,4 +84,8 @@ public class Unterkunft {
 
         return false;
     }
+
+    public String toString() {
+        return name;
+    }
 }

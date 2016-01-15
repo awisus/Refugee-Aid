@@ -65,16 +65,8 @@ public class Model extends Observable {
      */
     public void anmelden(String name, Unterkunft unterkunft) {
         nutzerAktuell = new Nutzer(name, unterkunft);
-        setChanged();
-        notifyObservers();
-    }
 
-    /**
-     * Log-In method for an already created user
-     * @param nutzer user, that is already is memory
-     */
-    public void anmelden(Nutzer nutzer) {
-        nutzerAktuell = nutzer;
+        // report change to Observer
         setChanged();
         notifyObservers();
     }
@@ -152,15 +144,6 @@ public class Model extends Observable {
      */
     public LinkedList<Unterkunft> getUnterkuenfte() {
         return unterkuenfte;
-    }
-
-    /**
-     * Getting accommodation by a position
-     * @param position position of accommodation to be got
-     * @return desired accommodation
-     */
-    public Unterkunft getUnterkunft(int position) {
-        return unterkuenfte.get(position);
     }
 
     /**
