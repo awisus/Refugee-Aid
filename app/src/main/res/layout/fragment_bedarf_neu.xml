@@ -35,5 +35,6 @@
         android:id="@+id/etBedarfNeu"
         android:layout_below="@+id/tvTitel"
         android:maxLines="1"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:hint="@string/string_bezeichnung" />
 </RelativeLayout>

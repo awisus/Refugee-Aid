@@ -30,6 +30,8 @@
     <string name="string_bedarfe">Bedarf: </string>
     <string name="string_plaetze">Plätze: </string>
     <string name="string_bewohner">Bewohner: </string>
+    <string name="string_name">Name</string>
+    <string name="string_bezeichnung">Bezeichnung</string>
 
     <string name="button_abmelden">Abmelden</string>
 
