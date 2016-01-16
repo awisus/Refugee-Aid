@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * /**
      * Called when this activity is created; Android-specific
      * Inflates the layout, initialises the model, tool bar, navigation drawer and the container
      * layout for fragments (Google Map or profile fragment)
@@ -197,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Control of the Android back key
+     * Control of the Android back button
      * closes nav drawer, if it is open
      */
     @Override

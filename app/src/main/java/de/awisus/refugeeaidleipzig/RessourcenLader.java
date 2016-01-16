@@ -13,15 +13,45 @@ import de.awisus.refugeeaidleipzig.model.Kategorie;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 
 /**
- * Created by Jens Awisus on 12.01.16.
+ * Created on 12.01.16.
+ *
+ * This class is responsible for getting data stored locally as json files.
+ * These json files are stores in the /raw resources directory and can be read by using an Activity
+ * of the app. This is necessary to gain access to the raw resources.
+ * @author Jens Awisus
  */
 public class RessourcenLader {
 
+      ////////////////////////////////////////////////////////////////////////////////
+     // Attributes //////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * An Activity to get raw resources (json files) from
+     */
     private Activity activity;
 
+    /**
+     * Array of accommodations
+     */
     private Unterkunft[] unterkuenfte;
+
+    /**
+     * Array of categories of needs
+     */
     private Kategorie[] kategorien;
 
+      ////////////////////////////////////////////////////////////////////////////////
+     // Constructor /////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Public constructor.
+     * Sets the Activity and starts reading of the local json files.
+     * @param activity Activity to gain access to raw resources
+     * @throws IOException Exception, if something is wrong with a file
+     * @throws JSONException Exception, if there occurs a mistake while working with json objects
+     */
     public RessourcenLader(Activity activity) throws IOException, JSONException {
         this.activity = activity;
 
@@ -29,19 +59,31 @@ public class RessourcenLader {
         ladeKategorien();
     }
 
+      ////////////////////////////////////////////////////////////////////////////////
+     // Methods /////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * This method loads the accommodation's json file.
+     * This runs through all accommodations lying in an array and creates instances of
+     * accommodations corresponding to the data read
+     * @throws IOException Exception, if something is wrong with a file
+     * @throws JSONException Exception, if there occurs a mistake while working with json objects
+     */
     private void ladeUnterkuenfte() throws IOException, JSONException {
         Unterkunft[] unterkuenfte;
 
-        // Datei mit den Unterkuenften auslesen
+        // Get content of accommodation's json file
         String inhalt = lesen(R.raw.unterkuenfte);
 
-        // Unterkuenfte aus der Datei lesen und initialisieren
+        // Initialise a json array by the accommodation's array name
         JSONObject json = new JSONObject(inhalt);
         JSONArray feld = json.getJSONArray("unterkuenfte");
 
+        // init of a new accommodation array
         unterkuenfte = new Unterkunft[feld.length()];
 
+        // Get new Objects out of json object data
         for(int i = 0; i < feld.length(); i++) {
             unterkuenfte[i] = Unterkunft.fromJSON(feld.getJSONObject(i));
         }
@@ -49,6 +91,13 @@ public class RessourcenLader {
         this.unterkuenfte = unterkuenfte;
     }
 
+    /**
+     * This method loads the category's json file.
+     * This runs through all categories lying in an array and creates instances of categories
+     * corresponding to the data read
+     * @throws IOException Exception, if something is wrong with a file
+     * @throws JSONException Exception, if there occurs a mistake while working with json objects
+     */
     private void ladeKategorien() throws IOException, JSONException {
         Kategorie[] kategorien;
 
@@ -66,24 +115,46 @@ public class RessourcenLader {
         this.kategorien = kategorien;
     }
 
+    /**
+     * Private method that generally reads any raw json file by a given resource id
+     * @param dateiID resource id of the desired json file
+     * @return String with the content got from file
+     * @throws IOException Exception, if something is wrong with the file
+     */
+    private String lesen(int dateiID) throws IOException {
 
+        // Opening an input stream by resource id
+        InputStream is = activity.getResources().openRawResource(dateiID);
+
+        // Check file length
+        int size = is.available();
+        byte[] buffer = new byte[size];
+
+        // read the content and store in the buffer
+        is.read(buffer);
+        is.close();
+
+        // Build new String from buffer and trim that -> NullPointerExc?!
+        return new String(buffer).trim();
+    }
+
+      ////////////////////////////////////////////////////////////////////////////////
+     // Getters /////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Getter for the accommodation array
+     * @return accommodation array
+     */
     public Unterkunft[] getUnterkuenfte() {
         return unterkuenfte;
     }
 
+    /**
+     * Getter for the category array
+     * @return category array
+     */
     public Kategorie[] getKategorien() {
         return kategorien;
-    }
-
-
-    private String lesen(int dateiID) throws IOException {
-
-        InputStream is = activity.getResources().openRawResource(dateiID);
-        int size = is.available();
-        byte[] buffer = new byte[size];
-        is.read(buffer);
-        is.close();
-
-        return new String(buffer).trim();
     }
 }
