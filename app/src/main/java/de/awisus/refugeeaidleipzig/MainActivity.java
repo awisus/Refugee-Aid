@@ -29,8 +29,8 @@ import de.awisus.refugeeaidleipzig.model.Unterkunft;
  * Created on 11.01.16.
  *
  * Class defining the Main Activity of the Android App as entry point.
- * Describes behaviour for the Navigation Drawer and the login and logout activity of the user
- * stored in the model.
+ * Describes behaviour for the Navigation Drawer and takes notice about login and logout behaviour
+ * of the user stored in the model.
  * Two windows may be called: One shows general information about the app. The second is a
  * login mask, that pops up, if no user is signed in.
  * @author Jens Awisus
