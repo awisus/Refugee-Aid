@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
 
 import de.awisus.refugeeaidleipzig.model.Kategorie;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
@@ -32,9 +33,9 @@ public class RessourcenLader {
     private Activity activity;
 
     /**
-     * Array of accommodations
+     * List of accommodations
      */
-    private Unterkunft[] unterkuenfte;
+    private LinkedList<Unterkunft> unterkuenfte;
 
     /**
      * Array of categories of needs
@@ -54,6 +55,7 @@ public class RessourcenLader {
      */
     public RessourcenLader(Activity activity) throws IOException, JSONException {
         this.activity = activity;
+        this.unterkuenfte = new LinkedList<>();
 
         ladeUnterkuenfte();
         ladeKategorien();
@@ -71,8 +73,6 @@ public class RessourcenLader {
      * @throws JSONException Exception, if there occurs a mistake while working with json objects
      */
     private void ladeUnterkuenfte() throws IOException, JSONException {
-        Unterkunft[] unterkuenfte;
-
         // Get content of accommodation's json file
         String inhalt = lesen(R.raw.unterkuenfte);
 
@@ -80,15 +80,10 @@ public class RessourcenLader {
         JSONObject json = new JSONObject(inhalt);
         JSONArray feld = json.getJSONArray("unterkuenfte");
 
-        // init of a new accommodation array
-        unterkuenfte = new Unterkunft[feld.length()];
-
-        // Get new Objects out of json object data
+        // Put a newly created accommodation to their list
         for(int i = 0; i < feld.length(); i++) {
-            unterkuenfte[i] = Unterkunft.fromJSON(feld.getJSONObject(i));
+            unterkuenfte.add(Unterkunft.fromJSON(feld.getJSONObject(i)));
         }
-
-        this.unterkuenfte = unterkuenfte;
     }
 
     /**
@@ -146,7 +141,7 @@ public class RessourcenLader {
      * Getter for the accommodation array
      * @return accommodation array
      */
-    public Unterkunft[] getUnterkuenfte() {
+    public LinkedList<Unterkunft> getUnterkuenfte() {
         return unterkuenfte;
     }
 

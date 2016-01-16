@@ -97,20 +97,6 @@ public class Model extends Observable {
     }
 
     /**
-     * Method for adding pre-known accommodations dynamically to the model
-     * new MarkerOption with name and geographic coordinates of accommodation stored
-     * @param unterkunft accommodations to be added
-     */
-    public void addUnterkunft(Unterkunft unterkunft) {
-        MarkerOptions marke = new MarkerOptions();
-        marke.title(unterkunft.getName());
-        marke.position(unterkunft.getLatLng());
-
-        markerOptionen.add(marke);
-        unterkuenfte.add(unterkunft);
-    }
-
-    /**
      * Method for adding MapMarkers to the HashMap for easy information retrieval.
      * Clears HashMap, if a very new set of Markers is to be stores (happens, if MapFragment is
      * newly created in Android view code)
@@ -126,6 +112,34 @@ public class Model extends Observable {
     }
 
       ////////////////////////////////////////////////////////////////////////////////
+     // Setters /////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Setter for the accommodation list
+     * @param unterkuenfte accommodation list to be set
+     */
+    public void setUnterkuenfte(LinkedList<Unterkunft> unterkuenfte) {
+        this.unterkuenfte = unterkuenfte;
+
+        for(Unterkunft unterkunft : unterkuenfte) {
+            addMarkerOption(unterkunft);
+        }
+    }
+
+    /**
+     * Private Method helping to add MarkerOptins to their list based upon an accommodation's data
+     * @param unterkunft accommodation data with data to be got
+     */
+    private void addMarkerOption(Unterkunft unterkunft) {
+        MarkerOptions marke = new MarkerOptions();
+        marke.title(unterkunft.getName());
+        marke.position(unterkunft.getLatLng());
+
+        markerOptionen.add(marke);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
      // Getters /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 

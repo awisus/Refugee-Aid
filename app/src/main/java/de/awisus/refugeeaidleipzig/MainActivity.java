@@ -23,7 +23,6 @@ import de.awisus.refugeeaidleipzig.fragment.FragmentKarte;
 import de.awisus.refugeeaidleipzig.fragment.FragmentLogin;
 import de.awisus.refugeeaidleipzig.fragment.FragmentProfil;
 import de.awisus.refugeeaidleipzig.model.Model;
-import de.awisus.refugeeaidleipzig.model.Unterkunft;
 
 /**
  * Created on 11.01.16.
@@ -111,19 +110,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // try to retrieve read accommodations from json file
         try {
             RessourcenLader lader = new RessourcenLader(this);
-
-            // run through all retrieved accommodations
-            Unterkunft[] unterkuenfte = lader.getUnterkuenfte();
-            for(int i = 0; i < unterkuenfte.length; i++) {
-                Unterkunft unterkunft = unterkuenfte[i];
-
-                // insert into model's HashMap of Markers and accommodations
-                model.addUnterkunft(unterkunft);
-            }
+            model.setUnterkuenfte(lader.getUnterkuenfte());
         } catch (IOException | JSONException e) {
             // Exception: inform user and return
             Toast.makeText(this, R.string.warnung_laden, Toast.LENGTH_SHORT).show();
-            return;
         }
     }
 
