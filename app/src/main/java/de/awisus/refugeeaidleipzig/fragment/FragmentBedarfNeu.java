@@ -54,7 +54,7 @@ public class FragmentBedarfNeu extends DialogFragment implements DialogInterface
 
     /**
      * Called when this dialogue is created; Android-specific
-     * Infaltes the layout, initialises text field and sets button texts
+     * Inflates the layout, initialises text field and sets button texts
      * @param savedInstanceState Bundle of saved instance state
      * @return dialogue created by the AlertDialog.Builder
      */

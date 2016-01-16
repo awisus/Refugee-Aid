@@ -56,7 +56,7 @@ public class FragmentInfo extends DialogFragment implements DialogInterface.OnCl
 
     /**
      * Called when this dialogue is created; Android-specific
-     * Infaltes the layout, initialises text fields and sets their texts as well as the positive
+     * Inflates the layout, initialises text fields and sets their texts as well as the positive
      * button
      * @param savedInstanceState Bundle of saved instance state
      * @return dialogue created by the AlertDialog.Builder
