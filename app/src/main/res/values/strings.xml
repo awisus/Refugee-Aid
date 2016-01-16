@@ -2,9 +2,9 @@
     <string name="app_name">Refugee Aid</string>
 
     <string name="info">
-        <b>Refugee Aid</b> ist eine Unterstützungssoftware, die Geflüchtete befähigt, Ihre
-        Befürfnisse direkt zu artikulieren.\n
-        Hilsbereite Bürger sehen, wo in ihrem Umfeld Hilsmöglichkeiten liegen und müssen keinen
+        <b>Refugee Aid</b> ist eine Plttform, die Geflüchtete befähigt, ihre Befürfnisse direkt
+        auszudrücken.\n
+        Auf der Karte sieht jeder, wo in ihrem Umfeld Hilsmöglichkeiten liegen und müssen keinen
         unliebsamen Weg zu zentralen Spendenannahmen in Kauf nehmen.\n\n
 
         Hergestellt von J. Awisus, 2016
@@ -34,4 +34,5 @@
     <string name="button_abmelden">Abmelden</string>
 
     <string name="warnung_laden">Kann Informationen nicht laden</string>
+    <string name="warnung_abmelden">Abgemeldet</string>
 </resources>

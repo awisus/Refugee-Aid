@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /**
-     * Private method to initialise the model and data to be stored in.
+     * Private method initialising the model and data to be stored in.
      * (Accommodations and map markers)
      */
     private void initModel() {
@@ -187,6 +187,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             wechsleFragment(FragmentProfil.newInstance(model));
         } else {                                // return to map on log off
             wechsleFragment(FragmentKarte.newInstance(model));
+            Toast.makeText(this, R.string.warnung_abmelden, Toast.LENGTH_SHORT).show();
         }
     }
 
