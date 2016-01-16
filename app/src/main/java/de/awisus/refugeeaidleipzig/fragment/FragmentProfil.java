@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -26,6 +27,7 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
     ////////////////////////////////////////////////////////////////////////////////
 
     private FragmentBedarfNeu fragmentBedarfNeu;
+    private FragmentBedarfEntfernen fragmentBedarfEntfernen;
 
     private TextView tvName;
     private TextView tvEinrichtung;
@@ -58,11 +60,14 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
         initUI(view);
         initNutzerInfo();
 
+        getActivity().setTitle(R.string.titel_profil);
+
         return view;
     }
 
     private void initUI(View view) {
         fragmentBedarfNeu = FragmentBedarfNeu.newInstance(nutzer);
+        fragmentBedarfEntfernen = FragmentBedarfEntfernen.newInstance(nutzer);
 
         tvName = (TextView) view.findViewById(R.id.tvName);
         tvEinrichtung = (TextView) view.findViewById(R.id.tvEinrichtung);
@@ -72,7 +77,9 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
         btAbmelden.setOnClickListener(this);
 
         FloatingActionButton btPlus = (FloatingActionButton) view.findViewById(R.id.fab_plus);
+        FloatingActionButton btMinus = (FloatingActionButton) view.findViewById(R.id.fab_minus);
         btPlus.setOnClickListener(this);
+        btMinus.setOnClickListener(this);
     }
 
     private void initNutzerInfo() {
@@ -117,6 +124,14 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
         int id = view.getId();
         if(id == R.id.fab_plus) {
             fragmentBedarfNeu.show(getChildFragmentManager(), "Neuer Bedarf");
+        }
+
+        if(id == R.id.fab_minus) {
+            if(nutzer.hatBedarf()) {
+                fragmentBedarfEntfernen.show(getChildFragmentManager(), "Bedarf entfernen");
+            } else {
+                Toast.makeText(getActivity(), R.string.warnung_loeschen, Toast.LENGTH_SHORT).show();
+            }
         }
 
         if(id == R.id.btAbmelden) {

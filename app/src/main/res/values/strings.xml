@@ -2,10 +2,10 @@
     <string name="app_name">Refugee Aid</string>
 
     <string name="info">
-        <b>Refugee Aid</b> ist eine Plttform, die Geflüchtete befähigt, ihre Befürfnisse direkt
+        <b>Refugee Aid</b> ist eine Plattform, die Geflüchtete befähigt, ihre Befürfnisse direkt
         auszudrücken.\n
-        Auf der Karte sieht jeder, wo in ihrem Umfeld Hilsmöglichkeiten liegen und müssen keinen
-        unliebsamen Weg zu zentralen Spendenannahmen in Kauf nehmen.\n\n
+        Auf der Karte werden Hilsmöglichkeiten im nahem Umfeld ersichtlich. So müssen keine
+        unliebsamen Wege zu zentralen Spendenannahmen in Kauf genommen werden.\n\n
 
         Hergestellt von J. Awisus, 2016
     </string>
@@ -18,10 +18,13 @@
 
     <string name="nav_titel_ueber">Über</string>
 
+    <string name="titel_profil">Bedarf verwalten</string>
     <string name="titel_login">Anmelden</string>
+    <string name="titel_bedarf_entfernen">Bedarf entfernen</string>
     <string name="titel_bedarf_neu">Neuen Bedarf angeben</string>
 
     <string name="dialog_login">Anmelden</string>
+    <string name="dialog_loeschen">Löschen</string>
     <string name="dialog_hinzufuegen">Hinzufügen</string>
     <string name="dialog_abbrechen">Abbrechen</string>
     <string name="dialog_ok">In Ordnung</string>
@@ -36,5 +39,6 @@
     <string name="button_abmelden">Abmelden</string>
 
     <string name="warnung_laden">Kann Informationen nicht laden</string>
+    <string name="warnung_loeschen">Kein Bedarf zum Löschen</string>
     <string name="warnung_abmelden">Abgemeldet</string>
 </resources>

@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragUeber = FragmentInfo.newInstance(
                 getResources().getString(R.string.nav_titel_ueber),
                 getResources().getString(R.string.info)
+                    +"\n\nv" +BuildConfig.VERSION_NAME
         );
 
         fragAnmelden = FragmentLogin.newInstance(model);

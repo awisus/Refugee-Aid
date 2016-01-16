@@ -161,7 +161,7 @@ public class Unterkunft {
      * @return comma-separated list if resident's needs
      */
     public String getBedarfeAlsString() {
-        if(!hatBedarf()) {  // No need? return -> null
+        if(!hatBedarf()) {  // No need? return null
             return null;
         } else {            // Get needs of each resident als string and separate with comma
             String str = "";

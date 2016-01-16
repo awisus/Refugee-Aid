@@ -59,6 +59,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback {
 
     /**
      * Automatically called method inflating the xml-layout
+     * Sets actovoty title to Map
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -66,6 +67,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().setTitle(R.string.nav_karte);
         return inflater.inflate(R.layout.fragment_karte, container, false);
     }
 

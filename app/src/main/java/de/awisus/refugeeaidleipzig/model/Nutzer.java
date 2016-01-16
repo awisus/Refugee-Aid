@@ -96,6 +96,14 @@ public class Nutzer extends Observable {
     }
 
     /**
+     * Getter for personal needs
+     * @return list of this user's needs
+     */
+    public LinkedList<String> getBedarfe() {
+        return bedarfe;
+    }
+
+    /**
      * Turns list of needs this into a comma-separated string to be shown on map and profile page
      * @return comma-separated string of personal needs
      */
