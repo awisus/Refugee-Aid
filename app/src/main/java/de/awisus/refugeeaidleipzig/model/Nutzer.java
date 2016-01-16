@@ -104,10 +104,10 @@ public class Nutzer extends Observable {
     }
 
     /**
-     * Turns list of needs this into a comma-separated string to be shown on map and profile page
+     * Turns list of needs this into a comma-separated string to be shown on map page
      * @return comma-separated string of personal needs
      */
-    public String getBedarfeAlsString() {
+    public String getBedarfeAlsKommaString() {
         if(!hatBedarf()) {
             return null;
         } else {
@@ -116,6 +116,27 @@ public class Nutzer extends Observable {
                 str += bedarfe.get(i);
                 if(i < bedarfe.size() - 1) {
                     str += ", ";
+                }
+            }
+
+            return str;
+        }
+    }
+
+    /**
+     * Turns list of needs this into a key point list string to be shown on profile page
+     * @return key point list string of personal needs
+     */
+    public String getBedarfeAlsListeString() {
+        if(!hatBedarf()) {
+            return null;
+        } else {
+            String str = "";
+            for(int i = 0; i < bedarfe.size(); i++) {
+                str += " - ";
+                str += bedarfe.get(i);
+                if(i < bedarfe.size() - 1) {
+                    str += "\n";
                 }
             }
 

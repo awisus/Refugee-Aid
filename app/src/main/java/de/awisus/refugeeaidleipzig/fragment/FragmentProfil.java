@@ -105,11 +105,11 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
     private void updateBedarfe() {
         if(nutzer != null) {
             String bedarfe;
-            if ((bedarfe = nutzer.getBedarfeAlsString()) == null) {
+            if ((bedarfe = nutzer.getBedarfeAlsListeString()) == null) {
                 tvBedarfe.setText(R.string.string_keine_bedarfe);
             } else {
                 tvBedarfe.setText(R.string.string_bedarfe);
-                tvBedarfe.append(" ");
+                tvBedarfe.append("\n\n");
                 tvBedarfe.append(bedarfe);
             }
         }

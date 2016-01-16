@@ -166,7 +166,7 @@ public class Unterkunft {
         } else {            // Get needs of each resident als string and separate with comma
             String str = "";
             for(int i = 0; i < bewohner.size(); i++) {
-                str += bewohner.get(i).getBedarfeAlsString();
+                str += bewohner.get(i).getBedarfeAlsKommaString();
                 if(i < bewohner.size() - 1) {
                     // In the end of all strings no comma necessary
                     str += ", ";

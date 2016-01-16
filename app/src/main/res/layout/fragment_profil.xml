@@ -54,21 +54,36 @@
         android:layout_marginRight="@dimen/fab_margin"
         android:layout_marginBottom="-28dp" />
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:padding="@dimen/activity_horizontal_margin"
-        android:layout_below="@+id/linearLayout">
+        android:layout_below="@+id/linearLayout"
+        android:weightSum="1">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="[Bedarfe]"
-            android:id="@+id/tvBedarfe" />
-    </LinearLayout>
+            android:id="@+id/tvBedarfe"
+            android:layout_weight="0.53"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_abmelden"
+            android:id="@+id/btAbmelden"
+            android:textColor="@color/rot"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false" />
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         app:fabSize="mini"
@@ -79,18 +94,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:src="@android:drawable/ic_menu_delete"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentRight="false"
+        android:layout_toLeftOf="@+id/fab_plus"
+        android:layout_alignTop="@+id/fab_plus"
         android:layout_marginRight="24dp"
-        android:layout_below="@+id/fab_plus"
-        android:layout_marginTop="48dp" />
+        android:layout_marginTop="8dp" />
 
-    <Button
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/button_abmelden"
-        android:id="@+id/btAbmelden"
-        android:textColor="@color/rot"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/activity_horizontal_margin" />
 </RelativeLayout>
