@@ -178,7 +178,7 @@ public class Unterkunft {
     }
 
     /**
-     * Getter looking for an existing resident in this accomodation
+     * Getter looking for an existing resident in this accommodation
      * @param suchname name of desired resident
      * @return null, if resident is not found by name; resident else
      */

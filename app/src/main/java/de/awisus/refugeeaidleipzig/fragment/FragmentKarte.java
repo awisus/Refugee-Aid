@@ -60,9 +60,9 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback {
     /**
      * Automatically called method inflating the xml-layout
      * Sets actovoty title to Map
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
+     * @param inflater who cares
+     * @param container who cares
+     * @param savedInstanceState who cares
      * @return View inflated with the layout
      */
     @Override

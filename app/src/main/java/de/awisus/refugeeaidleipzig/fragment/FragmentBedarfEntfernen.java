@@ -17,7 +17,9 @@ import de.awisus.refugeeaidleipzig.model.Nutzer;
 /**
  * Created on 16.01.16.
  *
- *
+ * This class describes a fragment that makes it possible to the user to delete needs added
+ * beforehand.
+ * This mainly shows a spinner to choose a need to be deleted.
  * @author Jens Awisus
  */
 public class FragmentBedarfEntfernen extends DialogFragment implements DialogInterface.OnClickListener {
@@ -26,12 +28,18 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * An Activity for a spinner as context
+     */
     private MainActivity context;
 
+    /**
+     * A Spinners to choose a particular need of the user
+     */
     private Spinner spBedarf;
 
     /**
-     * User currently adding new needs
+     * User currently removing new needs
      */
     private Nutzer nutzer;
 
@@ -74,6 +82,9 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
         return builder.create();
     }
 
+    /**
+     * This private method applies an adapter to the spinner to list all the user's needs
+     */
     private void initSpinnerAdapter() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 context,
@@ -88,6 +99,11 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
         spBedarf.setAdapter(adapter);
     }
 
+    /**
+     * This is called, when a parent Activity is attached. We want to use this Activity as context
+     * for our spinner.
+     * @param activity
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -100,8 +116,7 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
 
     /**
      * Listens to clicks on dialogue buttons
-     * if positive button, the given string in the text field will be trimmed before being added to
-     * the user
+     * if positive button, we take the selected need in the spinner and call the user to remove it
      * @param dialog DialogInterface
      * @param which number indicating the pressed button
      */

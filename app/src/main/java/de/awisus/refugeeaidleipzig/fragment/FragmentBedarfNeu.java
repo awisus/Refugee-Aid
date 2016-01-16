@@ -14,7 +14,8 @@ import de.awisus.refugeeaidleipzig.model.Nutzer;
 /**
  * Created on 12.01.16.
  *
- * Class defining the behaviour of the dialogue that gives opportunity to the user to add new needs
+ * Class defining the behaviour of the dialogue that gives opportunity to the user to add new needs.
+ * This shows a text field to name a need.
  * @author Jens Awisus
  */
 public class FragmentBedarfNeu extends DialogFragment implements DialogInterface.OnClickListener {
