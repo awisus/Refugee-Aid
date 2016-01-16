@@ -97,7 +97,7 @@
         android:layout_alignParentRight="false"
         android:layout_toLeftOf="@+id/fab_plus"
         android:layout_alignTop="@+id/fab_plus"
-        android:layout_marginRight="24dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="8dp" />
 
 </RelativeLayout>

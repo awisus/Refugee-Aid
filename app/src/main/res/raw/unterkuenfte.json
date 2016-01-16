@@ -20,110 +20,110 @@
   {
     "name" : "Naumburger Straße",
     "groesse" : 39,
-    "laengengrad" : 51.326792,
-    "breitengrad" : 12.328618
+    "laengengrad" : 51.326697,
+    "breitengrad" : 12.329556
   },
   {
     "name" : "Nikolai-Rumjanzew-Straße",
     "groesse" : 40,
-    "laengengrad" : 51.316123,
-    "breitengrad" : 12.306056
+    "laengengrad" : 51.317665,
+    "breitengrad" : 12.302612
   },
   {
     "name" : "Pittlerstraße",
     "groesse" : 36,
-    "laengengrad" : 51.378372,
-    "breitengrad" : 12.314264
+    "laengengrad" : 51.378399,
+    "breitengrad" : 12.314323
   },
   {
     "name" : "Puschstraße, Pavillon 10.14",
     "groesse" : 56,
-    "laengengrad" : 51.317630,
-    "breitengrad" : 12.398080
+    "laengengrad" : 51.317798,
+    "breitengrad" : 12.400247
   },
   {
     "name" : "Puschstraße, Pavillon 10.13",
     "groesse" : 45,
-    "laengengrad" : 51.317630,
-    "breitengrad" : 12.398080
+    "laengengrad" : 51.317798,
+    "breitengrad" : 12.400247
   },
   {
     "name" : "Sommerfelder Straße",
     "groesse" : 60,
-    "laengengrad" : 51.324437,
-    "breitengrad" : 12.433561
+    "laengengrad" : 51.324410,
+    "breitengrad" : 12.433539
   },
   {
     "name" : "Stöckelstraße",
     "groesse" : 58,
-    "laengengrad" : 51.353599,
-    "breitengrad" : 12.411139
+    "laengengrad" : 51.353693,
+    "breitengrad" : 12.411171
   },
   {
     "name" : "Wiebelstraße",
     "groesse" : 45,
-    "laengengrad" : 51.340082,
-    "breitengrad" : 12.408495
+    "laengengrad" : 51.339855,
+    "breitengrad" : 12.408871
   },
   {
     "name" : "Wilhelminenstraße",
     "groesse" : 60,
-    "laengengrad" : 51.361465,
-    "breitengrad" : 12.380819
+    "laengengrad" : 51.361472,
+    "breitengrad" : 12.380862
   },
   {
     "name" : "Alte Salzstraße",
     "groesse" : 65,
-    "laengengrad" : 51.326239,
-    "breitengrad" : 12.319252
+    "laengengrad" : 51.326259,
+    "breitengrad" : 12.319257
   },
   {
     "name" : "Bernhard-Göring-Straße, 3. Schule",
     "groesse" : 186,
-    "laengengrad" : 51.319722,
-    "breitengrad" : 12.376717
+    "laengengrad" : 51.319850,
+    "breitengrad" : 12.375816
   },
   {
     "name" : "Brühl",
     "groesse" : 520,
-    "laengengrad" : 51.343173,
-    "breitengrad" : 12.377035
+    "laengengrad" : 51.343193,
+    "breitengrad" : 12.377003
   },
   {
-    "name" : "Dösener Weg",
+    "name" : "Dösner Weg",
     "groesse" : 150,
-    "laengengrad" : 51.307512,
-    "breitengrad" : 12.270098
+    "laengengrad" : 51.323470,
+    "breitengrad" : 12.385523
   },
   {
     "name" : "Liliensteinstraße",
     "groesse" : 220,
-    "laengengrad" : 51.346899,
-    "breitengrad" : 12.316197
+    "laengengrad" : 51.306882,
+    "breitengrad" : 12.270688
   },
   {
     "name" : "Puschstraße, Messehalle 17",
     "groesse" : 550,
-    "laengengrad" : 51.317643,
-    "breitengrad" : 12.398080
+    "laengengrad" : 51.317824,
+    "breitengrad" : 12.400204
   },
   {
     "name" : "Riebeckstraße",
     "groesse" : 115,
-    "laengengrad" : 51.329756, 
-    "breitengrad" : 12.404588
+    "laengengrad" : 51.330145,
+    "breitengrad" : 12.403257
   },
   {
     "name" : "Riesaer Straße",
     "groesse" : 200,
-    "laengengrad" : 51.345901, 
-    "breitengrad" : 12.470443
+    "laengengrad" : 51.347690,
+    "breitengrad" : 12.470905
   },
   {
     "name" : "Torgauer Straße",
     "groesse" : 390,
-    "laengengrad" : 51.358051,
-    "breitengrad" : 12.438996
+    "laengengrad" : 51.358091,
+    "breitengrad" : 12.439104
   },
   {
     "name" : "Zschortauer Straße",
@@ -132,9 +132,9 @@
     "breitengrad" : 12.393376
   },
   {
-    "name" : "Zweenfurter Straße",
+    "name" : "Zweenfurther Straße",
     "groesse" : 102,
-    "laengengrad" : 51.345417,
-    "breitengrad" : 12.431935
+    "laengengrad" : 51.342093,
+    "breitengrad" : 12.430664
   }
 ]}
