@@ -9,7 +9,7 @@ By clicking a mark on the map they get further information, most importantly ano
 
 Usage
 --
-These files make up an Android Studio project. So just download and import to your IDE or check out from VCS.
+These files make up an Android Studio project. So just download and open or check out from VCS in your IDE.
 
 License
 --
