@@ -7,9 +7,16 @@ This is the Android frontend created by awisus for the upcoming platform done by
 We use the Google Maps platform to make accmommodations visible to the user.
 By clicking a mark on the map they get further information, most importantly required needs.
 
-* License *
+License
+--
 This software is published under MIT license.
 See the LICENSE file for detailed information.
 
-* The end *
+Hey, you there!
+--
 Please, feel free and welcome to collaborate to improve user experience and maintain the project.
+
+Contact us
+--
+- awisus: awisus.gdev@gmail.com
+- tokix: <>
