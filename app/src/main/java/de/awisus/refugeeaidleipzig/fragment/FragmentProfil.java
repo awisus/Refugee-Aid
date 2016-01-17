@@ -29,22 +29,55 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Fragment for adding new needs by the user
+     */
     private FragmentBedarfNeu fragmentBedarfNeu;
+
+    /**
+     * Fragment for removing new needs by the user
+     */
     private FragmentBedarfEntfernen fragmentBedarfEntfernen;
 
+    /**
+     * Label showing the user name
+     */
     private TextView tvName;
+
+    /**
+     * Label showing the accommodation the user stays in
+     */
     private TextView tvEinrichtung;
+
+    /**
+     * Label listung the user's needs
+     */
     private TextView tvBedarfe;
 
+    /**
+     * Log-Out button
+     */
     private Button btAbmelden;
 
+    /**
+     * Reference to the model for logging the user out
+     */
     private Model model;
+
+    /**
+     * The user reference
+     */
     private Nutzer nutzer;
 
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Public factory method setting the model and the user reference in it
+     * @param model Model to be set
+     * @return new Profile Fragment
+     */
     public static FragmentProfil newInstance(Model model) {
         FragmentProfil frag = new FragmentProfil();
         frag.model = model;

@@ -139,7 +139,8 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
             Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();
 
             if(eingabe != null && unterkunft != null) {
-                if(eingabe.trim() != null && !eingabe.trim().equals("")) {
+                eingabe = eingabe.trim();
+                if(eingabe != null && !eingabe.equals("")) {
 
                     // login with chosen name and accommodation
                     model.anmelden(eingabe, unterkunft);
