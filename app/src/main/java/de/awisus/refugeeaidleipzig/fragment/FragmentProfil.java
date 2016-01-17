@@ -169,7 +169,7 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
      */
     private void updateBedarfe() {
         if(nutzer != null) {
-            if (nutzer.hatBedarf()) {
+            if (!nutzer.hatBedarf()) {
                 tvBedarfe.setText(R.string.string_keine_bedarfe);
             } else {
 
