@@ -18,7 +18,10 @@ import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 
 /**
- * Created by Jens Awisus on 12.01.16.
+ * Created on 12.01.16.
+ *
+ *
+ * @author Jens Awisus
  */
 public class FragmentProfil extends Fragment implements Observer, View.OnClickListener {
 

@@ -27,7 +27,7 @@ import de.awisus.refugeeaidleipzig.model.Unterkunft;
  * information about sizes, number of residents and a list of needs for each accommodation
  * @author Jens Awisus
  */
-public class FragmentKarte extends Fragment implements OnMapReadyCallback {
+public class FragmentKarte extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
@@ -122,42 +122,50 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback {
         }
 
         // tap on marker info box shows accommodation detail
-        karte.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marke) {
+        karte.setOnInfoWindowClickListener(this);
+    }
 
-                // Get the accommodation for the marker being tabbed
-                Unterkunft unterkunft = model.getUnterkunft(marke);
-                String detail;
-                /*
-                 * Build up the details string to be shown in a separate window
-                 * example format:
-                 *
-                 *   Spaces: 30
-                 *   Residents: 28
-                 *
-                 *   Needs: Football, Jacket, Toothbrush
-                 */
+    /**
+     * This method is called, if a click on an info windows of a map marker occurs.
+     * This is going to pop up a detailed view of the accommodation corresponding to the marker.
+     * That window will contain information about space, number of residents and needs of all
+     * residents.
+     * @param marke Marker if which the window is clicked
+     */
+    @Override
+    public void onInfoWindowClick(Marker marke) {
 
-                detail  = getResources().getString(R.string.string_plaetze) + " ";
-                detail += unterkunft.getGroesse();
-                detail += "\n";
-                detail += getResources().getString(R.string.string_bewohner) + " ";
-                detail += unterkunft.findeBewohner();
+        // Get the accommodation for the marker being tabbed
+        Unterkunft unterkunft = model.getUnterkunft(marke);
 
-                detail += "\n\n";
+        /*
+         * Build up the details string to be shown in a separate window.
+         * Example format:
+         *
+         *   Spaces: 30
+         *   Residents: 28
+         *
+         *   Needs: Football, Jacket, Toothbrush
+         */
 
-                detail += unterkunft.hatBedarf()
-                        ? getResources().getString(R.string.string_bedarfe) + " "
-                        + unterkunft.getBedarfeAlsString()
-                        : getResources().getString(R.string.string_keine_bedarfe);
+        String detail;
+        detail  = getResources().getString(R.string.string_plaetze) + " ";
+        detail += unterkunft.getGroesse();
+        detail += "\n";
+        detail += getResources().getString(R.string.string_bewohner) + " ";
+        detail += unterkunft.findeBewohner();
 
-                // Call a new info fragment with name and details about the accommodation
-                FragmentInfo.newInstance(
-                        unterkunft.getName(),
-                        detail
-                ).show(getActivity().getSupportFragmentManager(), "Info");
-            }
-        });
+        detail += "\n\n";
+
+        detail += unterkunft.hatBedarf()
+                ? getResources().getString(R.string.string_bedarfe) + " "
+                + unterkunft.getBedarfeAlsString()
+                : getResources().getString(R.string.string_keine_bedarfe);
+
+        // Call a new info fragment with name and details about the accommodation
+        FragmentInfo.newInstance(
+                unterkunft.getName(),
+                detail
+        ).show(getActivity().getSupportFragmentManager(), "Info");
     }
 }

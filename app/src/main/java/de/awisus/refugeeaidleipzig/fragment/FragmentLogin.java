@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
@@ -19,8 +18,8 @@ import de.awisus.refugeeaidleipzig.model.Unterkunft;
 /**
  * Created on 15.01.16.
  *
- * A login fragment with a text field for the user name and a spinner with all accomodations to
- * choose
+ * A login fragment with a text field for the user name and a spinner with all accommodations to
+ * choose.
  * @author Jens Awisus
  */
 public class FragmentLogin extends DialogFragment implements DialogInterface.OnClickListener {
@@ -29,15 +28,35 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    private MainActivity context;
+    /**
+     * Activity as the Context for the accommodation spinner
+     */
+    private Activity context;
+
+    /**
+     * Text field for the user name
+     */
     private EditText etName;
+
+    /**
+     * Spinner to choose in which accommodation the users stays in
+     */
     private Spinner spUnterkunft;
+
+    /**
+     * Reference to the model to log in the new user (or to be found in the chosen accommodation)
+     */
     private Model model;
 
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Public factory method giving the model's reference
+     * @param model Model to log in user
+     * @return new Login Fragment
+     */
     public static FragmentLogin newInstance(Model model) {
         FragmentLogin frag = new FragmentLogin();
         frag.model = model;
@@ -48,6 +67,13 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
      // View creation ///////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Called when this dialogue is created; Android-specific
+     * Inflates the layout, initialises text field and spinner, initialises the spinner adapter to
+     * show up accommodations and sets the dialogue buttons
+     * @param savedInstanceState Bundle of saved instance state
+     * @return dialogue created by the AlertDialog.Builder
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -65,6 +91,9 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
         return builder.create();
     }
 
+    /**
+     * Private method that creates an Array Adapter the spinner uses to show accommodation names
+     */
     private void initSpinnerAdapter() {
         ArrayAdapter<Unterkunft> adapter = new ArrayAdapter<>(
                 context,
@@ -79,16 +108,28 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
         spUnterkunft.setAdapter(adapter);
     }
 
+    /**
+     * This is called to set the parent Activity as the Context for the spinner
+     * @param activity Activity to be set as context
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        context = (MainActivity)activity;
+        context = activity;
     }
 
       ////////////////////////////////////////////////////////////////////////////////
      // Listeners ///////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * This is called when one of the dialogue buttons is clicked.
+     * If positive button, the string from the text field and the accommodation chosen in the
+     * spinner are passed to the login method of the model. This causes the model to either find an
+     * existing resident by name or to create a new user, if the sears is not successful.
+     * @param dialog Dialog Interface
+     * @param which number indicating the button pressed
+     */
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if(which == DialogInterface.BUTTON_POSITIVE) {
