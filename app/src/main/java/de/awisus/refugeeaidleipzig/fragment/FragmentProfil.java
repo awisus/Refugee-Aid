@@ -20,7 +20,11 @@ import de.awisus.refugeeaidleipzig.model.Nutzer;
 /**
  * Created on 12.01.16.
  *
- *
+ * This Fragment makes up a profile view for the user.
+ * Three Labels show the user's information like name, accommodation and needs.
+ * Two FloatingActionButtons are there for adding or removal of needs to be shown on the map of
+ * accommodations.
+ * A LogOut button performs log out from the model
  * @author Jens Awisus
  */
 public class FragmentProfil extends Fragment implements Observer, View.OnClickListener {
@@ -89,6 +93,15 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
      // View creation ///////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Automatically called method inflating the xml-layout.
+     * This initialises add UI components, sets the user information to the labls and changes the
+     * Activity's title to PROFILE
+     * @param inflater who cares
+     * @param container who cares
+     * @param savedInstanceState who cares
+     * @return View inflated with the layout
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profil, container, false);
@@ -101,6 +114,10 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
         return view;
     }
 
+    /**
+     * Private method initialising all UI components from the inflated View
+     * @param view inflated View
+     */
     private void initUI(View view) {
         fragmentBedarfNeu = FragmentBedarfNeu.newInstance(nutzer);
         fragmentBedarfEntfernen = FragmentBedarfEntfernen.newInstance(nutzer);
@@ -118,10 +135,13 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
         btMinus.setOnClickListener(this);
     }
 
+    /**
+     * This shows user information (name, accommodation, needs) in the UI labels
+     */
     private void initNutzerInfo() {
         if(nutzer != null) {
             tvName.setText(nutzer.getName());
-            tvEinrichtung.setText(nutzer.getUnterkunft().getName());
+            tvEinrichtung.setText(nutzer.getUnterkunft().toString());
 
             updateBedarfe();
 
@@ -133,20 +153,34 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
      // Observer ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Update method called, if list of the user's needs changes.
+     * Causes label of user's needs to chow current information
+     * @param observable unused data model notifying about a change
+     * @param data unused data object given by the Observable
+     */
     @Override
     public void update(Observable observable, Object data) {
         updateBedarfe();
     }
 
+    /**
+     * Private method called to set the needs label for the current user's needs
+     */
     private void updateBedarfe() {
         if(nutzer != null) {
-            String bedarfe;
-            if ((bedarfe = nutzer.getBedarfeAlsListeString()) == null) {
+            if (nutzer.hatBedarf()) {
                 tvBedarfe.setText(R.string.string_keine_bedarfe);
             } else {
+
+                /* Needs are shown as a list like:
+                 * Needs:
+                 *  - Jacket
+                 *  - Toothbrush
+                 */
                 tvBedarfe.setText(R.string.string_bedarfe);
                 tvBedarfe.append("\n\n");
-                tvBedarfe.append(bedarfe);
+                tvBedarfe.append(nutzer.getBedarfeAlsListeString());
             }
         }
     }
@@ -155,21 +189,31 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
      // Listener ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * This Method is called, if any of the Buttons  is clicked
+     * @param view the View pressed
+     */
     @Override
     public void onClick(View view) {
         int id = view.getId();
+
+        // Click on the FloatingAction Plus button calls fragment for adding a need
         if(id == R.id.fab_plus) {
             fragmentBedarfNeu.show(getChildFragmentManager(), "Neuer Bedarf");
         }
 
+        // Click on the FloatingAction Delete button calls fragment for removing needs
         if(id == R.id.fab_minus) {
             if(nutzer.hatBedarf()) {
                 fragmentBedarfEntfernen.show(getChildFragmentManager(), "Bedarf entfernen");
             } else {
+
+                // Tell user, if there is no need to be deleted
                 Toast.makeText(getActivity(), R.string.warnung_loeschen, Toast.LENGTH_SHORT).show();
             }
         }
 
+        // LogOut button calles logout of user in the model
         if(id == R.id.btAbmelden) {
             model.abmelden();
         }

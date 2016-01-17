@@ -133,7 +133,7 @@ public class Model extends Observable {
      */
     private void addMarkerOption(Unterkunft unterkunft) {
         MarkerOptions marke = new MarkerOptions();
-        marke.title(unterkunft.getName());
+        marke.title(unterkunft.toString());
         marke.position(unterkunft.getLatLng());
 
         markerOptionen.add(marke);

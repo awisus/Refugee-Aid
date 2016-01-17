@@ -164,7 +164,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
 
         // Call a new info fragment with name and details about the accommodation
         FragmentInfo.newInstance(
-                unterkunft.getName(),
+                unterkunft.toString(),
                 detail
         ).show(getActivity().getSupportFragmentManager(), "Info");
     }

@@ -125,14 +125,6 @@ public class Unterkunft {
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Getter for name
-     * @return Name of accommodation
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
      * Getter for size
      * @return Size of accommodation
      */

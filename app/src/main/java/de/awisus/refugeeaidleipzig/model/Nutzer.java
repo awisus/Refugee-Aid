@@ -104,7 +104,9 @@ public class Nutzer extends Observable {
     }
 
     /**
-     * Turns list of needs this into a comma-separated string to be shown on map page
+     * Turns list of needs this into a comma-separated string to be shown on map page.
+     * Format:
+     *  jacket, toothbrush, ...
      * @return comma-separated string of personal needs
      */
     public String getBedarfeAlsKommaString() {
@@ -124,7 +126,11 @@ public class Nutzer extends Observable {
     }
 
     /**
-     * Turns list of needs this into a key point list string to be shown on profile page
+     * Turns list of needs this into a key point list string to be shown on profile page,
+     * Format:
+     *  - Jacket
+     *  - Toothbrush
+     *  - ...
      * @return key point list string of personal needs
      */
     public String getBedarfeAlsListeString() {
