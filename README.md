@@ -13,7 +13,7 @@ These files make up an Android Studio project. So just download and open or chec
 
 License
 --
-This software is published under MIT license.
+This software is published under the GNU General Public License.
 See the LICENSE file for detailed information.
 
 Hey, you there!
