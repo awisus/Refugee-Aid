@@ -8,7 +8,7 @@ We use the Google Maps platform to make accmommodations visible to the user.
 By clicking a mark on the map they get further information, most importantly anout required needs.
 
 ## Usage
-These files make up an Android Studio project. So just download and open or check out from VCS in your IDE.
+These files make up an Android Studio project. Simply download and open in your IDE or check out from Version Control.
 
 ## License
 This software is published under the GNU General Public License.
