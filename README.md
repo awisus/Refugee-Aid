@@ -7,20 +7,16 @@ This is the Android frontend created by awisus for the upcoming platform done by
 We use the Google Maps platform to make accmommodations visible to the user.
 By clicking a mark on the map they get further information, most importantly anout required needs.
 
-Usage
---
+## Usage
 These files make up an Android Studio project. So just download and open or check out from VCS in your IDE.
 
-License
---
+## License
 This software is published under the GNU General Public License.
 See the LICENSE file for detailed information.
 
-Hey, you there!
---
+## Hey, you there!
 Please, feel free and welcome to collaborate to improve user experience and maintain the project.
 
-Contact us
---
+## Contact us
 - awisus: awisus.gdev@gmail.com
 - tokix: -
