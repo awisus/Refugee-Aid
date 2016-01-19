@@ -1,4 +1,4 @@
-# Refugee-Aid
+# Refugee Aid
 Project intended to give refugees a chance to utter their needs themselves.
 General public may see those needs collected by accommodations on a map.
 So they become aware of help facilities in their area and what is really urgent.
@@ -20,3 +20,4 @@ Please, feel free and welcome to collaborate to improve user experience and main
 ## Contact us
 - awisus: awisus.gdev@gmail.com
 - tokix: -
+Made in Leipzig
