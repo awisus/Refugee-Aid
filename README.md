@@ -20,5 +20,5 @@ Please, feel free and welcome to collaborate to improve user experience and main
 ## Contact us
 - awisus: awisus.gdev@gmail.com
 - tokix: -
-- 
-Made in Leipzig
+
+Made with pleasure in Leipzig
