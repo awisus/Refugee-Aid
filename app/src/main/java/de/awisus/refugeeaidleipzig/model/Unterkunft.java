@@ -155,13 +155,20 @@ public class Unterkunft {
     public String getBedarfeAlsString() {
         if(!hatBedarf()) {  // No need? return null
             return null;
-        } else {            // Get needs of each resident als string and separate with comma
+        } else {            // Get needs of each resident as string and separate with comma
             String str = "";
             for(int i = 0; i < bewohner.size(); i++) {
-                str += bewohner.get(i).getBedarfeAlsKommaString();
-                if(i < bewohner.size() - 1) {
-                    // In the end of all strings no comma necessary
-                    str += ", ";
+            
+                // Get needs user
+                String bedarfNutzer = bewohner.get(i).getBedarfeAlsKommaString();
+                
+                // add user's needs, if not null
+                if(bedarfNutzer != null) {
+                    str += bedarfNutzer;
+                    if(i < bewohner.size() - 1) {
+                        // In the end of all strings no comma necessary
+                        str += ", ";
+                    }
                 }
             }
 
