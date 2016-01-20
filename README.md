@@ -5,7 +5,7 @@ So they become aware of help facilities in their area and what is really urgent.
 
 This is the Android frontend created by awisus for the upcoming platform done by tokix.
 We use the Google Maps platform to make accmommodations visible to the user.
-By clicking a mark on the map they get further information, most importantly anout required needs.
+By clicking a mark on the map he/she gets further information, most importantly about required needs.
 
 ## Usage
 These files make up an Android Studio project. Simply download and open in your IDE or check out from Version Control.
