@@ -153,7 +153,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         detail += unterkunft.getGroesse();
         detail += "\n";
         detail += getResources().getString(R.string.string_bewohner) + " ";
-        detail += unterkunft.findeBewohner();
+        detail += unterkunft.getBewohner();
 
         detail += "\n\n";
 

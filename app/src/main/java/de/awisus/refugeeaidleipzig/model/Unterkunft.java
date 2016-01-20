@@ -136,7 +136,7 @@ public class Unterkunft {
      * Getter for number of residents
      * @return number of residents
      */
-    public int findeBewohner() {
+    public int getBewohner() {
         return bewohner.size();
     }
 
