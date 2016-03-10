@@ -19,16 +19,22 @@
 
 package de.awisus.refugeeaidleipzig.model;
 
+import java.util.LinkedList;
+
 /**
- * Created by Jens Awisus on 11.01.16.
+ * Created on 11.01.16.
+ *
+ * @author Jens Awisus
  */
 public class Kategorie {
 
     private String bezeichnung;
+    private LinkedList<Kategorie> subkategorien;
 
 
-    public Kategorie(String bezeichnung) {
+    private Kategorie(String bezeichnung) {
         this.bezeichnung = bezeichnung;
+        this.subkategorien = new LinkedList<>();
     }
 
 

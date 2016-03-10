@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 
-import de.awisus.refugeeaidleipzig.model.Kategorie;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 
 /**
@@ -56,11 +55,6 @@ public class RessourcenLader {
      */
     private LinkedList<Unterkunft> unterkuenfte;
 
-    /**
-     * Array of categories of needs
-     */
-    private Kategorie[] kategorien;
-
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
@@ -77,7 +71,6 @@ public class RessourcenLader {
         this.unterkuenfte = new LinkedList<>();
 
         ladeUnterkuenfte();
-        ladeKategorien();
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -103,30 +96,6 @@ public class RessourcenLader {
         for(int i = 0; i < feld.length(); i++) {
             unterkuenfte.add(Unterkunft.fromJSON(feld.getJSONObject(i)));
         }
-    }
-
-    /**
-     * This method loads the category's json file.
-     * This runs through all categories lying in an array and creates instances of categories
-     * corresponding to the data read
-     * @throws IOException Exception, if something is wrong with a file
-     * @throws JSONException Exception, if there occurs a mistake while working with json objects
-     */
-    private void ladeKategorien() throws IOException, JSONException {
-        Kategorie[] kategorien;
-
-        String inhalt = lesen(R.raw.kategorien);
-
-        JSONObject json = new JSONObject(inhalt);
-        JSONArray feld = json.getJSONArray("kategorien");
-
-        kategorien = new Kategorie[feld.length()];
-
-        for(int i = 0; i < feld.length(); i++) {
-            kategorien[i] = new Kategorie(feld.getJSONObject(i).getString("bezeichnung"));
-        }
-
-        this.kategorien = kategorien;
     }
 
     /**
@@ -162,13 +131,5 @@ public class RessourcenLader {
      */
     public LinkedList<Unterkunft> getUnterkuenfte() {
         return unterkuenfte;
-    }
-
-    /**
-     * Getter for the category array
-     * @return category array
-     */
-    public Kategorie[] getKategorien() {
-        return kategorien;
     }
 }

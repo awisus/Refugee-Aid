@@ -38,6 +38,8 @@ public class Unterkunft {
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    private String stadt;
+
     /**
      * Name of the accommodation (e.g. Eythstrasse)
      */
@@ -58,6 +60,8 @@ public class Unterkunft {
      */
     private LinkedList<Nutzer> bewohner;
 
+    private int anzahlBewohner;
+
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
@@ -67,6 +71,28 @@ public class Unterkunft {
      */
     private Unterkunft() {
         bewohner = new LinkedList<>();
+    }
+
+    public static Unterkunft fromNetJSON(JSONObject json) throws JSONException {
+         // Instatiate new accommodation
+        Unterkunft unterkunft = new Unterkunft();
+
+        // put data to it from json object
+        unterkunft.stadt = json.getString("city");
+        unterkunft.name = json.getString("name");
+        unterkunft.groesse = json.getInt("space");
+        unterkunft.anzahlBewohner = json.getInt("residents");
+        unterkunft.latLng = new LatLng(
+                json.getDouble("longitude"),
+                json.getDouble("latitude")
+        );
+
+        // Better trim Strings, get rid of white spaces
+        if(unterkunft.name != null) {
+            unterkunft.name = unterkunft.name.trim();
+        }
+
+        return unterkunft;
     }
 
     /**
