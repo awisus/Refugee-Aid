@@ -37,7 +37,7 @@ public class WebResourceHandler {
             JSONObject unterkunftDaten;
 
             unterkunftDaten = feld.getJSONObject(i);
-            unterkunft = Unterkunft.fromJSON(unterkunftDaten);
+            unterkunft = Unterkunft.fromNetJSON(unterkunftDaten);
             id = unterkunftDaten.getInt("id");
 
             unterkunftMap.add(id, unterkunft);

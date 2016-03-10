@@ -49,7 +49,7 @@ public class Model extends Observable {
     /**
      * List of all pre-given accommodations
      */
-    private LinkedList<Unterkunft> unterkuenfte;
+    private UnterkunftMap unterkuenfte;
 
     /**
      * Mapping of Map Markers and accommodations for easy information retrieval
@@ -70,7 +70,6 @@ public class Model extends Observable {
      */
     public Model() {
         markerOptionen = new LinkedList<>();
-        unterkuenfte = new LinkedList<>();
         mapUnterkuenfte = new HashMap<>();
     }
 
@@ -138,7 +137,7 @@ public class Model extends Observable {
      * Setter for the accommodation list
      * @param unterkuenfte accommodation list to be set
      */
-    public void setUnterkuenfte(LinkedList<Unterkunft> unterkuenfte) {
+    public void setUnterkuenfte(UnterkunftMap unterkuenfte) {
         this.unterkuenfte = unterkuenfte;
 
         for(Unterkunft unterkunft : unterkuenfte) {
@@ -184,7 +183,7 @@ public class Model extends Observable {
      * Get accommodation list
      * @return accommodation list
      */
-    public LinkedList<Unterkunft> getUnterkuenfte() {
+    public UnterkunftMap getUnterkuenfte() {
         return unterkuenfte;
     }
 

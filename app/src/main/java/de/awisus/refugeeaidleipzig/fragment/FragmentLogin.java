@@ -114,10 +114,10 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
      * Private method that creates an Array Adapter the spinner uses to show accommodation names
      */
     private void initSpinnerAdapter() {
-        ArrayAdapter<Unterkunft> adapter = new ArrayAdapter<>(
+        ArrayAdapter<Unterkunft> adapter = new ArrayAdapter<Unterkunft>(
                 context,
                 android.R.layout.simple_spinner_item,
-                model.getUnterkuenfte()
+                model.getUnterkuenfte().asList()
         );
 
         // Specify the layout to use when the list of choices appears

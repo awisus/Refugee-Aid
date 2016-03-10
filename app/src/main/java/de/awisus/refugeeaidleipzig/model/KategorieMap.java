@@ -5,7 +5,7 @@ package de.awisus.refugeeaidleipzig.model;
  *
  * @author jens
  */
-public class KategorieMap extends DataMap<Kategorie> {
+public abstract class KategorieMap extends DataMap<Kategorie> {
 
     public KategorieMap() {
         super();
