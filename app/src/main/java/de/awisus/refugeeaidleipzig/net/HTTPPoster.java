@@ -57,5 +57,6 @@ public class HTTPPoster extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
+        parameter.clear();
     }
 }

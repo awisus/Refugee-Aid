@@ -48,7 +48,7 @@ import de.awisus.refugeeaidleipzig.fragment.FragmentLogin;
 import de.awisus.refugeeaidleipzig.fragment.FragmentProfil;
 import de.awisus.refugeeaidleipzig.fragment.Utility;
 import de.awisus.refugeeaidleipzig.model.Model;
-import de.awisus.refugeeaidleipzig.net.WebResourceHandler;
+import de.awisus.refugeeaidleipzig.net.WebFlirt;
 
 /**
  * Created on 11.01.16.
@@ -150,8 +150,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // this Activity listens to model changes (login and logout)
         model.addObserver(this);
         try {
-            WebResourceHandler handler = new WebResourceHandler();
-            model.setUnterkuenfte(handler.ladeUnterkuenfte());
+            model.setUnterkuenfte(WebFlirt.getInstance().getUnterkuenfte());
             return true;
         } catch (IOException | JSONException | InterruptedException | ExecutionException e){
             return false;

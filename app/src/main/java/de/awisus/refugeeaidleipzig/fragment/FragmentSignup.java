@@ -225,11 +225,7 @@ public class FragmentSignup extends DialogFragment implements DialogInterface.On
 
         try {
             JSONObject object = new JSONObject(httpPoster.get());
-
-            int unterkunftID = object.getInt("accommodation_id");
-            Unterkunft unterkunft = model.getUnterkunftFromID(unterkunftID);
-
-            return Nutzer.fromJSON(unterkunft, object);
+            return Nutzer.fromJSON(model, object);
         } catch (JSONException | InterruptedException | ExecutionException e) {
             Log.e("GET: Error", e.toString());
             return null;

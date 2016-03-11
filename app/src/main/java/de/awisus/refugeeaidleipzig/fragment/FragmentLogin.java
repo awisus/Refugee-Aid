@@ -26,14 +26,12 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
@@ -41,8 +39,7 @@ import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
-import de.awisus.refugeeaidleipzig.model.Unterkunft;
-import de.awisus.refugeeaidleipzig.net.HTTPGetter;
+import de.awisus.refugeeaidleipzig.net.WebFlirt;
 
 /**
  * Created on 15.01.16.
@@ -175,34 +172,17 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
             String passwort = etPasswort.getText().toString();
 
             // remote login with name and pasword
-            Nutzer nutzer;
-            if (((nutzer = login(name, passwort)) == null)) {
+            try {
+                Nutzer nutzer = WebFlirt.getInstance().getNutzer(model, name, passwort);
+                ladebalken.cancel();
+                model.anmelden(nutzer);
+            } catch (JSONException | InterruptedException | ExecutionException e) {
                 ladebalken.cancel();
                 context.checkNavigationMapItem();
                 Toast.makeText(context, "Name oder Passwort falsch", Toast.LENGTH_SHORT).show();
-            } else {
-                ladebalken.cancel();
-                model.anmelden(nutzer);
             }
         } else {
             context.checkNavigationMapItem();
-        }
-    }
-
-    private Nutzer login(String name, String passwort) {
-        HTTPGetter httpGetter = new HTTPGetter(SERVER_URL);
-        httpGetter.execute("getUser/" + name + "/" + passwort);
-
-        try {
-            JSONObject object = new JSONObject(httpGetter.get());
-
-            int unterkunftID = object.getInt("accommodation_id");
-            Unterkunft unterkunft = model.getUnterkunftFromID(unterkunftID);
-
-            return Nutzer.fromJSON(unterkunft, object);
-        } catch (JSONException | InterruptedException | ExecutionException e) {
-            Log.e("GET: Error", e.toString());
-            return null;
         }
     }
 }

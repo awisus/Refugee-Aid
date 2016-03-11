@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import de.awisus.refugeeaidleipzig.model.DataMap;
+import de.awisus.refugeeaidleipzig.model.Model;
+import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 
 /**
@@ -15,20 +17,27 @@ import de.awisus.refugeeaidleipzig.model.Unterkunft;
  *
  * @author Jens Awisus
  */
-public class WebResourceHandler {
+public class WebFlirt {
 
     public static final String SERVER_URL = "https://refugee-aid.herokuapp.com/";
+    public static final WebFlirt INSTANCE = new WebFlirt();
 
 
     private HTTPGetter httpGetter;
+    private HTTPPoster httpPoster;
 
 
-    public WebResourceHandler() {
+    private WebFlirt() {
         httpGetter = new HTTPGetter(SERVER_URL);
+        httpPoster = new HTTPPoster(SERVER_URL);
+    }
+
+    public static WebFlirt getInstance() {
+        return INSTANCE;
     }
 
 
-    public DataMap<Unterkunft> ladeUnterkuenfte() throws IOException, JSONException, InterruptedException, ExecutionException {
+    public DataMap<Unterkunft> getUnterkuenfte() throws IOException, JSONException, InterruptedException, ExecutionException {
 
         DataMap<Unterkunft> unterkunftMap = new DataMap<>();
 
@@ -47,5 +56,15 @@ public class WebResourceHandler {
         }
 
         return unterkunftMap;
+    }
+
+    public Nutzer getNutzer(Model model, String name, String passwort) throws JSONException, InterruptedException, ExecutionException {
+        httpGetter.execute("getUser/" + name + "/" + passwort);
+        return makeNutzer(model, httpGetter.get());
+    }
+
+    private Nutzer makeNutzer(Model model, String inhalt) throws JSONException {
+        JSONObject object = new JSONObject(inhalt);
+        return Nutzer.fromJSON(model, object);
     }
 }

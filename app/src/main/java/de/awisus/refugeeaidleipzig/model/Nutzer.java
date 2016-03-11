@@ -70,19 +70,24 @@ public class Nutzer extends Observable {
         bedarfe = new LinkedList<>();
     }
 
-    public static Nutzer fromJSON(Unterkunft unterkunft, JSONObject json) throws JSONException {
+    public static Nutzer fromJSON(Model model, JSONObject json) throws JSONException {
         // Instatiate new user
         Nutzer nutzer = new Nutzer();
 
         // put data to it from json object
+        int unterkunftID       = json.getInt("accommodation_id");
+
         nutzer.id              = json.getInt("id");
         nutzer.name            = json.getString("name");
         nutzer.mail            = json.getString("mail");
-        nutzer.unterkunft      = unterkunft;
+        nutzer.unterkunft      = model.getUnterkunftFromID(unterkunftID);
 
         // Better trim Strings, get rid of white spaces
         if(nutzer.name != null) {
             nutzer.name = nutzer.name.trim();
+        }
+        if(nutzer.mail != null) {
+            nutzer.mail = nutzer.mail.trim();
         }
 
         return nutzer;
