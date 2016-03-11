@@ -25,7 +25,7 @@ public class DataMap<T> implements Iterable<T> {
         return asList().get(index);
     }
 
-    public T getID(int id) {
+    public T getFromID(int id) {
         return map.get(id);
     }
 

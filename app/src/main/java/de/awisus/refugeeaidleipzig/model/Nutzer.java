@@ -19,6 +19,9 @@
 
 package de.awisus.refugeeaidleipzig.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.LinkedList;
 import java.util.Observable;
 
@@ -36,10 +39,14 @@ public class Nutzer extends Observable {
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    private int id;
+
     /**
      * User name
      */
     private String name;
+
+    private String mail;
 
     /**
      * Accommodation this user stays in
@@ -58,14 +65,27 @@ public class Nutzer extends Observable {
     /**
      * Public constructor to instantiate with name and accommodation
      * instantiates list of needs, processes login into given accommodation
-     * @param name user name
-     * @param unterkunft accommodation
      */
-    public Nutzer(String name, Unterkunft unterkunft) {
-        this.name = name.trim();
-        this.unterkunft = unterkunft;
-
+    private Nutzer() {
         bedarfe = new LinkedList<>();
+    }
+
+    public static Nutzer fromJSON(Unterkunft unterkunft, JSONObject json) throws JSONException {
+        // Instatiate new user
+        Nutzer nutzer = new Nutzer();
+
+        // put data to it from json object
+        nutzer.id              = json.getInt("id");
+        nutzer.name            = json.getString("name");
+        nutzer.mail            = json.getString("mail");
+        nutzer.unterkunft      = unterkunft;
+
+        // Better trim Strings, get rid of white spaces
+        if(nutzer.name != null) {
+            nutzer.name = nutzer.name.trim();
+        }
+
+        return nutzer;
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -121,28 +141,6 @@ public class Nutzer extends Observable {
     }
 
     /**
-     * Turns list of needs this into a comma-separated string to be shown on map page.
-     * Format:
-     *  jacket, toothbrush, ...
-     * @return comma-separated string of personal needs
-     */
-    public String getBedarfeAlsKommaString() {
-        if(!hatBedarf()) {
-            return null;
-        } else {
-            String str = "";
-            for(int i = 0; i < bedarfe.size(); i++) {
-                str += bedarfe.get(i);
-                if(i < bedarfe.size() - 1) {
-                    str += ", ";
-                }
-            }
-
-            return str;
-        }
-    }
-
-    /**
      * Turns list of needs this into a key point list string to be shown on profile page,
      * Format:
      *  - Jacket
@@ -150,7 +148,7 @@ public class Nutzer extends Observable {
      *  - ...
      * @return key point list string of personal needs
      */
-    public String getBedarfeAlsListeString() {
+    public String bedarfAlsListe() {
         if(!hatBedarf()) {
             return null;
         } else {

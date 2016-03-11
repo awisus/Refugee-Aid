@@ -3,6 +3,8 @@ package de.awisus.refugeeaidleipzig.net;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.IOException;
+
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpGet;
@@ -34,8 +36,7 @@ public class HTTPGetter extends AsyncTask<String, Void, String> {
 
             return EntityUtils.toString(response.getEntity());
         }
-        catch(Exception e)
-        {
+        catch (IOException e) {
             Log.e("GET: Error", e.toString());
         }
         return "Cannot Connect";

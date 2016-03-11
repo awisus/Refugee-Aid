@@ -25,25 +25,37 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.concurrent.ExecutionException;
+
 import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Model;
+import de.awisus.refugeeaidleipzig.model.Nutzer;
+import de.awisus.refugeeaidleipzig.model.Unterkunft;
+import de.awisus.refugeeaidleipzig.net.HTTPGetter;
 
 /**
  * Created on 15.01.16.
- *
+ * <p>
  * A login fragment with a text field for the user name and a spinner with all accommodations to
  * choose.
+ *
  * @author Jens Awisus
  */
 public class FragmentLogin extends DialogFragment implements DialogInterface.OnClickListener, View.OnClickListener {
 
-      ////////////////////////////////////////////////////////////////////////////////
-     // Attributes //////////////////////////////////////////////////////////////////
+    public static final String SERVER_URL = "https://refugee-aid.herokuapp.com/";
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -68,12 +80,13 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
      */
     private Model model;
 
-      ////////////////////////////////////////////////////////////////////////////////
-     // Constructor /////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    // Constructor /////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Public factory method giving the model's reference
+     *
      * @param model Model to log in user
      * @return new Login Fragment
      */
@@ -83,14 +96,15 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
         return frag;
     }
 
-      ////////////////////////////////////////////////////////////////////////////////
-     // View creation ///////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    // View creation ///////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Called when this dialogue is created; Android-specific
      * Inflates the layout, initialises text field and spinner, initialises the spinner adapter to
      * show up accommodations and sets the dialogue buttons
+     *
      * @param savedInstanceState Bundle of saved instance state
      * @return dialogue created by the AlertDialog.Builder
      */
@@ -114,6 +128,7 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
 
     /**
      * This is called to set the parent Activity as the Context for the spinner
+     *
      * @param activity Activity to be set as context
      */
     @Override
@@ -122,14 +137,14 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
         context = (MainActivity) activity;
     }
 
-      ////////////////////////////////////////////////////////////////////////////////
-     // Listeners ///////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    // Listeners ///////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.btNeu) {
+        if (view.getId() == R.id.btNeu) {
             FragmentSignup fragmentSignup;
             fragmentSignup = FragmentSignup.newInstance(model);
             fragmentSignup.show(context.getSupportFragmentManager(), "Neues Konto");
@@ -141,21 +156,45 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
      * If positive button, the string from the text field and the accommodation chosen in the
      * spinner are passed to the login method of the model. This causes the model to either find an
      * existing resident by name or to create a new user, if the sears is not successful.
+     *
      * @param dialog Dialog Interface
-     * @param which number indicating the button pressed
+     * @param which  number indicating the button pressed
      */
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        if(which == DialogInterface.BUTTON_POSITIVE) {
+        if (which == DialogInterface.BUTTON_POSITIVE) {
 
             // Get inserted name and selected accommodation from views
             String name = etName.getText().toString();
             String passwort = etPasswort.getText().toString();
 
-            // login with name and pasword
+            // remote login with name and pasword
+            Nutzer nutzer;
+            if (((nutzer = login(name, passwort)) == null)) {
+                context.checkNavigationMapItem();
+            } else {
+                model.anmelden(nutzer);
+            }
         } else {
             context.checkNavigationMapItem();
         }
         getDialog().cancel();
+    }
+
+    private Nutzer login(String name, String passwort) {
+        HTTPGetter httpGetter = new HTTPGetter(SERVER_URL);
+        httpGetter.execute("getUser/" + name + "/" + passwort);
+
+        try {
+            JSONObject object = new JSONObject(httpGetter.get());
+
+            int unterkunftID = object.getInt("accommodation_id");
+            Unterkunft unterkunft = model.getUnterkunftFromID(unterkunftID);
+
+            return Nutzer.fromJSON(unterkunft, object);
+        } catch (JSONException | InterruptedException | ExecutionException e) {
+            Log.e("GET: Error", e.toString());
+            return null;
+        }
     }
 }

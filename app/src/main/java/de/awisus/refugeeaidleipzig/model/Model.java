@@ -181,6 +181,11 @@ public class Model extends Observable {
         return unterkuenfte;
     }
 
+
+    public Unterkunft getUnterkunftFromID(int id) {
+        return unterkuenfte.getFromID(id);
+    }
+
     /**
      * Get user logged on
      * @return user logged on

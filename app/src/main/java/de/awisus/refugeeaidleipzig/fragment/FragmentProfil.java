@@ -199,7 +199,7 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
                  */
                 tvBedarfe.setText(R.string.string_bedarfe);
                 tvBedarfe.append("\n\n");
-                tvBedarfe.append(nutzer.getBedarfeAlsListeString());
+                tvBedarfe.append(nutzer.bedarfAlsListe());
             }
         }
     }

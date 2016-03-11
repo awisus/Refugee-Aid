@@ -40,6 +40,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.ExecutionException;
 
 import de.awisus.refugeeaidleipzig.fragment.FragmentInfo;
 import de.awisus.refugeeaidleipzig.fragment.FragmentKarte;
@@ -48,6 +49,7 @@ import de.awisus.refugeeaidleipzig.fragment.FragmentProfil;
 import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
+import de.awisus.refugeeaidleipzig.net.WebResourceHandler;
 
 /**
  * Created on 11.01.16.
@@ -159,17 +161,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // this Activity listens to model changes (login and logout)
         model.addObserver(this);
 
-        try {
-            WebResourceHandler handler = new WebResourceHandler();
+        WebResourceHandler handler = new WebResourceHandler();
+        DataMap<Unterkunft> unterkuenfte;
 
-            DataMap<Unterkunft> unterkuenfte = handler.ladeUnterkuenfte();
-            if(unterkuenfte == null) {
-                return false;
-            } else {
-                model.setUnterkuenfte(unterkuenfte);
-                return true;
-            }
-        } catch (IOException | JSONException e) {
+        try {
+            unterkuenfte = handler.ladeUnterkuenfte();
+            model.setUnterkuenfte(unterkuenfte);
+            return true;
+        } catch (IOException | JSONException | InterruptedException | ExecutionException e){
             return false;
         }
     }

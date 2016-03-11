@@ -67,7 +67,7 @@ public class Unterkunft implements Comparable<Unterkunft> {
 
     public static Unterkunft fromNetJSON(JSONObject json) throws JSONException {
 
-         // Instatiate new accommodation
+        // Instatiate new accommodation
         Unterkunft unterkunft = new Unterkunft();
 
         // put data to it from json object
