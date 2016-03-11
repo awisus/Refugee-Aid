@@ -67,7 +67,7 @@ public class Unterkunft implements Comparable<Unterkunft> {
     private Unterkunft() {
     }
 
-    public static Unterkunft fromNetJSON(JSONObject json) throws JSONException {
+    public static Unterkunft fromJSON(JSONObject json) throws JSONException {
 
         // Instatiate new accommodation
         Unterkunft unterkunft = new Unterkunft();
@@ -84,12 +84,8 @@ public class Unterkunft implements Comparable<Unterkunft> {
         );
 
         // Better trim Strings, get rid of white spaces
-        if(unterkunft.stadt != null) {
-            unterkunft.stadt = unterkunft.stadt.trim();
-        }
-        if(unterkunft.name != null) {
-            unterkunft.name = unterkunft.name.trim();
-        }
+        unterkunft.stadt = unterkunft.stadt.trim();
+        unterkunft.name = unterkunft.name.trim();
 
         return unterkunft;
     }

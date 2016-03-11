@@ -26,7 +26,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -34,7 +33,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -45,7 +43,7 @@ import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
-import de.awisus.refugeeaidleipzig.net.HTTPPoster;
+import de.awisus.refugeeaidleipzig.net.WebFlirt;
 
 /**
  * Created on 15.01.16.
@@ -55,8 +53,6 @@ import de.awisus.refugeeaidleipzig.net.HTTPPoster;
  * @author Jens Awisus
  */
 public class FragmentSignup extends DialogFragment implements DialogInterface.OnClickListener {
-
-    public static final String SERVER_URL = "https://refugee-aid.herokuapp.com/";
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
@@ -182,53 +178,32 @@ public class FragmentSignup extends DialogFragment implements DialogInterface.On
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if(which == DialogInterface.BUTTON_POSITIVE) {
-
-            ProgressDialog ladebalken = Utility.zeigeLadebalken(context, getResources().getString(R.string.meldung_anmelden));
-
-            // Get inserted name and selected accommodation from views
-            Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();
-
-            String unterkunftID = String.valueOf(unterkunft.getID());
-            String name = etName.getText().toString();
-            String mail = etMail.getText().toString();
-            String password = etPasswort.getText().toString();
-            String confirmation = etConformation.getText().toString();
-
-            Nutzer nutzer = signup(
-                    "name", name,
-                    "mail", mail,
-                    "accommodation_id",unterkunftID,
-                    "password", password,
-                    "password_confirmation", confirmation
-            );
-
-            if (nutzer == null) {
-                ladebalken.cancel();
-                context.checkNavigationMapItem();
-                Toast.makeText(context, "Fehler vom Server", Toast.LENGTH_SHORT).show();
-            } else {
-                ladebalken.cancel();
-                model.anmelden(nutzer);
-            }
+            signup();
         } else {
             context.checkNavigationMapItem();
         }
     }
 
-    private Nutzer signup(String... parameter) {
-        HTTPPoster httpPoster = new HTTPPoster(SERVER_URL);
+    private void signup() {
+        ProgressDialog ladebalken = Utility.zeigeLadebalken(context, getResources().getString(R.string.meldung_anmelden));
 
-        for(int i = 0; i < parameter.length; i += 2) {
-            httpPoster.addParameter(parameter[i], parameter[i+1]);
-        }
-        httpPoster.execute("users/remote");
+        // Get inserted name and selected accommodation from views
+        Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();
 
         try {
-            JSONObject object = new JSONObject(httpPoster.get());
-            return Nutzer.fromJSON(model, object);
+            Nutzer nutzer = WebFlirt.getInstance().postNutzer(model,
+                    "name",                     etName.getText().toString(),
+                    "mail",                     etMail.getText().toString(),
+                    "password",                 etPasswort.getText().toString(),
+                    "password_confirmation",    etConformation.getText().toString(),
+                    "accommodation_id",         String.valueOf(unterkunft.getID()));
+
+            ladebalken.cancel();
+            model.anmelden(nutzer);
         } catch (JSONException | InterruptedException | ExecutionException e) {
-            Log.e("GET: Error", e.toString());
-            return null;
+            ladebalken.cancel();
+            context.checkNavigationMapItem();
+            Toast.makeText(context, R.string.warnung_signup, Toast.LENGTH_SHORT).show();
         }
     }
 }

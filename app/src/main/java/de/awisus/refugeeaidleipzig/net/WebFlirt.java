@@ -23,13 +23,7 @@ public class WebFlirt {
     public static final WebFlirt INSTANCE = new WebFlirt();
 
 
-    private HTTPGetter httpGetter;
-    private HTTPPoster httpPoster;
-
-
     private WebFlirt() {
-        httpGetter = new HTTPGetter(SERVER_URL);
-        httpPoster = new HTTPPoster(SERVER_URL);
     }
 
     public static WebFlirt getInstance() {
@@ -41,7 +35,10 @@ public class WebFlirt {
 
         DataMap<Unterkunft> unterkunftMap = new DataMap<>();
 
+        HTTPGetter httpGetter;
+        httpGetter = new HTTPGetter(SERVER_URL);
         httpGetter.execute("/accommodations/json");
+
         JSONArray feld = new JSONArray(httpGetter.get());
         for (int i = 0; i < feld.length(); i++) {
             int id;
@@ -49,7 +46,7 @@ public class WebFlirt {
             JSONObject unterkunftDaten;
 
             unterkunftDaten = feld.getJSONObject(i);
-            unterkunft = Unterkunft.fromNetJSON(unterkunftDaten);
+            unterkunft = Unterkunft.fromJSON(unterkunftDaten);
             id = unterkunftDaten.getInt("id");
 
             unterkunftMap.add(id, unterkunft);
@@ -59,12 +56,26 @@ public class WebFlirt {
     }
 
     public Nutzer getNutzer(Model model, String name, String passwort) throws JSONException, InterruptedException, ExecutionException {
+        HTTPGetter httpGetter;
+        httpGetter = new HTTPGetter(SERVER_URL);
         httpGetter.execute("getUser/" + name + "/" + passwort);
+
         return makeNutzer(model, httpGetter.get());
     }
 
+    public Nutzer postNutzer(Model model, String... parameter) throws JSONException, InterruptedException, ExecutionException {
+        HTTPPoster httpPoster;
+        httpPoster = new HTTPPoster(SERVER_URL);
+
+        for(int i = 0; i < parameter.length; i += 2) {
+            httpPoster.addParameter(parameter[i], parameter[i+1]);
+        }
+        httpPoster.execute("users/remote");
+
+        return makeNutzer(model, httpPoster.get());
+    }
+
     private Nutzer makeNutzer(Model model, String inhalt) throws JSONException {
-        JSONObject object = new JSONObject(inhalt);
-        return Nutzer.fromJSON(model, object);
+        return Nutzer.fromJSON(model, new JSONObject(inhalt));
     }
 }

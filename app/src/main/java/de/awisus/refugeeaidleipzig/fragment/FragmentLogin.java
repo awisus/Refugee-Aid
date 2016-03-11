@@ -51,8 +51,6 @@ import de.awisus.refugeeaidleipzig.net.WebFlirt;
  */
 public class FragmentLogin extends DialogFragment implements DialogInterface.OnClickListener, View.OnClickListener {
 
-    public static final String SERVER_URL = "https://refugee-aid.herokuapp.com/";
-
     ////////////////////////////////////////////////////////////////////////////////
     // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
@@ -164,25 +162,28 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
-
-            ProgressDialog ladebalken = Utility.zeigeLadebalken(context, getResources().getString(R.string.meldung_anmelden));
-
-            // Get inserted name and selected accommodation from views
-            String name = etName.getText().toString();
-            String passwort = etPasswort.getText().toString();
-
-            // remote login with name and pasword
-            try {
-                Nutzer nutzer = WebFlirt.getInstance().getNutzer(model, name, passwort);
-                ladebalken.cancel();
-                model.anmelden(nutzer);
-            } catch (JSONException | InterruptedException | ExecutionException e) {
-                ladebalken.cancel();
-                context.checkNavigationMapItem();
-                Toast.makeText(context, "Name oder Passwort falsch", Toast.LENGTH_SHORT).show();
-            }
+            login();
         } else {
             context.checkNavigationMapItem();
+        }
+    }
+
+    private void login() {
+        ProgressDialog ladebalken = Utility.zeigeLadebalken(context, getResources().getString(R.string.meldung_anmelden));
+
+        // Get inserted name and selected accommodation from views
+        String name = etName.getText().toString();
+        String passwort = etPasswort.getText().toString();
+
+        // remote login with name and password
+        try {
+            Nutzer nutzer = WebFlirt.getInstance().getNutzer(model, name, passwort);
+            ladebalken.cancel();
+            model.anmelden(nutzer);
+        } catch (JSONException | InterruptedException | ExecutionException e) {
+            ladebalken.cancel();
+            context.checkNavigationMapItem();
+            Toast.makeText(context, R.string.warnung_login, Toast.LENGTH_SHORT).show();
         }
     }
 }

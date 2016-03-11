@@ -83,12 +83,8 @@ public class Nutzer extends Observable {
         nutzer.unterkunft      = model.getUnterkunftFromID(unterkunftID);
 
         // Better trim Strings, get rid of white spaces
-        if(nutzer.name != null) {
-            nutzer.name = nutzer.name.trim();
-        }
-        if(nutzer.mail != null) {
-            nutzer.mail = nutzer.mail.trim();
-        }
+        nutzer.name = nutzer.name.trim();
+        nutzer.mail = nutzer.mail.trim();
 
         return nutzer;
     }

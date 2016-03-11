@@ -103,8 +103,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ladebalken = Utility.zeigeLadebalken(this, getResources().getString(R.string.meldung_aktualisieren));
-
         // set the view by layout xml file
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -114,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initialise() {
         if(connected()) {
+            ladebalken = Utility.zeigeLadebalken(this, getResources().getString(R.string.meldung_aktualisieren));
             if(initModel() == true) {
                 Toolbar tb = initToolbar();
                 initNavigationDrawer(tb);
