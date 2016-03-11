@@ -168,7 +168,7 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
     public void onClick(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
 
-            ProgressDialog ladebalken = Utility.zeigeLadebalken(context, "Anmelden...");
+            ProgressDialog ladebalken = Utility.zeigeLadebalken(context, getResources().getString(R.string.meldung_anmelden));
 
             // Get inserted name and selected accommodation from views
             String name = etName.getText().toString();

@@ -183,7 +183,7 @@ public class FragmentSignup extends DialogFragment implements DialogInterface.On
     public void onClick(DialogInterface dialog, int which) {
         if(which == DialogInterface.BUTTON_POSITIVE) {
 
-            ProgressDialog ladebalken = Utility.zeigeLadebalken(context, "Anmelden...");
+            ProgressDialog ladebalken = Utility.zeigeLadebalken(context, getResources().getString(R.string.meldung_anmelden));
 
             // Get inserted name and selected accommodation from views
             Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();
@@ -194,8 +194,15 @@ public class FragmentSignup extends DialogFragment implements DialogInterface.On
             String password = etPasswort.getText().toString();
             String confirmation = etConformation.getText().toString();
 
-            Nutzer nutzer;
-            if (((nutzer = signup("name", name, "mail", mail, "accommodation_id", unterkunftID, "password", password, "password_confirmation", confirmation)) == null)) {
+            Nutzer nutzer = signup(
+                    "name", name,
+                    "mail", mail,
+                    "accommodation_id",unterkunftID,
+                    "password", password,
+                    "password_confirmation", confirmation
+            );
+
+            if (nutzer == null) {
                 ladebalken.cancel();
                 context.checkNavigationMapItem();
                 Toast.makeText(context, "Fehler vom Server", Toast.LENGTH_SHORT).show();

@@ -47,9 +47,7 @@ import de.awisus.refugeeaidleipzig.fragment.FragmentKarte;
 import de.awisus.refugeeaidleipzig.fragment.FragmentLogin;
 import de.awisus.refugeeaidleipzig.fragment.FragmentProfil;
 import de.awisus.refugeeaidleipzig.fragment.Utility;
-import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Model;
-import de.awisus.refugeeaidleipzig.model.Unterkunft;
 import de.awisus.refugeeaidleipzig.net.WebResourceHandler;
 
 /**
@@ -105,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ladebalken = Utility.zeigeLadebalken(this, getResources().getString(R.string.meldung_aktualisieren));
 
         // set the view by layout xml file
         super.onCreate(savedInstanceState);
@@ -115,21 +114,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initialise() {
         if(connected()) {
-            ProgressDialog ladebalken = Utility.zeigeLadebalken(this, "Aktualisiere...");
             if(initModel() == true) {
                 Toolbar tb = initToolbar();
                 initNavigationDrawer(tb);
                 initContainer();
                 initFragmente();
-
-                ladebalken.cancel();
             } else {
-                ladebalken.cancel();
                 Toast.makeText(this, R.string.warnung_laden, Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(this, R.string.warnung_netz, Toast.LENGTH_SHORT).show();
         }
+
+        ladebalken.cancel();
     }
 
     private boolean connected() {
@@ -152,13 +149,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // this Activity listens to model changes (login and logout)
         model.addObserver(this);
-
-        WebResourceHandler handler = new WebResourceHandler();
-        DataMap<Unterkunft> unterkuenfte;
-
         try {
-            unterkuenfte = handler.ladeUnterkuenfte();
-            model.setUnterkuenfte(unterkuenfte);
+            WebResourceHandler handler = new WebResourceHandler();
+            model.setUnterkuenfte(handler.ladeUnterkuenfte());
             return true;
         } catch (IOException | JSONException | InterruptedException | ExecutionException e){
             return false;
@@ -239,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {                                // return to map on log off
             wechsleFragment(FragmentKarte.newInstance(model));
             checkNavigationMapItem();
-            Toast.makeText(this, R.string.warnung_abmelden, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.meldung_abmelden, Toast.LENGTH_SHORT).show();
         }
     }
 
