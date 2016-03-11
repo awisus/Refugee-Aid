@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/titel_login"
+        android:text="Neuer Benutzer"
         android:id="@+id/tvTitel"
         android:layout_alignTop="@+id/imageView"
         android:layout_toEndOf="@+id/imageView"
@@ -29,6 +29,16 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:textColor="#000" />
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spUnterkunft"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_horizontal_margin" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,9 +46,21 @@
         android:maxLines="1"
         android:singleLine="true"
         android:hint="@string/string_name"
+        android:layout_below="@+id/spUnterkunft"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/imageView" />
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etMail"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:hint="E-Mail-Adresse"
+        android:layout_below="@+id/etName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:layout_width="match_parent"
@@ -47,23 +69,21 @@
         android:maxLines="1"
         android:singleLine="true"
         android:hint="Passwort"
+        android:layout_below="@+id/etMail"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:inputType="textPassword"
-        android:layout_below="@+id/etName"
-        android:paddingBottom="@dimen/activity_horizontal_margin" />
+        android:inputType="textPassword" />
 
-    <Button
-        style="?android:attr/borderlessButtonStyle"
-        android:textColor="@color/colorPrimary"
-        android:layout_width="fill_parent"
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Neues Konto erstellen"
-        android:id="@+id/btNeu"
+        android:id="@+id/etConfirmation"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:hint="Passwort wiederholen"
         android:layout_below="@+id/etPassword"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:paddingTop="@dimen/activity_horizontal_margin"
-        android:paddingBottom="@dimen/activity_horizontal_margin" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:inputType="textPassword" />
 
 </RelativeLayout>

@@ -26,12 +26,17 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+
+import java.util.Collections;
+import java.util.LinkedList;
 
 import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Model;
+import de.awisus.refugeeaidleipzig.model.Unterkunft;
 
 /**
  * Created on 15.01.16.
@@ -40,7 +45,7 @@ import de.awisus.refugeeaidleipzig.model.Model;
  * choose.
  * @author Jens Awisus
  */
-public class FragmentLogin extends DialogFragment implements DialogInterface.OnClickListener, View.OnClickListener {
+public class FragmentSignup extends DialogFragment implements DialogInterface.OnClickListener {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
@@ -59,9 +64,7 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
     /**
      * Spinner to choose in which accommodation the users stays in
      */
-    private EditText etPasswort;
-
-    private Button btNeu;
+    private Spinner spUnterkunft;
 
     /**
      * Reference to the model to log in the new user (or to be found in the chosen accommodation)
@@ -77,8 +80,8 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
      * @param model Model to log in user
      * @return new Login Fragment
      */
-    public static FragmentLogin newInstance(Model model) {
-        FragmentLogin frag = new FragmentLogin();
+    public static FragmentSignup newInstance(Model model) {
+        FragmentSignup frag = new FragmentSignup();
         frag.model = model;
         return frag;
     }
@@ -97,19 +100,40 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_login, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_signup, null);
 
         etName = (EditText) view.findViewById(R.id.etName);
-        etPasswort = (EditText) view.findViewById(R.id.etPassword);
-        btNeu = (Button) view.findViewById(R.id.btNeu);
+        spUnterkunft = (Spinner) view.findViewById(R.id.spUnterkunft);
 
-        btNeu.setOnClickListener(this);
+        initSpinnerAdapter();
 
         builder.setView(view);
-        builder.setPositiveButton(R.string.dialog_login, this);
+        builder.setPositiveButton("Konto erstellen", this);
         builder.setNegativeButton(R.string.dialog_abbrechen, this);
 
         return builder.create();
+    }
+
+    /**
+     * Private method that creates an Array Adapter the spinner uses to show accommodation names
+     */
+    private void initSpinnerAdapter() {
+
+        LinkedList<Unterkunft> unterkuenfte;
+        unterkuenfte = model.getUnterkuenfte().asList();
+        Collections.sort(unterkuenfte);
+
+        ArrayAdapter<Unterkunft> adapter = new ArrayAdapter<>(
+                context,
+                android.R.layout.simple_spinner_item,
+                unterkuenfte
+        );
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        spUnterkunft.setAdapter(adapter);
     }
 
     /**
@@ -126,16 +150,6 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
      // Listeners ///////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-
-    @Override
-    public void onClick(View view) {
-        if(view.getId() == R.id.btNeu) {
-            FragmentSignup fragmentSignup;
-            fragmentSignup = FragmentSignup.newInstance(model);
-            fragmentSignup.show(context.getSupportFragmentManager(), "Neues Konto");
-        }
-    }
-
     /**
      * This is called when one of the dialogue buttons is clicked.
      * If positive button, the string from the text field and the accommodation chosen in the
@@ -149,10 +163,17 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
         if(which == DialogInterface.BUTTON_POSITIVE) {
 
             // Get inserted name and selected accommodation from views
-            String name = etName.getText().toString();
-            String passwort = etPasswort.getText().toString();
+            String eingabe = etName.getText().toString();
+            Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();
 
-            // login with name and pasword
+            if(eingabe != null && unterkunft != null) {
+                eingabe = eingabe.trim();
+                if(eingabe != null && !eingabe.equals("")) {
+
+                    // login with chosen name and accommodation
+                    // model.anmelden(eingabe, unterkunft);
+                }
+            }
         } else {
             context.checkNavigationMapItem();
         }

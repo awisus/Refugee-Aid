@@ -22,11 +22,14 @@ public class WebResourceHandler {
 
     public static final String SERVER_URL = "https://refugee-aid.herokuapp.com/";
 
+
     private HTTPGetter httpGetter;
+
 
     public WebResourceHandler() {
         httpGetter = new HTTPGetter(SERVER_URL);
     }
+
 
     public DataMap<Unterkunft> ladeUnterkuenfte() throws IOException, JSONException {
 

@@ -66,8 +66,6 @@ public class Nutzer extends Observable {
         this.unterkunft = unterkunft;
 
         bedarfe = new LinkedList<>();
-
-        unterkunft.anmelden(this);
     }
 
       ////////////////////////////////////////////////////////////////////////////////

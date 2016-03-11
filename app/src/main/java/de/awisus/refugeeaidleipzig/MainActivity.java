@@ -159,15 +159,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // this Activity listens to model changes (login and logout)
         model.addObserver(this);
 
-        // try to retrieve read accommodations from json file
-//        try {
-//            RessourcenLader lader = new RessourcenLader(this);
-//            model.setUnterkuenfte(lader.ladeUnterkuenfte());
-//        } catch (IOException | JSONException e) {
-//            // Exception: inform user and return
-//            Toast.makeText(this, R.string.warnung_laden, Toast.LENGTH_SHORT).show();
-//        }
-
         try {
             WebResourceHandler handler = new WebResourceHandler();
 

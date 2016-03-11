@@ -42,11 +42,6 @@ public class Model extends Observable {
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * List of MarkerOptions storing information for each Marker for each accommodation
-     */
-    private LinkedList<MarkerOptions> markerOptionen;
-
-    /**
      * List of all pre-given accommodations
      */
     private DataMap<Unterkunft> unterkuenfte;
@@ -55,6 +50,11 @@ public class Model extends Observable {
      * Mapping of Map Markers and accommodations for easy information retrieval
      */
     private HashMap<Marker, Unterkunft> mapUnterkuenfte;
+
+    /**
+     * List of MarkerOptions storing information for each Marker for each accommodation
+     */
+    private LinkedList<MarkerOptions> markerOptionen;
 
     /**
      * Current user (may be null, if not logged in)
@@ -80,16 +80,10 @@ public class Model extends Observable {
     /**
      * Log-In method to log in a user by creation with name and its accommodation
      * Notifies with TRUE, to inform Observer about login
-     * @param name user name
-     * @param unterkunft user's accomodation
+     * @param nutzer user
      */
-    public void anmelden(String name, Unterkunft unterkunft) {
-        Nutzer bewohner = unterkunft.findeBewohner(name.trim());
-        if(bewohner != null) {
-            nutzerAktuell = bewohner;
-        } else {
-            nutzerAktuell = new Nutzer(name, unterkunft);
-        }
+    public void anmelden(Nutzer nutzer) {
+        nutzerAktuell = nutzer;
 
         // report change to Observer
         setChanged();
