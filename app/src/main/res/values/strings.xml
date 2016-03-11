@@ -19,7 +19,7 @@
 
     <string name="nav_titel_ueber">Über</string>
 
-    <string name="titel_profil">Bedarf verwalten</string>
+    <string name="titel_profil">Profil</string>
     <string name="titel_login">Anmelden</string>
     <string name="titel_bedarf_entfernen">Bedarf entfernen</string>
     <string name="titel_bedarf_neu">Neuen Bedarf angeben</string>

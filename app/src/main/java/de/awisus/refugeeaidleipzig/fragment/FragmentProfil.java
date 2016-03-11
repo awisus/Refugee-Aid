@@ -23,9 +23,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,11 +80,6 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
     private TextView tvBedarfe;
 
     /**
-     * Log-Out button
-     */
-    private Button btAbmelden;
-
-    /**
      * Reference to the model for logging the user out
      */
     private Model model;
@@ -111,6 +108,13 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
       ////////////////////////////////////////////////////////////////////////////////
      // View creation ///////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     /**
      * Automatically called method inflating the xml-layout.
@@ -145,9 +149,6 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
         tvEinrichtung = (TextView) view.findViewById(R.id.tvEinrichtung);
         tvBedarfe = (TextView) view.findViewById(R.id.tvBedarfe);
 
-        btAbmelden = (Button) view.findViewById(R.id.btAbmelden);
-        btAbmelden.setOnClickListener(this);
-
         FloatingActionButton btPlus = (FloatingActionButton) view.findViewById(R.id.fab_plus);
         FloatingActionButton btMinus = (FloatingActionButton) view.findViewById(R.id.fab_minus);
         btPlus.setOnClickListener(this);
@@ -166,6 +167,28 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
 
             nutzer.addObserver(this);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_profile_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itBearbeiten:
+                // Not implemented here
+                return false;
+            case R.id.itAbmelden:
+                model.abmelden();
+                return true;
+            default:
+                break;
+        }
+
+        return false;
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -230,11 +253,6 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
                 // Tell user, if there is no need to be deleted
                 Toast.makeText(getActivity(), R.string.warnung_loeschen, Toast.LENGTH_SHORT).show();
             }
-        }
-
-        // LogOut button calles logout of user in the model
-        if(id == R.id.btAbmelden) {
-            model.abmelden();
         }
     }
 }

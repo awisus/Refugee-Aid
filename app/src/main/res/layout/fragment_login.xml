@@ -58,7 +58,7 @@
         android:textColor="@color/colorPrimary"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Neues Konto erstellen"
+        android:text="Neu? Jetzt Konto erstellen"
         android:id="@+id/btNeu"
         android:layout_below="@+id/etPassword"
         android:layout_alignParentLeft="true"

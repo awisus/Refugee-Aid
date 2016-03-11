@@ -73,16 +73,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true" />
 
-        <Button
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_abmelden"
-            android:id="@+id/btAbmelden"
-            android:textColor="@color/rot"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentTop="false" />
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
