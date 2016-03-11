@@ -46,6 +46,8 @@ public class Model extends Observable {
      */
     private DataMap<Unterkunft> unterkuenfte;
 
+    private DataMap<Kategorie> kategorien;
+
     /**
      * Mapping of Map Markers and accommodations for easy information retrieval
      */
@@ -126,6 +128,10 @@ public class Model extends Observable {
       ////////////////////////////////////////////////////////////////////////////////
      // Setters /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
+
+    public void setKategorien(DataMap<Kategorie> kategorien) {
+        this.kategorien = kategorien;
+    }
 
     /**
      * Setter for the accommodation list

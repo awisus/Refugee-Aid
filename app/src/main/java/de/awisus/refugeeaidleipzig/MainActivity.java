@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         model.addObserver(this);
         try {
             model.setUnterkuenfte(WebFlirt.getInstance().getUnterkuenfte());
+            model.setKategorien(WebFlirt.getInstance().getKategorien());
             return true;
         } catch (IOException | JSONException | InterruptedException | ExecutionException e){
             return false;

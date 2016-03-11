@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import de.awisus.refugeeaidleipzig.model.DataMap;
+import de.awisus.refugeeaidleipzig.model.Kategorie;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
@@ -37,22 +38,46 @@ public class WebFlirt {
 
         HTTPGetter httpGetter;
         httpGetter = new HTTPGetter(SERVER_URL);
-        httpGetter.execute("/accommodations/json");
+        httpGetter.execute("accommodations/json");
 
         JSONArray feld = new JSONArray(httpGetter.get());
         for (int i = 0; i < feld.length(); i++) {
             int id;
             Unterkunft unterkunft;
-            JSONObject unterkunftDaten;
+            JSONObject json;
 
-            unterkunftDaten = feld.getJSONObject(i);
-            unterkunft = Unterkunft.fromJSON(unterkunftDaten);
-            id = unterkunftDaten.getInt("id");
+            json = feld.getJSONObject(i);
+            id = json.getInt("id");
+            unterkunft = Unterkunft.fromJSON(json);
 
             unterkunftMap.add(id, unterkunft);
         }
 
         return unterkunftMap;
+    }
+
+    public DataMap<Kategorie> getKategorien() throws IOException, JSONException, InterruptedException, ExecutionException {
+
+        DataMap<Kategorie> kategorieMap = new DataMap<>();
+
+        HTTPGetter httpGetter;
+        httpGetter = new HTTPGetter(SERVER_URL);
+        httpGetter.execute("categories/json");
+
+        JSONArray feld = new JSONArray(httpGetter.get());
+        for (int i = 0; i < feld.length(); i++) {
+            int id;
+            Kategorie kategorie;
+            JSONObject json;
+
+            json = feld.getJSONObject(i);
+            id = json.getInt("id");
+            kategorie = Kategorie.fromJSON(json);
+
+            kategorieMap.add(id, kategorie);
+        }
+
+        return kategorieMap;
     }
 
     public Nutzer getNutzer(Model model, String name, String passwort) throws JSONException, InterruptedException, ExecutionException {

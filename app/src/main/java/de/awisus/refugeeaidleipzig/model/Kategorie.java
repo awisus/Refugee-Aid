@@ -19,6 +19,10 @@
 
 package de.awisus.refugeeaidleipzig.model;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.LinkedList;
 
 /**
@@ -28,17 +32,38 @@ import java.util.LinkedList;
  */
 public class Kategorie {
 
-    private String bezeichnung;
+    private int id;
+    private String name;
+
     private LinkedList<Kategorie> subkategorien;
 
 
-    private Kategorie(String bezeichnung) {
-        this.bezeichnung = bezeichnung;
+    private Kategorie() {
         this.subkategorien = new LinkedList<>();
     }
 
+    public static Kategorie fromJSON(JSONObject json) throws JSONException {
+        Kategorie kategorie = new Kategorie();
 
-    public String getBezeichnung() {
-        return bezeichnung;
+        kategorie.id =      json.getInt("id");
+        kategorie.name =    json.getString("name");
+
+        JSONArray subkategorien = json.getJSONArray("subcategories");
+        if(subkategorien.length() > 0) {
+            for(int i = 0; i > subkategorien.length(); i++) {
+                kategorie.subkategorien.add(Kategorie.fromJSON(subkategorien.getJSONObject(i)));
+            }
+        }
+
+        return kategorie;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }
