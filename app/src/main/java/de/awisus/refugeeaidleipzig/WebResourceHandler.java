@@ -1,14 +1,17 @@
 package de.awisus.refugeeaidleipzig;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
+import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
-import de.awisus.refugeeaidleipzig.model.UnterkunftMap;
-import de.awisus.refugeeaidleipzig.net.HTTPHandler;
+import de.awisus.refugeeaidleipzig.net.HTTPGetter;
 
 /**
  * Created on 10.03.16.
@@ -19,30 +22,36 @@ public class WebResourceHandler {
 
     public static final String SERVER_URL = "https://refugee-aid.herokuapp.com/";
 
-    private HTTPHandler httpHandler;
+    private HTTPGetter httpGetter;
 
     public WebResourceHandler() {
-        httpHandler = new HTTPHandler(SERVER_URL);
+        httpGetter = new HTTPGetter(SERVER_URL);
     }
 
-    public UnterkunftMap ladeUnterkuenfte() throws IOException, JSONException {
-        UnterkunftMap unterkunftMap = new UnterkunftMap();
+    public DataMap<Unterkunft> ladeUnterkuenfte() throws IOException, JSONException {
 
-        String inhalt = httpHandler.get("/accommodations/json");
-        JSONArray feld = new JSONArray(inhalt);
+        DataMap<Unterkunft> unterkunftMap = new DataMap<>();
 
-        for(int i = 0; i < feld.length(); i++) {
-            int id;
-            Unterkunft unterkunft;
-            JSONObject unterkunftDaten;
+        httpGetter.execute("/accommodations/json");
 
-            unterkunftDaten = feld.getJSONObject(i);
-            unterkunft = Unterkunft.fromNetJSON(unterkunftDaten);
-            id = unterkunftDaten.getInt("id");
+        try {
+            JSONArray feld = new JSONArray(httpGetter.get());
+            for (int i = 0; i < feld.length(); i++) {
+                int id;
+                Unterkunft unterkunft;
+                JSONObject unterkunftDaten;
 
-            unterkunftMap.add(id, unterkunft);
+                unterkunftDaten = feld.getJSONObject(i);
+                unterkunft = Unterkunft.fromNetJSON(unterkunftDaten);
+                id = unterkunftDaten.getInt("id");
+
+                unterkunftMap.add(id, unterkunft);
+            }
+
+            return unterkunftMap;
+        } catch (JSONException | InterruptedException | ExecutionException e) {
+            Log.e("GET: Error", e.toString());
+            return null;
         }
-
-        return unterkunftMap;
     }
 }

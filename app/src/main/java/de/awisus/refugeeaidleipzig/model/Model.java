@@ -49,7 +49,7 @@ public class Model extends Observable {
     /**
      * List of all pre-given accommodations
      */
-    private UnterkunftMap unterkuenfte;
+    private DataMap<Unterkunft> unterkuenfte;
 
     /**
      * Mapping of Map Markers and accommodations for easy information retrieval
@@ -137,7 +137,7 @@ public class Model extends Observable {
      * Setter for the accommodation list
      * @param unterkuenfte accommodation list to be set
      */
-    public void setUnterkuenfte(UnterkunftMap unterkuenfte) {
+    public void setUnterkuenfte(DataMap<Unterkunft> unterkuenfte) {
         this.unterkuenfte = unterkuenfte;
 
         for(Unterkunft unterkunft : unterkuenfte) {
@@ -183,7 +183,7 @@ public class Model extends Observable {
      * Get accommodation list
      * @return accommodation list
      */
-    public UnterkunftMap getUnterkuenfte() {
+    public DataMap<Unterkunft> getUnterkuenfte() {
         return unterkuenfte;
     }
 

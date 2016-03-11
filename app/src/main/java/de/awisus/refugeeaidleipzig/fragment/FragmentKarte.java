@@ -32,9 +32,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
 
 import de.awisus.refugeeaidleipzig.R;
+import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
-import de.awisus.refugeeaidleipzig.model.UnterkunftMap;
 
 /**
  * Created on 11.01.16.
@@ -117,7 +117,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     public void onMapReady(GoogleMap karte) {
 
         // get accommodations loaded into the model
-        final UnterkunftMap unterkuenfte = model.getUnterkuenfte();
+        final DataMap<Unterkunft> unterkuenfte = model.getUnterkuenfte();
 
         // Bring marker for each accommodation to the map
         for (int i = 0; i < unterkuenfte.size(); i++) {

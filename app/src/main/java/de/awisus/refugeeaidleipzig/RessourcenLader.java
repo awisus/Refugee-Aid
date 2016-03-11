@@ -27,8 +27,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
 
+import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 
 /**
@@ -50,11 +50,6 @@ public class RessourcenLader {
      */
     private Activity activity;
 
-    /**
-     * List of accommodations
-     */
-    private LinkedList<Unterkunft> unterkuenfte;
-
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
@@ -66,11 +61,8 @@ public class RessourcenLader {
      * @throws IOException Exception, if something is wrong with a file
      * @throws JSONException Exception, if there occurs a mistake while working with json objects
      */
-    public RessourcenLader(Activity activity) throws IOException, JSONException {
+    public RessourcenLader(Activity activity) {
         this.activity = activity;
-        this.unterkuenfte = new LinkedList<>();
-
-        ladeUnterkuenfte();
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -84,7 +76,10 @@ public class RessourcenLader {
      * @throws IOException Exception, if something is wrong with a file
      * @throws JSONException Exception, if there occurs a mistake while working with json objects
      */
-    private void ladeUnterkuenfte() throws IOException, JSONException {
+    public DataMap<Unterkunft> ladeUnterkuenfte() throws IOException, JSONException {
+
+        DataMap<Unterkunft> unterkuenfte = new DataMap<>();
+
         // Get content of accommodation's json file
         String inhalt = lesen(R.raw.unterkuenfte);
 
@@ -94,8 +89,10 @@ public class RessourcenLader {
 
         // Put a newly created accommodation to their list
         for(int i = 0; i < feld.length(); i++) {
-            unterkuenfte.add(Unterkunft.fromJSON(feld.getJSONObject(i)));
+            unterkuenfte.add(i, Unterkunft.fromJSON(feld.getJSONObject(i)));
         }
+
+        return unterkuenfte;
     }
 
     /**
@@ -119,17 +116,5 @@ public class RessourcenLader {
 
         // Build new String from buffer and trim that -> NullPointerExc?!
         return new String(buffer).trim();
-    }
-
-      ////////////////////////////////////////////////////////////////////////////////
-     // Getters /////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Getter for the accommodation array
-     * @return accommodation array
-     */
-    public LinkedList<Unterkunft> getUnterkuenfte() {
-        return unterkuenfte;
     }
 }

@@ -30,6 +30,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
@@ -50,7 +51,7 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
     /**
      * Activity as the Context for the accommodation spinner
      */
-    private Activity context;
+    private MainActivity context;
 
     /**
      * Text field for the user name
@@ -134,7 +135,7 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        context = activity;
+        context = (MainActivity) activity;
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -165,6 +166,8 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
                     model.anmelden(eingabe, unterkunft);
                 }
             }
+        } else {
+            context.checkNavigationMapItem();
         }
         getDialog().cancel();
     }

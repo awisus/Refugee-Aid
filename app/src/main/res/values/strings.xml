@@ -1,4 +1,5 @@
 <resources>
+    <string name="google_app_id">477637456018</string>
     <string name="app_name">Refugee Aid</string>
 
     <string name="info">
@@ -38,6 +39,7 @@
 
     <string name="button_abmelden">Abmelden</string>
 
+    <string name="warnung_netz">Netzwerk aktivieren und neu starten</string>
     <string name="warnung_laden">Kann Informationen nicht laden</string>
     <string name="warnung_loeschen">Kein Bedarf zum Löschen</string>
     <string name="warnung_abmelden">Abgemeldet</string>

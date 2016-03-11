@@ -9,11 +9,11 @@ import java.util.LinkedList;
  *
  * @author Jens Awisus
  */
-public abstract class DataMap<T> implements Iterable<T> {
+public class DataMap<T> implements Iterable<T> {
 
-    protected HashMap<Integer, T> map;
+    private HashMap<Integer, T> map;
 
-    protected DataMap() {
+    public DataMap() {
         map = new HashMap<>();
     }
 
@@ -21,7 +21,11 @@ public abstract class DataMap<T> implements Iterable<T> {
         map.put(id, daten);
     }
 
-    public T get(int id) {
+    public T get(int index) {
+        return asList().get(index);
+    }
+
+    public T getID(int id) {
         return map.get(id);
     }
 
@@ -35,26 +39,6 @@ public abstract class DataMap<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-
-        Iterator<T> it = new Iterator<T>() {
-
-            private int currentIndex = 0;
-
-            @Override
-            public boolean hasNext() {
-                return currentIndex < map.size() && map.get(currentIndex) != null;
-            }
-
-            @Override
-            public T next() {
-                return map.get(currentIndex++);
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
-        return it;
+        return map.values().iterator();
     }
 }
