@@ -36,6 +36,8 @@ public class Unterkunft implements Comparable<Unterkunft> {
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    private int id;
+
     private String stadt;
 
     /**
@@ -71,6 +73,7 @@ public class Unterkunft implements Comparable<Unterkunft> {
         Unterkunft unterkunft = new Unterkunft();
 
         // put data to it from json object
+        unterkunft.id               = json.getInt("id");
         unterkunft.stadt            = json.getString("city");
         unterkunft.name             = json.getString("name");
         unterkunft.groesse          = json.getInt("space");
@@ -116,6 +119,14 @@ public class Unterkunft implements Comparable<Unterkunft> {
         return super.equals(o);
     }
 
+      ////////////////////////////////////////////////////////////////////////////////
+     // Getters /////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    public int getID() {
+        return id;
+    }
+
     /**
      * Override toString() method
      * @return name of this accommodation
@@ -124,10 +135,6 @@ public class Unterkunft implements Comparable<Unterkunft> {
     public String toString() {
         return stadt +", " +name;
     }
-
-      ////////////////////////////////////////////////////////////////////////////////
-     // Getters /////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Getter for size

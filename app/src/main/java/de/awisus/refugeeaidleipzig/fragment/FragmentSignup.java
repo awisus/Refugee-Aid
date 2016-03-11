@@ -21,22 +21,31 @@ package de.awisus.refugeeaidleipzig.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.concurrent.ExecutionException;
 
 import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Model;
+import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
+import de.awisus.refugeeaidleipzig.net.HTTPPoster;
 
 /**
  * Created on 15.01.16.
@@ -46,6 +55,8 @@ import de.awisus.refugeeaidleipzig.model.Unterkunft;
  * @author Jens Awisus
  */
 public class FragmentSignup extends DialogFragment implements DialogInterface.OnClickListener {
+
+    public static final String SERVER_URL = "https://refugee-aid.herokuapp.com/";
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
@@ -57,9 +68,9 @@ public class FragmentSignup extends DialogFragment implements DialogInterface.On
     private MainActivity context;
 
     /**
-     * Text field for the user name
+     * Reference to the model to log in the new user (or to be found in the chosen accommodation)
      */
-    private EditText etName;
+    private Model model;
 
     /**
      * Spinner to choose in which accommodation the users stays in
@@ -67,9 +78,16 @@ public class FragmentSignup extends DialogFragment implements DialogInterface.On
     private Spinner spUnterkunft;
 
     /**
-     * Reference to the model to log in the new user (or to be found in the chosen accommodation)
+     * Text field for the user name
      */
-    private Model model;
+    private EditText etName;
+
+    private EditText etMail;
+
+    private EditText etPasswort;
+
+    private EditText etConformation;
+
 
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
@@ -102,8 +120,11 @@ public class FragmentSignup extends DialogFragment implements DialogInterface.On
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_signup, null);
 
-        etName = (EditText) view.findViewById(R.id.etName);
         spUnterkunft = (Spinner) view.findViewById(R.id.spUnterkunft);
+        etName = (EditText) view.findViewById(R.id.etName);
+        etMail = (EditText) view.findViewById(R.id.etMail);
+        etPasswort = (EditText) view.findViewById(R.id.etPassword);
+        etConformation = (EditText) view.findViewById(R.id.etConfirmation);
 
         initSpinnerAdapter();
 
@@ -162,21 +183,49 @@ public class FragmentSignup extends DialogFragment implements DialogInterface.On
     public void onClick(DialogInterface dialog, int which) {
         if(which == DialogInterface.BUTTON_POSITIVE) {
 
+            ProgressDialog ladebalken = Utility.zeigeLadebalken(context, "Anmelden...");
+
             // Get inserted name and selected accommodation from views
-            String eingabe = etName.getText().toString();
             Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();
 
-            if(eingabe != null && unterkunft != null) {
-                eingabe = eingabe.trim();
-                if(eingabe != null && !eingabe.equals("")) {
+            String unterkunftID = String.valueOf(unterkunft.getID());
+            String name = etName.getText().toString();
+            String mail = etMail.getText().toString();
+            String password = etPasswort.getText().toString();
+            String confirmation = etConformation.getText().toString();
 
-                    // login with chosen name and accommodation
-                    // model.anmelden(eingabe, unterkunft);
-                }
+            Nutzer nutzer;
+            if (((nutzer = signup("name", name, "mail", mail, "accommodation_id", unterkunftID, "password", password, "password_confirmation", confirmation)) == null)) {
+                ladebalken.cancel();
+                context.checkNavigationMapItem();
+                Toast.makeText(context, "Fehler vom Server", Toast.LENGTH_SHORT).show();
+            } else {
+                ladebalken.cancel();
+                model.anmelden(nutzer);
             }
         } else {
             context.checkNavigationMapItem();
         }
-        getDialog().cancel();
+    }
+
+    private Nutzer signup(String... parameter) {
+        HTTPPoster httpPoster = new HTTPPoster(SERVER_URL);
+
+        for(int i = 0; i < parameter.length; i += 2) {
+            httpPoster.addParameter(parameter[i], parameter[i+1]);
+        }
+        httpPoster.execute("users/remote");
+
+        try {
+            JSONObject object = new JSONObject(httpPoster.get());
+
+            int unterkunftID = object.getInt("accommodation_id");
+            Unterkunft unterkunft = model.getUnterkunftFromID(unterkunftID);
+
+            return Nutzer.fromJSON(unterkunft, object);
+        } catch (JSONException | InterruptedException | ExecutionException e) {
+            Log.e("GET: Error", e.toString());
+            return null;
+        }
     }
 }

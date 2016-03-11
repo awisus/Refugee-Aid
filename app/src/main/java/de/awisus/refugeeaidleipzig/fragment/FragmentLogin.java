@@ -21,6 +21,7 @@ package de.awisus.refugeeaidleipzig.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -29,6 +30,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -148,6 +150,8 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
             FragmentSignup fragmentSignup;
             fragmentSignup = FragmentSignup.newInstance(model);
             fragmentSignup.show(context.getSupportFragmentManager(), "Neues Konto");
+
+            dismiss();
         }
     }
 
@@ -164,6 +168,8 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
     public void onClick(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
 
+            ProgressDialog ladebalken = Utility.zeigeLadebalken(context, "Anmelden...");
+
             // Get inserted name and selected accommodation from views
             String name = etName.getText().toString();
             String passwort = etPasswort.getText().toString();
@@ -171,14 +177,16 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
             // remote login with name and pasword
             Nutzer nutzer;
             if (((nutzer = login(name, passwort)) == null)) {
+                ladebalken.cancel();
                 context.checkNavigationMapItem();
+                Toast.makeText(context, "Name oder Passwort falsch", Toast.LENGTH_SHORT).show();
             } else {
+                ladebalken.cancel();
                 model.anmelden(nutzer);
             }
         } else {
             context.checkNavigationMapItem();
         }
-        getDialog().cancel();
     }
 
     private Nutzer login(String name, String passwort) {

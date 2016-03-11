@@ -46,6 +46,7 @@ import de.awisus.refugeeaidleipzig.fragment.FragmentInfo;
 import de.awisus.refugeeaidleipzig.fragment.FragmentKarte;
 import de.awisus.refugeeaidleipzig.fragment.FragmentLogin;
 import de.awisus.refugeeaidleipzig.fragment.FragmentProfil;
+import de.awisus.refugeeaidleipzig.fragment.Utility;
 import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initialise() {
         if(connected()) {
-            zeigeLadebalken();
+            ProgressDialog ladebalken = Utility.zeigeLadebalken(this, "Aktualisiere...");
             if(initModel() == true) {
                 Toolbar tb = initToolbar();
                 initNavigationDrawer(tb);
@@ -138,15 +139,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         return false;
-    }
-
-    private void zeigeLadebalken() {
-        ladebalken = new ProgressDialog(this);
-        ladebalken.setMessage("Aktualisiere...");
-        ladebalken.setCancelable(false);
-        ladebalken.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        ladebalken.setIndeterminate(true);
-        ladebalken.show();
     }
 
     /**
