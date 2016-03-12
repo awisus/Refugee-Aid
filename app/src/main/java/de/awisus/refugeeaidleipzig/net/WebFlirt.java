@@ -1,5 +1,7 @@
 package de.awisus.refugeeaidleipzig.net;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,9 +40,8 @@ public class WebFlirt {
 
         HTTPGetter httpGetter;
         httpGetter = new HTTPGetter(SERVER_URL);
-        httpGetter.execute("accommodations/json");
 
-        JSONArray feld = new JSONArray(httpGetter.get());
+        JSONArray feld = new JSONArray(httpGetter.get("accommodations/json")); Log.d("Antwort", feld.toString(4));
         for (int i = 0; i < feld.length(); i++) {
             int id;
             Unterkunft unterkunft;
@@ -62,9 +63,8 @@ public class WebFlirt {
 
         HTTPGetter httpGetter;
         httpGetter = new HTTPGetter(SERVER_URL);
-        httpGetter.execute("categories/json");
 
-        JSONArray feld = new JSONArray(httpGetter.get());
+        JSONArray feld = new JSONArray(httpGetter.get("categories/json"));
         for (int i = 0; i < feld.length(); i++) {
             int id;
             Kategorie kategorie;
@@ -83,9 +83,8 @@ public class WebFlirt {
     public Nutzer getNutzer(Model model, String name, String passwort) throws JSONException, InterruptedException, ExecutionException {
         HTTPGetter httpGetter;
         httpGetter = new HTTPGetter(SERVER_URL);
-        httpGetter.execute("getUser/" + name + "/" + passwort);
 
-        return makeNutzer(model, httpGetter.get());
+        return makeNutzer(model, httpGetter.get("getUser/" + name + "/" + passwort));
     }
 
     public Nutzer postNutzer(Model model, String... parameter) throws JSONException, InterruptedException, ExecutionException {

@@ -239,7 +239,7 @@ public class FragmentSignup extends DialogFragment implements DialogInterface.On
     }
 
     private void signup() {
-        ProgressDialog ladebalken = Utility.zeigeLadebalken(context, getResources().getString(R.string.meldung_anmelden));
+        ProgressDialog ladebalken = Utility.getInstance().zeigeLadebalken(context, getResources().getString(R.string.meldung_anmelden));
 
         // Get inserted name and selected accommodation from views
         Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();

@@ -8,16 +8,15 @@ import android.app.ProgressDialog;
  *
  * @author Jens Awisus
  */
-public abstract class Utility {
+public class Utility {
 
-    public static ProgressDialog zeigeLadebalken(Activity activity, String nachricht) {
-        ProgressDialog ladebalken;
-        ladebalken = new ProgressDialog(activity);
-        ladebalken.setMessage(nachricht);
-        ladebalken.setCancelable(false);
-        ladebalken.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        ladebalken.setIndeterminate(true);
-        ladebalken.show();
-        return ladebalken;
+    public static final Utility INSTANCE = new Utility();
+
+    public static Utility getInstance() {
+        return INSTANCE;
+    }
+
+    public ProgressDialog zeigeLadebalken(Activity activity, String nachricht) {
+        return ProgressDialog.show(activity, null, nachricht, true, false);
     }
 }

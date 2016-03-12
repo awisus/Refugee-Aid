@@ -23,6 +23,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -78,16 +79,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private int selectedItemID;
 
     /**
-     * Instance of the About dialogue
-     */
-    private FragmentInfo fragUeber;
-
-    /**
-     * Instance of a login mask
-     */
-    private FragmentLogin fragAnmelden;
-
-    /**
      * Instance of modelled problem
      */
     private Model model;
@@ -107,29 +98,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         // set the view by layout xml file
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         initialise();
     }
 
     private void initialise() {
-        Toolbar tb = initToolbar();
-        initNavigationDrawer(tb);
-
-        ladebalken = Utility.zeigeLadebalken(this, getResources().getString(R.string.meldung_aktualisieren));
-
         if(connected()) {
-            if(initModel() == true) {
-                initContainer();
-                initFragmente();
-            } else {
-                Toast.makeText(this, R.string.warnung_laden, Toast.LENGTH_SHORT).show();
-            }
+            new IAmABackgroundTask().execute();
         } else {
             Toast.makeText(this, R.string.warnung_netz, Toast.LENGTH_SHORT).show();
         }
+    }
 
-        ladebalken.cancel();
+    class IAmABackgroundTask extends AsyncTask<String, Integer, Model> {
+
+        @Override
+        protected void onPreExecute() {
+            MainActivity.this.ladebalken = Utility.getInstance().zeigeLadebalken(MainActivity.this, getResources().getString(R.string.meldung_aktualisieren));
+        }
+
+        @Override
+        protected void onPostExecute(Model result) {
+
+            MainActivity.this.model = result;
+
+            // this Activity listens to model changes (login and logout)
+            MainActivity.this.model.addObserver(MainActivity.this);
+            MainActivity.this.ladebalken.dismiss();
+
+            setContentView(R.layout.activity_main);
+
+            Toolbar tb = initToolbar();
+            initNavigationDrawer(tb);
+            initContainer();
+        }
+
+        @Override
+        protected Model doInBackground(String... params) {
+            try {
+                // initialise the model
+                Model model;
+                model = new Model();
+                model.setUnterkuenfte(WebFlirt.getInstance().getUnterkuenfte());
+                model.setKategorien(WebFlirt.getInstance().getKategorien());
+
+                return model;
+            } catch (IOException | JSONException | InterruptedException | ExecutionException e){
+                return null;
+            }
+        }
     }
 
     private boolean connected() {
@@ -139,26 +155,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         return false;
-    }
-
-    /**
-     * Private method initialising the model and data to be stored in.
-     * (Accommodations and map markers)
-     */
-    private boolean initModel() {
-
-        // initialise the model
-        model = new Model();
-
-        // this Activity listens to model changes (login and logout)
-        model.addObserver(this);
-        try {
-            model.setUnterkuenfte(WebFlirt.getInstance().getUnterkuenfte());
-            model.setKategorien(WebFlirt.getInstance().getKategorien());
-            return true;
-        } catch (IOException | JSONException | InterruptedException | ExecutionException e){
-            return false;
-        }
     }
 
     /**
@@ -196,6 +192,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /**
+     * Private method initialising the model and data to be stored in.
+     * (Accommodations and map markers)
+     */
+    private Model initModel() {
+        try {
+            // initialise the model
+            model = new Model();
+            model.setUnterkuenfte(WebFlirt.getInstance().getUnterkuenfte());
+            model.setKategorien(WebFlirt.getInstance().getKategorien());
+
+            // this Activity listens to model changes (login and logout)
+            model.addObserver(this);
+            return model;
+        } catch (IOException | JSONException | InterruptedException | ExecutionException e){
+            return null;
+        }
+    }
+
+    /**
      * Private method starting with adding the map fragment to the fragment container
      */
     private void initContainer() {
@@ -203,17 +218,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.add(R.id.fragment_container, FragmentKarte.newInstance(model));
         transaction.commit();
         checkNavigationMapItem();
-    }
-
-    private void initFragmente() {
-        // prepare instances of the About and Login dialogues
-        fragUeber = FragmentInfo.newInstance(
-                getResources().getString(R.string.nav_titel_ueber),
-                getResources().getString(R.string.info)
-                        +"\n\nv" +BuildConfig.VERSION_NAME
-        );
-
-        fragAnmelden = FragmentLogin.newInstance(model);
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -278,6 +282,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 wechsleFragment(FragmentProfil.newInstance(model));
             } else {
                 // Else, show login dialogue
+                FragmentLogin fragAnmelden;
+                fragAnmelden = FragmentLogin.newInstance(model);
                 fragAnmelden.show(getSupportFragmentManager(), "Anmelden");
             }
         }
@@ -290,6 +296,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Show About Dialogue
         if(id == R.id.nav_ueber) {
+            FragmentInfo fragUeber =
+            FragmentInfo.newInstance(
+                getResources().getString(R.string.nav_titel_ueber),
+                getResources().getString(R.string.info)
+                        +"\n\nv" +BuildConfig.VERSION_NAME);
+
             fragUeber.show(getSupportFragmentManager(), "Info");
         }
 

@@ -1,6 +1,5 @@
 package de.awisus.refugeeaidleipzig.net;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
@@ -16,7 +15,7 @@ import cz.msebera.android.httpclient.util.EntityUtils;
  *
  * @author Jens Awisus
  */
-public class HTTPGetter extends AsyncTask<String, Void, String> {
+public class HTTPGetter {
 
     private String serverUrl;
 
@@ -24,8 +23,7 @@ public class HTTPGetter extends AsyncTask<String, Void, String> {
         this.serverUrl = serverUrl;
     }
 
-    @Override
-    protected String doInBackground(String... str) {
+    public String get(String... str) {
         try {
             HttpClient client = HttpClients.createDefault();
 
@@ -40,10 +38,5 @@ public class HTTPGetter extends AsyncTask<String, Void, String> {
             Log.e("GET: Error", e.toString());
         }
         return "Cannot Connect";
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-        super.onPostExecute(result);
     }
 }

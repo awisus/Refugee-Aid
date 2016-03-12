@@ -170,7 +170,7 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
     }
 
     private void login() {
-        ProgressDialog ladebalken = Utility.zeigeLadebalken(context, getResources().getString(R.string.meldung_anmelden));
+        ProgressDialog ladebalken = Utility.getInstance().zeigeLadebalken(context, getResources().getString(R.string.meldung_anmelden));
 
         // Get inserted name and selected accommodation from views
         String name = etName.getText().toString();
