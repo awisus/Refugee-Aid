@@ -203,7 +203,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         detail += "\n\n";
 
         detail += unterkunft.hatBedarf()
-                ? getResources().getString(R.string.string_bedarfe) + " "
+                ? getResources().getString(R.string.string_bedarfe) + "\n"
                 + unterkunft.getBedarfeAlsString()
                 : getResources().getString(R.string.string_keine_bedarfe);
 
@@ -211,7 +211,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         FragmentInfo.newInstance(
                 unterkunft.toString(),
                 detail
-        ).show(getActivity().getSupportFragmentManager(), "Info");
+        ).show(getActivity().getSupportFragmentManager(), unterkunft.toString());
     }
 
     @Override
@@ -247,7 +247,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         @Override
         protected DataMap<Unterkunft> doInBackground(String... params) {
             try {
-                return WebFlirt.getInstance().getUnterkuenfte();
+                return WebFlirt.getInstance().getUnterkuenfte(model);
             } catch (IOException | JSONException | InterruptedException | ExecutionException e){
                 return null;
             }

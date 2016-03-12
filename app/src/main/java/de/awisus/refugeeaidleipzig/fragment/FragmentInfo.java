@@ -47,6 +47,8 @@ public class FragmentInfo extends DialogFragment implements DialogInterface.OnCl
      */
     private String inhalt;
 
+    private String titel;
+
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
@@ -60,6 +62,7 @@ public class FragmentInfo extends DialogFragment implements DialogInterface.OnCl
     public static FragmentInfo newInstance(String titel, String inhalt) {
         FragmentInfo frag = new FragmentInfo();
         frag.inhalt = inhalt;
+        frag.titel = titel;
         return frag;
     }
 
@@ -86,8 +89,9 @@ public class FragmentInfo extends DialogFragment implements DialogInterface.OnCl
         builder.setView(view);
         builder.setPositiveButton(R.string.dialog_ok, this);
 
-        Dialog dialog = builder.create();
-        dialog.setTitle(R.string.nav_titel_ueber);
+        Dialog dialog;
+        dialog = builder.create();
+        dialog.setTitle(titel);
 
         return dialog;
     }

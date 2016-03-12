@@ -21,6 +21,7 @@ package de.awisus.refugeeaidleipzig.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,6 +58,8 @@ public class Unterkunft implements Comparable<Unterkunft> {
 
     private int anzahlBewohner;
 
+    private DataMap<Bedarf> bedarf;
+
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
@@ -65,12 +68,15 @@ public class Unterkunft implements Comparable<Unterkunft> {
      * Private constructor
      */
     private Unterkunft() {
+        bedarf = new DataMap<>();
     }
 
-    public static Unterkunft fromJSON(JSONObject json) throws JSONException {
+    public static Unterkunft fromJSON(Model model, JSONObject json) throws JSONException {
 
         // Instatiate new accommodation
         Unterkunft unterkunft = new Unterkunft();
+
+        JSONArray bedarfIDs = json.getJSONArray("needs");
 
         // put data to it from json object
         unterkunft.id               = json.getInt("id");
@@ -78,6 +84,7 @@ public class Unterkunft implements Comparable<Unterkunft> {
         unterkunft.name             = json.getString("name");
         unterkunft.groesse          = json.getInt("space");
         unterkunft.anzahlBewohner   = json.getInt("residents");
+        unterkunft.bedarf           = new NeedParser(model).parse(bedarfIDs);
         unterkunft.latLng = new LatLng(
                                       json.getDouble("longitude"),
                                       json.getDouble("latitude")
@@ -161,7 +168,19 @@ public class Unterkunft implements Comparable<Unterkunft> {
      * @return comma-separated list if resident's needs
      */
     public String getBedarfeAlsString() {
-        return null;
+        if(!hatBedarf()) {
+            return null;
+        } else {
+            String str = "";
+            for(int i = 0; i < bedarf.size(); i++) {
+                str += bedarf.get(i);
+                if(i < bedarf.size() - 1) {
+                    str += "\n";
+                }
+            }
+
+            return str;
+        }
     }
 
     /**
@@ -169,6 +188,6 @@ public class Unterkunft implements Comparable<Unterkunft> {
      * @return true, if a resident has needs; false else
      */
     public boolean hatBedarf() {
-        return getBedarfeAlsString() != null;
+        return bedarf.size() != 0;
     }
 }

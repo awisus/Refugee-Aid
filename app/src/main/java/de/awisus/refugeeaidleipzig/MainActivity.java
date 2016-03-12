@@ -146,8 +146,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 // initialise the model
                 Model model;
                 model = new Model();
-                model.setUnterkuenfte(WebFlirt.getInstance().getUnterkuenfte());
                 model.setKategorien(WebFlirt.getInstance().getKategorien());
+                model.setUnterkuenfte(WebFlirt.getInstance().getUnterkuenfte(model));
 
                 return model;
             } catch (IOException | JSONException | InterruptedException | ExecutionException e){
