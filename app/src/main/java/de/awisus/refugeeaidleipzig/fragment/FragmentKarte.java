@@ -65,6 +65,8 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
 
     private MainActivity context;
 
+    private GoogleMap karte;
+
     private FloatingActionButton fabUpdate;
 
     /**
@@ -137,6 +139,11 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
      */
     @Override
     public void onMapReady(GoogleMap karte) {
+        this.karte = karte;
+        this.setMarkers();
+    }
+
+    private void setMarkers() {
 
         // get accommodations loaded into the model
         final DataMap<Unterkunft> unterkuenfte = model.getUnterkuenfte();
@@ -152,12 +159,12 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         // Zoom on users accommodation, if logged in
         if(model.angemeldet()) {
             karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                    model.getNutzerAktuell().getUnterkunft().getLatLng(), 11f)
+                            model.getNutzerAktuell().getUnterkunft().getLatLng(), 11f)
             );
         } else {
             // Zoom to arbitrary accommodation
             karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                    unterkuenfte.get(0).getLatLng(), 11f)
+                            unterkuenfte.get(0).getLatLng(), 11f)
             );
         }
 
@@ -232,6 +239,8 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
                 Toast.makeText(context, "Download gescheitert", Toast.LENGTH_SHORT).show();
             } else {
                 model.setUnterkuenfte(result);
+                karte.clear();
+                setMarkers();
             }
 
             ladebalken.dismiss();

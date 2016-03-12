@@ -110,6 +110,10 @@ public class Model extends Observable {
         return nutzerAktuell != null;
     }
 
+      ////////////////////////////////////////////////////////////////////////////////
+     // Setters /////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
     /**
      * Method for adding MapMarkers to the HashMap for easy information retrieval.
      * Clears HashMap, if a very new set of Markers is to be stores (happens, if MapFragment is
@@ -125,10 +129,6 @@ public class Model extends Observable {
         mapUnterkuenfte.put(marke, unterkunft);
     }
 
-      ////////////////////////////////////////////////////////////////////////////////
-     // Setters /////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-
     public void setKategorien(DataMap<Kategorie> kategorien) {
         this.kategorien = kategorien;
     }
@@ -140,6 +140,7 @@ public class Model extends Observable {
     public void setUnterkuenfte(DataMap<Unterkunft> unterkuenfte) {
         this.unterkuenfte = unterkuenfte;
 
+        markerOptionen.clear();
         for(Unterkunft unterkunft : unterkuenfte) {
             addMarkerOption(unterkunft);
         }
