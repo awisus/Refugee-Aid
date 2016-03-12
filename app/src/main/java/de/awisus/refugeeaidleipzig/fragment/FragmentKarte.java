@@ -228,13 +228,13 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         @Override
         protected void onPostExecute(DataMap<Unterkunft> result) {
 
-            ladebalken.dismiss();
-
             if(result == null) {
                 Toast.makeText(context, "Download gescheitert", Toast.LENGTH_SHORT).show();
             } else {
                 model.setUnterkuenfte(result);
             }
+
+            ladebalken.dismiss();
         }
 
         @Override

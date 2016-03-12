@@ -76,14 +76,14 @@ public abstract class FragmentLogin extends DialogFragment {
         @Override
         protected void onPostExecute(Nutzer result) {
 
-            ladebalken.dismiss();
-
             if(result == null) {
                 context.checkNavigationMapItem();
                 Toast.makeText(context, R.string.warnung_login, Toast.LENGTH_SHORT).show();
             } else {
                 model.anmelden(result);
             }
+
+            ladebalken.dismiss();
         }
 
         @Override
