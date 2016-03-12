@@ -19,11 +19,15 @@
 
 package de.awisus.refugeeaidleipzig.fragment;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -31,10 +35,18 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+
+import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
+import de.awisus.refugeeaidleipzig.net.WebFlirt;
+import de.awisus.refugeeaidleipzig.util.Utility;
 
 /**
  * Created on 11.01.16.
@@ -45,11 +57,15 @@ import de.awisus.refugeeaidleipzig.model.Unterkunft;
  * information about sizes, number of residents and a list of needs for each accommodation
  * @author Jens Awisus
  */
-public class FragmentKarte extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+public class FragmentKarte extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener, View.OnClickListener {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
+
+    private MainActivity context;
+
+    private FloatingActionButton fabUpdate;
 
     /**
      * Model to access information about the accommodations and their respective marker info
@@ -65,9 +81,10 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
      * @param model
      * @return
      */
-    public static FragmentKarte newInstance(Model model) {
+    public static FragmentKarte newInstance(MainActivity context, Model model) {
         FragmentKarte frag = new FragmentKarte();
         frag.model = model;
+        frag.context = context;
         return frag;
     }
 
@@ -85,8 +102,13 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_karte, container, false);
+
+        fabUpdate = (FloatingActionButton) view.findViewById(R.id.fabUpdate);
+        fabUpdate.setOnClickListener(this);
+
         getActivity().setTitle(R.string.nav_karte);
-        return inflater.inflate(R.layout.fragment_karte, container, false);
+        return view;
     }
 
     /**
@@ -185,5 +207,43 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
                 unterkunft.toString(),
                 detail
         ).show(getActivity().getSupportFragmentManager(), "Info");
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.fabUpdate) {
+            new Updater().execute();
+        }
+    }
+
+    private class Updater extends AsyncTask<String, Integer, DataMap<Unterkunft>> {
+
+        private ProgressDialog ladebalken;
+
+        @Override
+        protected void onPreExecute() {
+            ladebalken = Utility.getInstance().zeigeLadebalken(context, getResources().getString(R.string.meldung_aktualisieren));
+        }
+
+        @Override
+        protected void onPostExecute(DataMap<Unterkunft> result) {
+
+            ladebalken.dismiss();
+
+            if(result == null) {
+                Toast.makeText(context, "Download gescheitert", Toast.LENGTH_SHORT).show();
+            } else {
+                model.setUnterkuenfte(result);
+            }
+        }
+
+        @Override
+        protected DataMap<Unterkunft> doInBackground(String... params) {
+            try {
+                return WebFlirt.getInstance().getUnterkuenfte();
+            } catch (IOException | JSONException | InterruptedException | ExecutionException e){
+                return null;
+            }
+        }
     }
 }

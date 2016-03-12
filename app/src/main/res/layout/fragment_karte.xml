@@ -15,7 +15,7 @@
         tools:context=".fragment.FragmentKarte" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabHinzufuegen"
+        android:id="@+id/fabUpdate"
         android:src="@android:drawable/ic_popup_sync"
 
         app:fabSize="normal"

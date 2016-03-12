@@ -1,7 +1,5 @@
 package de.awisus.refugeeaidleipzig.net;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,7 +39,7 @@ public class WebFlirt {
         HTTPGetter httpGetter;
         httpGetter = new HTTPGetter(SERVER_URL);
 
-        JSONArray feld = new JSONArray(httpGetter.get("accommodations/json")); Log.d("Antwort", feld.toString(4));
+        JSONArray feld = new JSONArray(httpGetter.get("accommodations/json"));
         for (int i = 0; i < feld.length(); i++) {
             int id;
             Unterkunft unterkunft;

@@ -64,7 +64,6 @@ public abstract class FragmentLogin extends DialogFragment {
         context = (MainActivity) activity;
     }
 
-
     protected class NutzerGet extends AsyncTask<String, Integer, Nutzer> {
 
         private ProgressDialog ladebalken;
