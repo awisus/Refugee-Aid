@@ -33,6 +33,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
 import org.json.JSONException;
@@ -141,6 +142,18 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     public void onMapReady(GoogleMap karte) {
         this.karte = karte;
         this.setMarkers();
+
+        // Zoom on users accommodation, if logged in
+        if(model.angemeldet()) {
+            karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                            model.getNutzerAktuell().getUnterkunft().getLatLng(), 11f));
+        } else {
+            // Zoom to arbitrary accommodation
+            karte.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.5, 10.5), 5.8f));
+        }
+
+        // tap on marker info box shows accommodation detail
+        karte.setOnInfoWindowClickListener(this);
     }
 
     private void setMarkers() {
@@ -155,21 +168,6 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
             // Store this marker in the model
             model.addMarke(marke, i);
         }
-
-        // Zoom on users accommodation, if logged in
-        if(model.angemeldet()) {
-            karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                            model.getNutzerAktuell().getUnterkunft().getLatLng(), 11f)
-            );
-        } else {
-            // Zoom to arbitrary accommodation
-            karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                            unterkuenfte.get(0).getLatLng(), 11f)
-            );
-        }
-
-        // tap on marker info box shows accommodation detail
-        karte.setOnInfoWindowClickListener(this);
     }
 
     /**

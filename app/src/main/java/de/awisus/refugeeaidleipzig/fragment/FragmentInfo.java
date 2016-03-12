@@ -43,11 +43,6 @@ public class FragmentInfo extends DialogFragment implements DialogInterface.OnCl
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * String to be set as title
-     */
-    private String titel;
-
-    /**
      * String to be set as content
      */
     private String inhalt;
@@ -64,7 +59,6 @@ public class FragmentInfo extends DialogFragment implements DialogInterface.OnCl
      */
     public static FragmentInfo newInstance(String titel, String inhalt) {
         FragmentInfo frag = new FragmentInfo();
-        frag.titel = titel;
         frag.inhalt = inhalt;
         return frag;
     }
@@ -85,16 +79,17 @@ public class FragmentInfo extends DialogFragment implements DialogInterface.OnCl
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_info, null);
 
-        TextView tvTitelInfo = (TextView) view.findViewById(R.id.tvTitelInfo);
         TextView tvInfo = (TextView) view.findViewById(R.id.tvInfo);
 
-        tvTitelInfo.setText(titel);
         tvInfo.setText(inhalt);
 
         builder.setView(view);
         builder.setPositiveButton(R.string.dialog_ok, this);
 
-        return builder.create();
+        Dialog dialog = builder.create();
+        dialog.setTitle(R.string.nav_titel_ueber);
+
+        return dialog;
     }
 
       ////////////////////////////////////////////////////////////////////////////////

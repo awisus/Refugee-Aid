@@ -117,7 +117,10 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
         builder.setPositiveButton(R.string.dialog_signup, this);
         builder.setNegativeButton(R.string.dialog_abbrechen, this);
 
-        return builder.create();
+        Dialog dialog = builder.create();
+        dialog.setTitle(R.string.titel_signup);
+
+        return dialog;
     }
 
     private void addListeners() {

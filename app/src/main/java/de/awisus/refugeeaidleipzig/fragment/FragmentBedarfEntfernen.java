@@ -98,7 +98,11 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
         builder.setView(view);
         builder.setPositiveButton(R.string.dialog_loeschen, this);
         builder.setNegativeButton(R.string.dialog_abbrechen, this);
-        return builder.create();
+
+        Dialog dialog = builder.create();
+        dialog.setTitle(R.string.titel_bedarf_entfernen);
+
+        return dialog;
     }
 
     /**

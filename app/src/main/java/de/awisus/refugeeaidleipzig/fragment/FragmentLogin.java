@@ -54,7 +54,7 @@ public abstract class FragmentLogin extends DialogFragment {
     protected Model model;
 
     /**
-     * This is called to set the parent Activity as the Context for the spinner
+     * This is called to set the parent Activity as the Context of the Fragment
      *
      * @param activity Activity to be set as context
      */

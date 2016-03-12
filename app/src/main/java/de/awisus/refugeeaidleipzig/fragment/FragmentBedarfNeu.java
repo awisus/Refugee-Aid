@@ -88,7 +88,11 @@ public class FragmentBedarfNeu extends DialogFragment implements DialogInterface
         builder.setView(view);
         builder.setPositiveButton(R.string.dialog_hinzufuegen, this);
         builder.setNegativeButton(R.string.dialog_abbrechen, this);
-        return builder.create();
+
+        Dialog dialog = builder.create();
+        dialog.setTitle(R.string.titel_bedarf_neu);
+
+        return dialog;
     }
 
       ////////////////////////////////////////////////////////////////////////////////

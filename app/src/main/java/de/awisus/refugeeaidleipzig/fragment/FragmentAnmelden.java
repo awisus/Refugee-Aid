@@ -99,7 +99,10 @@ public class FragmentAnmelden extends FragmentLogin implements DialogInterface.O
         builder.setPositiveButton(R.string.dialog_login, this);
         builder.setNegativeButton(R.string.dialog_abbrechen, this);
 
-        return builder.create();
+        Dialog dialog = builder.create();
+        dialog.setTitle(R.string.titel_login);
+
+        return dialog;
     }
 
     ////////////////////////////////////////////////////////////////////////////////
