@@ -8,7 +8,7 @@
             android:title="@string/nav_profil" />
         <item
             android:id="@+id/nav_karte"
-            android:icon="@android:drawable/ic_menu_compass"
+            android:icon="@android:drawable/ic_dialog_map"
             android:title="@string/nav_karte" />
     </group>
 

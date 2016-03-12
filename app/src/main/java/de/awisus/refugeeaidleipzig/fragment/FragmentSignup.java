@@ -26,6 +26,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -44,6 +45,9 @@ import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
+import de.awisus.refugeeaidleipzig.util.MailValidator;
+import de.awisus.refugeeaidleipzig.util.TextValidator;
+import de.awisus.refugeeaidleipzig.util.Utility;
 
 /**
  * Created on 15.01.16.
@@ -122,13 +126,63 @@ public class FragmentSignup extends DialogFragment implements DialogInterface.On
         etPasswort = (EditText) view.findViewById(R.id.etPassword);
         etConformation = (EditText) view.findViewById(R.id.etConfirmation);
 
+        addListeners();
         initSpinnerAdapter();
 
         builder.setView(view);
-        builder.setPositiveButton("Konto erstellen", this);
+        builder.setPositiveButton(R.string.dialog_signup, this);
         builder.setNegativeButton(R.string.dialog_abbrechen, this);
 
         return builder.create();
+    }
+
+    private void addListeners() {
+        etName.addTextChangedListener(new TextValidator(etName) {
+            @Override
+            public void afterTextChanged(Editable s) {
+                String name = etName.getText().toString();
+
+                if (name.length() > 47) {
+                    etName.setError("Nutzername zu lang");
+                }
+            }
+        });
+        etMail.addTextChangedListener(new TextValidator(etMail) {
+            @Override
+            public void afterTextChanged(Editable s) {
+                String mail = etMail.getText().toString();
+
+                if (mail.length() > 255) {
+                    etMail.setError("E-Mail-Adresse zu lang");
+                    return;
+                }
+                if (!MailValidator.getInstance().isValid(mail)) {
+                    etMail.setError("E-Mail-Adresse ungültig");
+                    return;
+                }
+            }
+        });
+        etPasswort.addTextChangedListener(new TextValidator(etPasswort) {
+            @Override
+            public void afterTextChanged(Editable s) {
+                String passwort = etPasswort.getText().toString();
+
+                if (passwort.length() < 6) {
+                    etPasswort.setError("Passwort zu kurz");
+                }
+            }
+        });
+        etConformation.addTextChangedListener(new TextValidator(etConformation) {
+            @Override
+            public void afterTextChanged(Editable s) {
+                String password = etPasswort.getText().toString();
+                String confirmation = etConformation.getText().toString();
+
+                if (!password.equals(confirmation)) {
+                    etConformation.setError("Passwörter stimmen nicht überein");
+                }
+            }
+        });
     }
 
     /**

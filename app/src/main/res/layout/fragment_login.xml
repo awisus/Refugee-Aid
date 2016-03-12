@@ -29,16 +29,37 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:textColor="#000" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Nutzername"
+        android:id="@+id/tvName"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etName"
         android:maxLines="1"
         android:singleLine="true"
-        android:hint="@string/string_name"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/imageView" />
+        android:layout_below="@+id/tvName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Passwort"
+        android:id="@+id/tvPasswort"
+        android:layout_below="@+id/etName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin" />
 
     <EditText
         android:layout_width="match_parent"
@@ -46,11 +67,10 @@
         android:id="@+id/etPassword"
         android:maxLines="1"
         android:singleLine="true"
-        android:hint="Passwort"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:inputType="textPassword"
-        android:layout_below="@+id/etName"
+        android:layout_below="@+id/tvPasswort"
         android:paddingBottom="@dimen/activity_horizontal_margin" />
 
     <Button

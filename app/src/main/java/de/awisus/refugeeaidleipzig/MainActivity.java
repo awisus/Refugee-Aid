@@ -46,9 +46,9 @@ import de.awisus.refugeeaidleipzig.fragment.FragmentInfo;
 import de.awisus.refugeeaidleipzig.fragment.FragmentKarte;
 import de.awisus.refugeeaidleipzig.fragment.FragmentLogin;
 import de.awisus.refugeeaidleipzig.fragment.FragmentProfil;
-import de.awisus.refugeeaidleipzig.fragment.Utility;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
+import de.awisus.refugeeaidleipzig.util.Utility;
 
 /**
  * Created on 11.01.16.
@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
 
     private NavigationView navigationView;
+
+    private int selectedItemID;
 
     /**
      * Instance of the About dialogue
@@ -111,11 +113,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initialise() {
+        Toolbar tb = initToolbar();
+        initNavigationDrawer(tb);
+
+        ladebalken = Utility.zeigeLadebalken(this, getResources().getString(R.string.meldung_aktualisieren));
+
         if(connected()) {
-            ladebalken = Utility.zeigeLadebalken(this, getResources().getString(R.string.meldung_aktualisieren));
             if(initModel() == true) {
-                Toolbar tb = initToolbar();
-                initNavigationDrawer(tb);
                 initContainer();
                 initFragmente();
             } else {
@@ -267,7 +271,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = (item.getItemId());
 
         // Show user profile if logged on
-        if(id == R.id.nav_profil) {
+        if(id == R.id.nav_profil && id != selectedItemID) {
+            selectedItemID = id;
+
             if(model.angemeldet()) {
                 wechsleFragment(FragmentProfil.newInstance(model));
             } else {
@@ -277,7 +283,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         // Switch to Google Map
-        if(id == R.id.nav_karte) {
+        if(id == R.id.nav_karte && id != selectedItemID) {
+            selectedItemID = id;
             wechsleFragment(FragmentKarte.newInstance(model));
         }
 
@@ -303,5 +310,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void checkNavigationMapItem() {
         navigationView.getMenu().getItem(1).setChecked(true);
+        selectedItemID = R.id.nav_karte;
     }
 }

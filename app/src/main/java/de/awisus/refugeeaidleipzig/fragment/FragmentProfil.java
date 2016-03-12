@@ -145,7 +145,7 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
         fragmentBedarfNeu = FragmentBedarfNeu.newInstance(nutzer);
         fragmentBedarfEntfernen = FragmentBedarfEntfernen.newInstance(nutzer);
 
-        tvName = (TextView) view.findViewById(R.id.tvName);
+        tvName = (TextView) view.findViewById(R.id.tvUnterkunft);
         tvEinrichtung = (TextView) view.findViewById(R.id.tvEinrichtung);
         tvBedarfe = (TextView) view.findViewById(R.id.tvBedarfe);
 

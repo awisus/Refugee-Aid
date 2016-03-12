@@ -21,7 +21,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="[NAME]"
             android:textColor="@color/colorPrimaryDark"
-            android:id="@+id/tvName"
+            android:id="@+id/tvUnterkunft"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="false"
             android:layout_above="@+id/tvEinrichtung"

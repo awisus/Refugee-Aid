@@ -1,4 +1,4 @@
-package de.awisus.refugeeaidleipzig.fragment;
+package de.awisus.refugeeaidleipzig.util;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

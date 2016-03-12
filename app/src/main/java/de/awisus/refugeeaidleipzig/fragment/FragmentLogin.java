@@ -40,6 +40,7 @@ import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
+import de.awisus.refugeeaidleipzig.util.Utility;
 
 /**
  * Created on 15.01.16.

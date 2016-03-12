@@ -29,6 +29,7 @@
     <string name="dialog_hinzufuegen">Hinzufügen</string>
     <string name="dialog_abbrechen">Abbrechen</string>
     <string name="dialog_ok">In Ordnung</string>
+    <string name="dialog_signup">Konto erstellen</string>
 
     <string name="string_keine_bedarfe">Kein Bedarf</string>
     <string name="string_bedarfe">Bedarf: </string>
@@ -36,6 +37,12 @@
     <string name="string_bewohner">Bewohner: </string>
     <string name="string_name">Name</string>
     <string name="string_bezeichnung">Bezeichnung</string>
+
+    <string name="label_unterkunft">Unterkunft</string>
+    <string name="label_name">Nutzername</string>
+    <string name="label_mail">E-Mail</string>
+    <string name="label_passwort">Passwort</string>
+    <string name="label_confirmation">Passwort wiederholen</string>
 
     <string name="button_abmelden">Abmelden</string>
 
