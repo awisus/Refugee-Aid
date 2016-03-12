@@ -193,6 +193,10 @@ public class Model extends Observable {
         return unterkuenfte.getFromID(id);
     }
 
+    public Kategorie getKategorieFromID(int id) {
+        return kategorien.getFromID(id);
+    }
+
     /**
      * Get user logged on
      * @return user logged on

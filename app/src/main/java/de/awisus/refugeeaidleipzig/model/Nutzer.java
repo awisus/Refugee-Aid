@@ -19,10 +19,10 @@
 
 package de.awisus.refugeeaidleipzig.model;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.LinkedList;
 import java.util.Observable;
 
 /**
@@ -56,7 +56,7 @@ public class Nutzer extends Observable {
     /**
      * List of needs being uttered to the public
      */
-    private LinkedList<String> bedarfe;
+    private DataMap<Bedarf> bedarf;
 
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
@@ -67,7 +67,7 @@ public class Nutzer extends Observable {
      * instantiates list of needs, processes login into given accommodation
      */
     private Nutzer() {
-        bedarfe = new LinkedList<>();
+        bedarf = new DataMap<>();
     }
 
     public static Nutzer fromJSON(Model model, JSONObject json) throws JSONException {
@@ -77,10 +77,13 @@ public class Nutzer extends Observable {
         // put data to it from json object
         int unterkunftID       = json.getInt("accommodation_id");
 
+        JSONArray bedarfIDs = json.getJSONArray("needs");
+
         nutzer.id              = json.getInt("id");
         nutzer.name            = json.getString("name");
         nutzer.mail            = json.getString("mail");
         nutzer.unterkunft      = model.getUnterkunftFromID(unterkunftID);
+        nutzer.bedarf          = new NeedParser(model).parse(bedarfIDs);
 
         // Better trim Strings, get rid of white spaces
         nutzer.name = nutzer.name.trim();
@@ -93,22 +96,14 @@ public class Nutzer extends Observable {
      // Methods /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Method for adding new need to this resident
-     * @param bedarf new need to be added
-     */
-    public void addBedarf(String bedarf) {
-        bedarfe.add(bedarf);
+    public void addBedarf(String name) {
+        bedarf.add(bedarf.size(), new Bedarf(id, name));
         setChanged();
         notifyObservers();
     }
 
-    /**
-     * Method for removing a need from the list of needs
-     * @param bedarf need to be removed
-     */
-    public void loescheBedarf(String bedarf) {
-        bedarfe.remove(bedarf);
+    public void loescheBedarf(int id) {
+        bedarf.remove(id);
         setChanged();
         notifyObservers();
     }
@@ -137,8 +132,8 @@ public class Nutzer extends Observable {
      * Getter for personal needs
      * @return list of this user's needs
      */
-    public LinkedList<String> getBedarfe() {
-        return bedarfe;
+    public DataMap<Bedarf> getBedarf() {
+        return bedarf;
     }
 
     /**
@@ -154,10 +149,10 @@ public class Nutzer extends Observable {
             return null;
         } else {
             String str = "";
-            for(int i = 0; i < bedarfe.size(); i++) {
+            for(int i = 0; i < bedarf.size(); i++) {
                 str += " - ";
-                str += bedarfe.get(i);
-                if(i < bedarfe.size() - 1) {
+                str += bedarf.get(i);
+                if(i < bedarf.size() - 1) {
                     str += "\n";
                 }
             }
@@ -171,6 +166,6 @@ public class Nutzer extends Observable {
      * @return true, if list of needs > 0; false else
      */
     public boolean hatBedarf() {
-        return bedarfe.size() > 0;
+        return bedarf.size() > 0;
     }
 }

@@ -109,14 +109,7 @@ public class FragmentBedarfNeu extends DialogFragment implements DialogInterface
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if(which == DialogInterface.BUTTON_POSITIVE) {
-            String eingabe = etBedarfNeu.getText().toString();
-            if(eingabe != null) {
-                eingabe = eingabe.trim();
-                if(eingabe != null && !eingabe.equals("")) {
-                    nutzer.addBedarf(eingabe);
-                }
-            }
+            //
         }
-        getDialog().cancel();
     }
 }

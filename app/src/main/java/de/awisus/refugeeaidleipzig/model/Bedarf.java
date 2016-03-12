@@ -22,29 +22,28 @@ package de.awisus.refugeeaidleipzig.model;
 /**
  * Created by Jens Awisus on 11.01.16.
  */
-public class Bedarf {
+public class Bedarf implements Comparable<Bedarf> {
 
+    private int id;
     private String name;
-    private Kategorie kategorie;
-    private int menge;
 
 
-    public Bedarf(String name, Kategorie kategorie, int menge) {
+    public Bedarf(int id, String name) {
+        this.id = id;
         this.name = name;
-        this.kategorie = kategorie;
-        this.menge = menge;
     }
 
+    @Override
+    public int compareTo(Bedarf another) {
+        return -another.name.compareTo(name);
+    }
 
-    public String getName() {
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
         return name;
-    }
-
-    public Kategorie getKategorie() {
-        return kategorie;
-    }
-
-    public int getMenge() {
-        return menge;
     }
 }

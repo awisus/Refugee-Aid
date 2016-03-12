@@ -41,15 +41,10 @@ public class WebFlirt {
 
         JSONArray feld = new JSONArray(httpGetter.get("accommodations/json"));
         for (int i = 0; i < feld.length(); i++) {
-            int id;
-            Unterkunft unterkunft;
-            JSONObject json;
 
-            json = feld.getJSONObject(i);
-            id = json.getInt("id");
-            unterkunft = Unterkunft.fromJSON(json);
+            JSONObject json = feld.getJSONObject(i);
 
-            unterkunftMap.add(id, unterkunft);
+            unterkunftMap.add(json.getInt("id"), Unterkunft.fromJSON(json));
         }
 
         return unterkunftMap;
@@ -64,15 +59,10 @@ public class WebFlirt {
 
         JSONArray feld = new JSONArray(httpGetter.get("categories/json"));
         for (int i = 0; i < feld.length(); i++) {
-            int id;
-            Kategorie kategorie;
-            JSONObject json;
 
-            json = feld.getJSONObject(i);
-            id = json.getInt("id");
-            kategorie = Kategorie.fromJSON(json);
+            JSONObject json = feld.getJSONObject(i);
 
-            kategorieMap.add(id, kategorie);
+            kategorieMap.add(json.getInt("id"), Kategorie.fromJSON(json));
         }
 
         return kategorieMap;

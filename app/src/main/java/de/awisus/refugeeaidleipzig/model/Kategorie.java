@@ -50,7 +50,7 @@ public class Kategorie {
 
         JSONArray subkategorien = json.getJSONArray("subcategories");
         if(subkategorien.length() > 0) {
-            for(int i = 0; i > subkategorien.length(); i++) {
+            for(int i = 0; i < subkategorien.length(); i++) {
                 kategorie.subkategorien.add(Kategorie.fromJSON(subkategorien.getJSONObject(i)));
             }
         }
@@ -65,5 +65,26 @@ public class Kategorie {
 
     public String getName() {
         return name;
+    }
+
+    public String getPath(int[] ids) {
+        return getPath(ids, 0);
+    }
+
+    private String getPath(int[] ids, int index) {
+        if(subkategorien.size() > 0) {
+            return name + " > " +getSubkategorie(ids[index + 1]).getPath(ids, index + 1);
+        } else {
+            return name;
+        }
+    }
+
+    private Kategorie getSubkategorie(int index) {
+        for(Kategorie kategorie : subkategorien) {
+            if(kategorie.id == index) {
+                return kategorie;
+            }
+        }
+        return null;
     }
 }

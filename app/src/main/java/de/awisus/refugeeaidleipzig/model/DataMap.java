@@ -29,6 +29,10 @@ public class DataMap<T> implements Iterable<T> {
         return map.get(id);
     }
 
+    public T remove(Integer i) {
+        return map.remove(i);
+    }
+
     public int size() {
         return map.size();
     }

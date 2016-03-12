@@ -29,8 +29,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import java.util.Collections;
+import java.util.LinkedList;
+
 import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
+import de.awisus.refugeeaidleipzig.model.Bedarf;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 
 /**
@@ -109,10 +113,14 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
      * This private method applies an adapter to the spinner to list all the user's needs
      */
     private void initSpinnerAdapter() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+
+        LinkedList<Bedarf> bedarf = nutzer.getBedarf().asList();
+        Collections.sort(bedarf);
+
+        ArrayAdapter<Bedarf> adapter = new ArrayAdapter<>(
                 context,
                 android.R.layout.simple_spinner_item,
-                nutzer.getBedarfe()
+                bedarf
         );
 
         // Specify the layout to use when the list of choices appears
@@ -146,12 +154,7 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if(which == DialogInterface.BUTTON_POSITIVE) {
-            String bedarf = (String) spBedarf.getSelectedItem();
-
-            if(bedarf != null) {
-                nutzer.loescheBedarf(bedarf);
-            }
+            //
         }
-        getDialog().cancel();
     }
 }
