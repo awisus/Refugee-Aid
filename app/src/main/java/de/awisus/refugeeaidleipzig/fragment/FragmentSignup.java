@@ -19,19 +19,15 @@
 
 package de.awisus.refugeeaidleipzig.fragment;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -39,7 +35,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutionException;
 
-import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
@@ -47,7 +42,6 @@ import de.awisus.refugeeaidleipzig.model.Unterkunft;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
 import de.awisus.refugeeaidleipzig.util.MailValidator;
 import de.awisus.refugeeaidleipzig.util.TextValidator;
-import de.awisus.refugeeaidleipzig.util.Utility;
 
 /**
  * Created on 15.01.16.
@@ -56,21 +50,11 @@ import de.awisus.refugeeaidleipzig.util.Utility;
  * choose.
  * @author Jens Awisus
  */
-public class FragmentSignup extends DialogFragment implements DialogInterface.OnClickListener {
+public class FragmentSignup extends FragmentAnmelden implements DialogInterface.OnClickListener {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Activity as the Context for the accommodation spinner
-     */
-    private MainActivity context;
-
-    /**
-     * Reference to the model to log in the new user (or to be found in the chosen accommodation)
-     */
-    private Model model;
 
     /**
      * Spinner to choose in which accommodation the users stays in
@@ -207,16 +191,6 @@ public class FragmentSignup extends DialogFragment implements DialogInterface.On
         spUnterkunft.setAdapter(adapter);
     }
 
-    /**
-     * This is called to set the parent Activity as the Context for the spinner
-     * @param activity Activity to be set as context
-     */
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        context = (MainActivity) activity;
-    }
-
       ////////////////////////////////////////////////////////////////////////////////
      // Listeners ///////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
@@ -239,25 +213,31 @@ public class FragmentSignup extends DialogFragment implements DialogInterface.On
     }
 
     private void signup() {
-        ProgressDialog ladebalken = Utility.getInstance().zeigeLadebalken(context, getResources().getString(R.string.meldung_anmelden));
-
         // Get inserted name and selected accommodation from views
         Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();
 
-        try {
-            Nutzer nutzer = WebFlirt.getInstance().postNutzer(model,
-                    "name",                     etName.getText().toString(),
-                    "mail",                     etMail.getText().toString(),
-                    "password",                 etPasswort.getText().toString(),
-                    "password_confirmation",    etConformation.getText().toString(),
-                    "accommodation_id",         String.valueOf(unterkunft.getID()));
+        new NutzerPost().execute(
+                "name",                     etName.getText().toString(),
+                "mail",                     etMail.getText().toString(),
+                "password",                 etPasswort.getText().toString(),
+                "password_confirmation",    etConformation.getText().toString(),
+                "accommodation_id",         String.valueOf(unterkunft.getID()));
+    }
 
-            ladebalken.cancel();
-            model.anmelden(nutzer);
-        } catch (JSONException | InterruptedException | ExecutionException e) {
-            ladebalken.cancel();
-            context.checkNavigationMapItem();
-            Toast.makeText(context, R.string.warnung_signup, Toast.LENGTH_SHORT).show();
+    private class NutzerPost extends NutzerGet {
+
+        @Override
+        protected Nutzer doInBackground(String... params) {
+            try {
+                return WebFlirt.getInstance().postNutzer(model,
+                        params[0], params[1],
+                        params[2], params[3],
+                        params[4], params[5],
+                        params[6], params[7],
+                        params[8], params[9]);
+            } catch (JSONException | InterruptedException | ExecutionException e){
+                return null;
+            }
         }
     }
 }

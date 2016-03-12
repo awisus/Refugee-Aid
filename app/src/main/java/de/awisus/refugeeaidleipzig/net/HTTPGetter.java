@@ -37,6 +37,6 @@ public class HTTPGetter {
         catch (IOException e) {
             Log.e("GET: Error", e.toString());
         }
-        return "Cannot Connect";
+        return null;
     }
 }

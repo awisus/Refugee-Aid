@@ -1,6 +1,5 @@
 package de.awisus.refugeeaidleipzig.net;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
@@ -21,7 +20,7 @@ import cz.msebera.android.httpclient.util.EntityUtils;
  *
  * @author Jens Awisus
  */
-public class HTTPPoster extends AsyncTask<String, Void, String> {
+public class HTTPPoster {
 
     private String serverUrl;
     private List<NameValuePair> parameter;
@@ -35,8 +34,7 @@ public class HTTPPoster extends AsyncTask<String, Void, String> {
         parameter.add(new BasicNameValuePair(key, value));
     }
 
-    @Override
-    protected String doInBackground(String... str) {
+    public String post(String... str) {
         try {
             HttpClient httpclient = HttpClients.createDefault();
             HttpPost httppost = new HttpPost(serverUrl +str[0]);
@@ -50,13 +48,9 @@ public class HTTPPoster extends AsyncTask<String, Void, String> {
         }
         catch (IOException e) {
             Log.e("GET: Error", e.toString());
+        } finally {
+            parameter.clear();
         }
-        return "Cannot Connect";
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-        super.onPostExecute(result);
-        parameter.clear();
+        return null;
     }
 }

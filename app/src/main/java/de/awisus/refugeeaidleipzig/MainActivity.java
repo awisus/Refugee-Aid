@@ -45,7 +45,7 @@ import java.util.concurrent.ExecutionException;
 
 import de.awisus.refugeeaidleipzig.fragment.FragmentInfo;
 import de.awisus.refugeeaidleipzig.fragment.FragmentKarte;
-import de.awisus.refugeeaidleipzig.fragment.FragmentLogin;
+import de.awisus.refugeeaidleipzig.fragment.FragmentAnmelden;
 import de.awisus.refugeeaidleipzig.fragment.FragmentProfil;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-
-    private ProgressDialog ladebalken;
 
     /**
      * Layout for the Activity's tool bar and navigation drawer
@@ -113,9 +111,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private class ModelInitialiser extends AsyncTask<String, Integer, Model> {
 
+        private ProgressDialog ladebalken;
+
         @Override
         protected void onPreExecute() {
-            MainActivity.this.ladebalken = Utility.getInstance().zeigeLadebalken(MainActivity.this, getResources().getString(R.string.meldung_aktualisieren));
+            ladebalken = Utility.getInstance().zeigeLadebalken(MainActivity.this, getResources().getString(R.string.meldung_aktualisieren));
         }
 
         @Override
@@ -262,8 +262,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 wechsleFragment(FragmentProfil.newInstance(model));
             } else {
                 // Else, show login dialogue
-                FragmentLogin fragAnmelden;
-                fragAnmelden = FragmentLogin.newInstance(model);
+                FragmentAnmelden fragAnmelden;
+                fragAnmelden = FragmentAnmelden.newInstance(model);
                 fragAnmelden.show(getSupportFragmentManager(), "Anmelden");
             }
         }

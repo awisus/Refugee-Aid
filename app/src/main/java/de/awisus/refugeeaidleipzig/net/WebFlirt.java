@@ -94,9 +94,8 @@ public class WebFlirt {
         for(int i = 0; i < parameter.length; i += 2) {
             httpPoster.addParameter(parameter[i], parameter[i+1]);
         }
-        httpPoster.execute("users/remote");
 
-        return makeNutzer(model, httpPoster.get());
+        return makeNutzer(model, httpPoster.post("users/remote"));
     }
 
     private Nutzer makeNutzer(Model model, String inhalt) throws JSONException {
