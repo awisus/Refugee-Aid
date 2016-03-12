@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -60,6 +61,8 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
      * Activity as the Context for the accommodation spinner
      */
     private MainActivity context;
+
+    private ProgressDialog ladebalken;
 
     /**
      * Text field for the user name
@@ -170,21 +173,40 @@ public class FragmentLogin extends DialogFragment implements DialogInterface.OnC
     }
 
     private void login() {
-        ProgressDialog ladebalken = Utility.getInstance().zeigeLadebalken(context, getResources().getString(R.string.meldung_anmelden));
-
         // Get inserted name and selected accommodation from views
         String name = etName.getText().toString();
         String passwort = etPasswort.getText().toString();
 
-        // remote login with name and password
-        try {
-            Nutzer nutzer = WebFlirt.getInstance().getNutzer(model, name, passwort);
-            ladebalken.cancel();
-            model.anmelden(nutzer);
-        } catch (JSONException | InterruptedException | ExecutionException e) {
-            ladebalken.cancel();
-            context.checkNavigationMapItem();
-            Toast.makeText(context, R.string.warnung_login, Toast.LENGTH_SHORT).show();
+        new NutzerGetter().execute(name, passwort);
+    }
+
+    private class NutzerGetter extends AsyncTask<String, Integer, Nutzer> {
+
+        @Override
+        protected void onPreExecute() {
+            ladebalken = Utility.getInstance().zeigeLadebalken(context, getResources().getString(R.string.meldung_anmelden));
+        }
+
+        @Override
+        protected void onPostExecute(Nutzer result) {
+
+            ladebalken.dismiss();
+
+            if(result == null) {
+                context.checkNavigationMapItem();
+                Toast.makeText(context, R.string.warnung_login, Toast.LENGTH_SHORT).show();
+            } else {
+                model.anmelden(result);
+            }
+        }
+
+        @Override
+        protected Nutzer doInBackground(String... params) {
+            try {
+                return WebFlirt.getInstance().getNutzer(model, params[0], params[1]);
+            } catch (JSONException | InterruptedException | ExecutionException e){
+                return null;
+            }
         }
     }
 }

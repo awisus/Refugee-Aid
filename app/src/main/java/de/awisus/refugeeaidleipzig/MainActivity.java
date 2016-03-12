@@ -96,20 +96,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // set the view by layout xml file
         super.onCreate(savedInstanceState);
-        initialise();
-    }
 
-    private void initialise() {
         if(connected()) {
-            new IAmABackgroundTask().execute();
+            new ModelInitialiser().execute();
         } else {
             Toast.makeText(this, R.string.warnung_netz, Toast.LENGTH_SHORT).show();
         }
     }
 
-    class IAmABackgroundTask extends AsyncTask<String, Integer, Model> {
+    private boolean connected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo nwInfo = connectivityManager.getActiveNetworkInfo();
+        return nwInfo != null && nwInfo.isConnectedOrConnecting();
+    }
+
+    private class ModelInitialiser extends AsyncTask<String, Integer, Model> {
 
         @Override
         protected void onPreExecute() {
@@ -119,17 +121,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected void onPostExecute(Model result) {
 
-            MainActivity.this.model = result;
+            ladebalken.dismiss();
 
-            // this Activity listens to model changes (login and logout)
-            MainActivity.this.model.addObserver(MainActivity.this);
-            MainActivity.this.ladebalken.dismiss();
+            if(result == null) {
+                Toast.makeText(MainActivity.this, R.string.warnung_laden, Toast.LENGTH_SHORT).show();
+            } else {
+                model = result;
 
-            setContentView(R.layout.activity_main);
+                // this Activity listens to model changes (login and logout)
+                model.addObserver(MainActivity.this);
 
-            Toolbar tb = initToolbar();
-            initNavigationDrawer(tb);
-            initContainer();
+                // set the view by layout xml file
+                setContentView(R.layout.activity_main);
+
+                Toolbar tb = initToolbar();
+                initNavigationDrawer(tb);
+                initContainer();
+            }
         }
 
         @Override
@@ -146,15 +154,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return null;
             }
         }
-    }
-
-    private boolean connected() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo nwInfo = connectivityManager.getActiveNetworkInfo();
-        if (nwInfo != null && nwInfo.isConnectedOrConnecting()) {
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -189,25 +188,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         this.navigationView = navigationView;
-    }
-
-    /**
-     * Private method initialising the model and data to be stored in.
-     * (Accommodations and map markers)
-     */
-    private Model initModel() {
-        try {
-            // initialise the model
-            model = new Model();
-            model.setUnterkuenfte(WebFlirt.getInstance().getUnterkuenfte());
-            model.setKategorien(WebFlirt.getInstance().getKategorien());
-
-            // this Activity listens to model changes (login and logout)
-            model.addObserver(this);
-            return model;
-        } catch (IOException | JSONException | InterruptedException | ExecutionException e){
-            return null;
-        }
     }
 
     /**
