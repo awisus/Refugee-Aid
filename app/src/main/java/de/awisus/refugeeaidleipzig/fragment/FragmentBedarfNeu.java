@@ -20,7 +20,9 @@
 package de.awisus.refugeeaidleipzig.fragment;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -29,6 +31,8 @@ import android.widget.EditText;
 
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
+import de.awisus.refugeeaidleipzig.net.WebFlirt;
+import de.awisus.refugeeaidleipzig.util.Utility;
 
 /**
  * Created on 12.01.16.
@@ -109,7 +113,48 @@ public class FragmentBedarfNeu extends DialogFragment implements DialogInterface
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if(which == DialogInterface.BUTTON_POSITIVE) {
-            //
+            try {
+                int nutzerID = nutzer.getId();
+                int bedarfID = Integer.parseInt(etBedarfNeu.getText().toString());
+
+                new BedarfPost().execute(
+                        "user_id",      String.valueOf(nutzerID),
+                        "category_id",  String.valueOf(bedarfID));
+            } catch (Exception e) {
+                return;
+            }
+        }
+    }
+
+    private class BedarfPost extends AsyncTask<String, Integer, Integer> {
+
+        private ProgressDialog ladebalken;
+
+        @Override
+        protected void onPreExecute() {
+            ladebalken = Utility.getInstance().zeigeLadebalken(getActivity(), getResources().getString(R.string.meldung_anmelden));
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+            try {
+                return WebFlirt.getInstance().postBedarf(params[0], params[1], params[2], params[3]);
+            } catch (Exception e){
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+
+            if(result == null) {
+//                Toast.makeText(getActivity(), "Konnte nicht hinzugefügt werden", Toast.LENGTH_SHORT).show();
+            } else {
+                //
+            }
+
+            dismiss();
+            ladebalken.dismiss();
         }
     }
 }

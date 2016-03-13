@@ -12,6 +12,7 @@ public class Utility {
 
     public static final Utility INSTANCE = new Utility();
 
+    private Utility() {}
     public static Utility getInstance() {
         return INSTANCE;
     }

@@ -12,6 +12,7 @@ public class NeedParser {
 
     public static NeedParser INSTANCE = new NeedParser();
 
+    private NeedParser() {}
     public static NeedParser getInstance() {
         return INSTANCE;
     }

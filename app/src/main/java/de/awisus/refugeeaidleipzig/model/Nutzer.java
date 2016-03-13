@@ -85,7 +85,7 @@ public class Nutzer extends Observable {
         nutzer.unterkunft      = unterkuenfte.getFromID(unterkunftID);
         nutzer.bedarf          = NeedParser.getInstance().parse(kategorien, bedarfIDs);
 
-        // Better trim Strings, get rid of white spaces
+        // Better trim Strings, perform rid of white spaces
         nutzer.name = nutzer.name.trim();
         nutzer.mail = nutzer.mail.trim();
 
@@ -158,7 +158,6 @@ public class Nutzer extends Observable {
         } else {
             String str = "";
             for(int i = 0; i < bedarf.size(); i++) {
-                str += " - ";
                 str += bedarf.get(i);
                 if(i < bedarf.size() - 1) {
                     str += "\n";

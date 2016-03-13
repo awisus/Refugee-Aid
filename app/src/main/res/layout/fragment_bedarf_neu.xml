@@ -9,5 +9,5 @@
         android:id="@+id/etBedarfNeu"
         android:maxLines="1"
         android:singleLine="true"
-        android:hint="@string/string_bezeichnung" />
+        android:hint="ID" />
 </RelativeLayout>

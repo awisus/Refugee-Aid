@@ -11,6 +11,7 @@ public class MailValidator {
 
     public static final MailValidator INSTANCE = new MailValidator();
 
+    private MailValidator() {}
     public static MailValidator getInstance() {
         return INSTANCE;
     }

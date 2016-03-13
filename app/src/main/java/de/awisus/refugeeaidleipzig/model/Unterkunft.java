@@ -90,7 +90,7 @@ public class Unterkunft implements Comparable<Unterkunft> {
                                       json.getDouble("latitude")
         );
 
-        // Better trim Strings, get rid of white spaces
+        // Better trim Strings, perform rid of white spaces
         unterkunft.stadt = unterkunft.stadt.trim();
         unterkunft.name = unterkunft.name.trim();
 

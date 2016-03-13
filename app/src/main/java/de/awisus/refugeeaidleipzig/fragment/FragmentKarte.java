@@ -158,7 +158,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
 
     private void setMarkers() {
 
-        // get accommodations loaded into the model
+        // perform accommodations loaded into the model
         final DataMap<Unterkunft> unterkuenfte = model.getUnterkuenfte();
 
         // Bring marker for each accommodation to the map
