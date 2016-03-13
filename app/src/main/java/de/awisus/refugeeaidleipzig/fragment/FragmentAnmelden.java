@@ -95,6 +95,8 @@ public class FragmentAnmelden extends FragmentLogin implements View.OnClickListe
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_anmelden, null);
 
+        warnungID = R.string.warnung_anmelden;
+
         etName = (EditText) view.findViewById(R.id.etName);
         etPasswort = (EditText) view.findViewById(R.id.etPassword);
         btAnmelden = (Button) view.findViewById(R.id.btAnmelden);
@@ -113,8 +115,8 @@ public class FragmentAnmelden extends FragmentLogin implements View.OnClickListe
         return dialog;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    // Listeners ///////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////
+     // Listeners ///////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -122,8 +124,6 @@ public class FragmentAnmelden extends FragmentLogin implements View.OnClickListe
     public void onClick(View view) {
         if (view.getId() == R.id.btAnmelden) {
             login();
-
-            dismiss();
         }
         if (view.getId() == R.id.btNeu) {
             FragmentSignup fragmentSignup;

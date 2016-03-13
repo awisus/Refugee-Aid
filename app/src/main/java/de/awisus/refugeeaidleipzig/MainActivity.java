@@ -202,7 +202,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container, FragmentKarte.newInstance(this, model));
         transaction.commit();
-        checkNavigationMapItem();
+
+        selectedItemID = R.id.nav_karte;
+        correctNavigationItem();
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -221,9 +223,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Boolean anmeldung = (Boolean) data;
         if(anmeldung.equals(Boolean.TRUE)) {    // Show profile on log in
             wechsleFragment(FragmentProfil.newInstance(model));
+
+            selectedItemID = R.id.nav_profil;
+            correctNavigationItem();
         } else {                                // return to map on log off
             wechsleFragment(FragmentKarte.newInstance(this, model));
-            checkNavigationMapItem();
+
+            selectedItemID = R.id.nav_karte;
+            correctNavigationItem();
+
             Toast.makeText(this, R.string.meldung_abmelden, Toast.LENGTH_SHORT).show();
         }
     }
@@ -243,6 +251,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+
+        correctNavigationItem();
     }
 
     /**
@@ -261,10 +271,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Show user profile if logged on
         if(id == R.id.nav_profil && id != selectedItemID) {
-            selectedItemID = id;
-
             if(model.angemeldet()) {
                 wechsleFragment(FragmentProfil.newInstance(model));
+                selectedItemID = R.id.nav_profil;
             } else {
                 // Else, show login dialogue
                 FragmentAnmelden fragAnmelden;
@@ -275,20 +284,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Switch to Google Map
         if(id == R.id.nav_karte && id != selectedItemID) {
-            selectedItemID = id;
             wechsleFragment(FragmentKarte.newInstance(this, model));
+            selectedItemID = R.id.nav_karte;
         }
 
         // Show About Dialogue
         if(id == R.id.nav_ueber) {
             FragmentInfo fragUeber =
             FragmentInfo.newInstance(
-                getResources().getString(R.string.nav_titel_ueber),
-                getResources().getString(R.string.info)
-                        +"\n\nv" +BuildConfig.VERSION_NAME);
+                    getResources().getString(R.string.nav_titel_ueber),
+                    getResources().getString(R.string.info) +"\n\nv" +BuildConfig.VERSION_NAME);
 
             fragUeber.show(getSupportFragmentManager(), "Info");
         }
+
+        correctNavigationItem();
 
         // Close drawer
         drawer.closeDrawer(GravityCompat.START);
@@ -305,8 +315,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.commit();
     }
 
-    public void checkNavigationMapItem() {
-        navigationView.getMenu().getItem(1).setChecked(true);
-        selectedItemID = R.id.nav_karte;
+    private void correctNavigationItem() {
+        int neu = 0;
+        if(selectedItemID == R.id.nav_karte) {
+            neu = 1;
+        }
+        navigationView.getMenu().getItem(neu).setChecked(true);
     }
 }

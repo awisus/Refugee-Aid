@@ -104,6 +104,8 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_signup, null);
 
+        warnungID = R.string.warnung_signup;
+
         spUnterkunft = (Spinner) view.findViewById(R.id.spUnterkunft);
         etName = (EditText) view.findViewById(R.id.etName);
         etMail = (EditText) view.findViewById(R.id.etMail);
@@ -210,8 +212,6 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
     public void onClick(DialogInterface dialog, int which) {
         if(which == DialogInterface.BUTTON_POSITIVE) {
             signup();
-        } else {
-            context.checkNavigationMapItem();
         }
     }
 

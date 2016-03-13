@@ -48,6 +48,8 @@ public abstract class FragmentLogin extends DialogFragment {
      */
     protected Model model;
 
+    protected int warnungID;
+
     /**
      * This is called to set the parent Activity as the Context of the Fragment
      *
@@ -72,12 +74,12 @@ public abstract class FragmentLogin extends DialogFragment {
         protected void onPostExecute(Nutzer result) {
 
             if(result == null) {
-                context.checkNavigationMapItem();
-                Toast.makeText(context, R.string.warnung_login, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, warnungID, Toast.LENGTH_SHORT).show();
             } else {
                 model.anmelden(result);
             }
 
+            dismiss();
             ladebalken.dismiss();
         }
     }
