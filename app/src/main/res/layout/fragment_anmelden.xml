@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin">
+    android:padding="@dimen/frag_margin">
 
     <TextView
         android:layout_width="wrap_content"
@@ -46,19 +43,29 @@
         android:layout_alignParentEnd="true"
         android:inputType="textPassword"
         android:layout_below="@+id/tvPasswort"
-        android:paddingBottom="@dimen/activity_horizontal_margin" />
+        android:layout_marginBottom="@dimen/activity_horizontal_margin" />
 
     <Button
         style="?android:attr/borderlessButtonStyle"
-        android:textColor="@color/colorPrimary"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Neu? Jetzt Konto erstellen"
+        android:text="@string/button_konto_neu"
         android:id="@+id/btNeu"
-        android:layout_below="@+id/etPassword"
+        android:layout_below="@+id/btAnmelden"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin" />
+        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
+    <Button
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_anmelden"
+        android:id="@+id/btAnmelden"
+        android:layout_below="@+id/etPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/frag_margin" />
 
 </RelativeLayout>

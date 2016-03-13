@@ -227,7 +227,7 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
                 "accommodation_id",         String.valueOf(unterkunft.getID()));
     }
 
-    private class NutzerPost extends NutzerGet {
+    private class NutzerPost extends FragmentLogin.NutzerGet {
 
         @Override
         protected Nutzer doInBackground(String... params) {

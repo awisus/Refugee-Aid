@@ -25,12 +25,14 @@
     <string name="titel_bedarf_entfernen">Bedarf entfernen</string>
     <string name="titel_bedarf_neu">Neuen Bedarf angeben</string>
 
-    <string name="dialog_login">Anmelden</string>
+    <string name="dialog_anmelden">Anmelden</string>
     <string name="dialog_loeschen">Löschen</string>
     <string name="dialog_hinzufuegen">Hinzufügen</string>
     <string name="dialog_abbrechen">Abbrechen</string>
     <string name="dialog_ok">In Ordnung</string>
     <string name="dialog_signup">Konto erstellen</string>
+
+    <string name="button_konto_neu">Neu? Hier Konto erstellen</string>
 
     <string name="string_keine_bedarfe">Kein Bedarf</string>
     <string name="string_bedarfe">Bedarf: </string>

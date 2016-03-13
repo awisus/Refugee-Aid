@@ -20,7 +20,6 @@
 package de.awisus.refugeeaidleipzig.fragment;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -36,7 +35,7 @@ import de.awisus.refugeeaidleipzig.R;
  * string
  * @author Jens Awisus
  */
-public class FragmentInfo extends DialogFragment implements DialogInterface.OnClickListener {
+public class FragmentInfo extends DialogFragment {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
@@ -87,27 +86,11 @@ public class FragmentInfo extends DialogFragment implements DialogInterface.OnCl
         tvInfo.setText(inhalt);
 
         builder.setView(view);
-        builder.setPositiveButton(R.string.dialog_ok, this);
 
         Dialog dialog;
         dialog = builder.create();
         dialog.setTitle(titel);
 
         return dialog;
-    }
-
-      ////////////////////////////////////////////////////////////////////////////////
-     // Listener ////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Listens to clicks on dialogue buttons
-     * just closing the window
-     * @param dialog DialogInterface
-     * @param which number indicating the pressed button
-     */
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        getDialog().cancel();
     }
 }

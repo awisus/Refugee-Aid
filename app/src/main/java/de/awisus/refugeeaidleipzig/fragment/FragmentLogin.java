@@ -25,15 +25,10 @@ import android.os.AsyncTask;
 import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
-import org.json.JSONException;
-
-import java.util.concurrent.ExecutionException;
-
 import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
-import de.awisus.refugeeaidleipzig.net.WebFlirt;
 import de.awisus.refugeeaidleipzig.util.Utility;
 
 /**
@@ -64,9 +59,9 @@ public abstract class FragmentLogin extends DialogFragment {
         context = (MainActivity) activity;
     }
 
-    protected class NutzerGet extends AsyncTask<String, Integer, Nutzer> {
+    protected abstract class NutzerGet extends AsyncTask<String, Integer, Nutzer> {
 
-        private ProgressDialog ladebalken;
+        protected ProgressDialog ladebalken;
 
         @Override
         protected void onPreExecute() {
@@ -84,16 +79,6 @@ public abstract class FragmentLogin extends DialogFragment {
             }
 
             ladebalken.dismiss();
-        }
-
-        @Override
-        protected Nutzer doInBackground(String... params) {
-            try {
-                return WebFlirt.getInstance().getNutzer(
-                        model.getUnterkuenfte(), model.getKategorien(), params[0], params[1]);
-            } catch (JSONException | InterruptedException | ExecutionException e) {
-                return null;
-            }
         }
     }
 }
