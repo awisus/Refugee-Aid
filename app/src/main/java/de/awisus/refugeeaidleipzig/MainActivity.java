@@ -224,16 +224,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(anmeldung.equals(Boolean.TRUE)) {    // Show profile on log in
             wechsleFragment(FragmentProfil.newInstance(model));
             selectedItemID = R.id.nav_profil;
-
             correctNavigationItem();
         } else {                                // return to map on log off
             wechsleFragment(FragmentKarte.newInstance(this, model));
             selectedItemID = R.id.nav_karte;
+            correctNavigationItem();
 
             Toast.makeText(this, R.string.meldung_abmelden, Toast.LENGTH_SHORT).show();
         }
-
-        correctNavigationItem();
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -274,8 +272,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(model.angemeldet()) {
                 wechsleFragment(FragmentProfil.newInstance(model));
                 selectedItemID = R.id.nav_profil;
+                correctNavigationItem();
             } else {
                 selectedItemID = R.id.nav_karte;
+                correctNavigationItem();
 
                 // Else, show login dialogue
                 FragmentAnmelden fragAnmelden;
@@ -288,9 +288,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(id == R.id.nav_karte && id != selectedItemID) {
             wechsleFragment(FragmentKarte.newInstance(this, model));
             selectedItemID = R.id.nav_karte;
+            correctNavigationItem();
         }
-
-        correctNavigationItem();
 
         // Show About Dialogue
         if(id == R.id.nav_ueber) {
