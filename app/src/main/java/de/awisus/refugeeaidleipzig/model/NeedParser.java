@@ -21,12 +21,11 @@ public class NeedParser {
 
         for(int i = 0; i < json.length(); i++) {
             int[] ids = stringToInts(json.getString(i));
-            int id = ids[ids.length - 1];
 
             Kategorie kategorie;
             kategorie = kategorien.getFromID(ids[0]);
 
-            bedarf.add(i, new Bedarf(id, kategorie.getPath(ids)));
+            bedarf.add(i, kategorie.toBedarf(ids));
         }
 
         return bedarf;

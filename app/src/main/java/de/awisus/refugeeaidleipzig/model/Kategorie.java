@@ -67,15 +67,17 @@ public class Kategorie {
         return name;
     }
 
-    public String getPath(int[] ids) {
-        return getPath(ids, 0);
+    public Bedarf toBedarf(int[] ids) {
+        Bedarf bedarf;
+        bedarf = new Bedarf();
+        toBedarf(bedarf, ids, 0);
+        return bedarf;
     }
 
-    private String getPath(int[] ids, int index) {
+    private void toBedarf(Bedarf bedarf, int[] ids, int index) {
+        bedarf.put(id, name);
         if(subkategorien.size() > 0) {
-            return name + " > " +getSubkategorie(ids[index + 1]).getPath(ids, index + 1);
-        } else {
-            return name;
+            getSubkategorie(ids[index + 1]).toBedarf(bedarf, ids, index + 1);
         }
     }
 

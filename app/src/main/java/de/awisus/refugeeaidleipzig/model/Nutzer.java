@@ -96,8 +96,8 @@ public class Nutzer extends Observable {
      // Methods /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    public void addBedarf(String name) {
-        bedarf.add(bedarf.size(), new Bedarf(id, name));
+    public void addBedarf(Bedarf bedarf) {
+        this.bedarf.add(bedarf.getId(), bedarf);
         setChanged();
         notifyObservers();
     }
@@ -112,12 +112,20 @@ public class Nutzer extends Observable {
      // Getters /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    public int getId() {
+        return id;
+    }
+
     /**
      * Get user name
      * @return user name
      */
     public String getName() {
         return name;
+    }
+
+    public String getMail() {
+        return mail;
     }
 
     /**

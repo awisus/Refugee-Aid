@@ -19,23 +19,31 @@
 
 package de.awisus.refugeeaidleipzig.model;
 
+import java.util.LinkedList;
+
 /**
- * Created by Jens Awisus on 11.01.16.
+ * Created by on 11.01.16.
+ *
+ * @author Jens Awisus
  */
 public class Bedarf implements Comparable<Bedarf> {
 
     private int id;
-    private String name;
+    private LinkedList<String> pfad;
 
 
-    public Bedarf(int id, String name) {
+    public Bedarf() {
+        this.pfad = new LinkedList<>();
+    }
+
+    public void put(int id, String name) {
         this.id = id;
-        this.name = name;
+        this.pfad.add(name);
     }
 
     @Override
     public int compareTo(Bedarf another) {
-        return -another.name.compareTo(name);
+        return -another.toString().compareTo(toString());
     }
 
     public int getId() {
@@ -44,6 +52,10 @@ public class Bedarf implements Comparable<Bedarf> {
 
     @Override
     public String toString() {
-        return name;
+        String str = pfad.get(0);
+        for(int i = 1; i < pfad.size(); i++) {
+            str += " > " + pfad.get(i);
+        }
+        return str;
     }
 }
