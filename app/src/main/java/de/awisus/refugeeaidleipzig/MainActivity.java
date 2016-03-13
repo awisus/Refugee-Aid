@@ -100,9 +100,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
 
         if(connected()) {
-            new ModelInitialiser().execute();
+            new Initialiser().execute();
         } else {
-            Toast.makeText(this, R.string.warnung_netz, Toast.LENGTH_SHORT).show();
+            setContentView(R.layout.activity_main_error);
         }
     }
 
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return nwInfo != null && nwInfo.isConnectedOrConnecting();
     }
 
-    private class ModelInitialiser extends AsyncTask<String, Integer, Model> {
+    private class Initialiser extends AsyncTask<String, Integer, Model> {
 
         private ProgressDialog ladebalken;
 
