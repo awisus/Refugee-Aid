@@ -223,17 +223,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Boolean anmeldung = (Boolean) data;
         if(anmeldung.equals(Boolean.TRUE)) {    // Show profile on log in
             wechsleFragment(FragmentProfil.newInstance(model));
-
             selectedItemID = R.id.nav_profil;
+
             correctNavigationItem();
         } else {                                // return to map on log off
             wechsleFragment(FragmentKarte.newInstance(this, model));
-
             selectedItemID = R.id.nav_karte;
-            correctNavigationItem();
 
             Toast.makeText(this, R.string.meldung_abmelden, Toast.LENGTH_SHORT).show();
         }
+
+        correctNavigationItem();
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -275,6 +275,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 wechsleFragment(FragmentProfil.newInstance(model));
                 selectedItemID = R.id.nav_profil;
             } else {
+                selectedItemID = R.id.nav_karte;
+
                 // Else, show login dialogue
                 FragmentAnmelden fragAnmelden;
                 fragAnmelden = FragmentAnmelden.newInstance(model);
@@ -288,6 +290,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             selectedItemID = R.id.nav_karte;
         }
 
+        correctNavigationItem();
+
         // Show About Dialogue
         if(id == R.id.nav_ueber) {
             FragmentInfo fragUeber =
@@ -297,8 +301,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             fragUeber.show(getSupportFragmentManager(), "Info");
         }
-
-        correctNavigationItem();
 
         // Close drawer
         drawer.closeDrawer(GravityCompat.START);
@@ -320,6 +322,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(selectedItemID == R.id.nav_karte) {
             neu = 1;
         }
+
         navigationView.getMenu().getItem(neu).setChecked(true);
     }
 }
