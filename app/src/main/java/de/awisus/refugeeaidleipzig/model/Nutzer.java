@@ -23,8 +23,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Observable;
-
 /**
  * Created on 12.01.16.
  *
@@ -33,13 +31,11 @@ import java.util.Observable;
  * removed
  * @author Jens Awisus
  */
-public class Nutzer extends Observable {
+public class Nutzer extends ObservableIDObject {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-
-    private int id;
 
     /**
      * User name
@@ -97,7 +93,7 @@ public class Nutzer extends Observable {
     ////////////////////////////////////////////////////////////////////////////////
 
     public void addBedarf(Bedarf bedarf) {
-        this.bedarf.add(bedarf.getId(), bedarf);
+        this.bedarf.add(bedarf);
         setChanged();
         notifyObservers();
     }

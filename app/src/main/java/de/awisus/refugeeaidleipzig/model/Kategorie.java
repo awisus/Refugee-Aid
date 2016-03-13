@@ -30,9 +30,7 @@ import java.util.LinkedList;
  *
  * @author Jens Awisus
  */
-public class Kategorie {
-
-    private int id;
+public class Kategorie extends IDObject {
     private String name;
 
     private LinkedList<Kategorie> subkategorien;
@@ -58,10 +56,6 @@ public class Kategorie {
         return kategorie;
     }
 
-
-    public int getId() {
-        return id;
-    }
 
     public String getName() {
         return name;

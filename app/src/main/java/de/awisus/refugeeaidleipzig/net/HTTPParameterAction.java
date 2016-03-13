@@ -24,7 +24,7 @@ public abstract class HTTPParameterAction extends HTTPAction {
         parameter.add(new BasicNameValuePair(key, value));
     }
 
-    protected String paramString(String url) {
+    protected String paramUrl(String url) {
         if(parameter.size() > 0) {
             url += "?";
             for(int i = 0; i < parameter.size(); i++) {

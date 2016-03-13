@@ -44,7 +44,7 @@ public class WebFlirt {
 
             JSONObject json = feld.getJSONObject(i);
 
-            unterkunftMap.add(json.getInt("id"), Unterkunft.fromJSON(kategorien, json));
+            unterkunftMap.add(Unterkunft.fromJSON(kategorien, json));
         }
 
         return unterkunftMap;
@@ -62,7 +62,7 @@ public class WebFlirt {
 
             JSONObject json = feld.getJSONObject(i);
 
-            kategorieMap.add(json.getInt("id"), Kategorie.fromJSON(json));
+            kategorieMap.add(Kategorie.fromJSON(json));
         }
 
         return kategorieMap;
@@ -104,14 +104,14 @@ public class WebFlirt {
     }
 
     public Integer deleteBedarf(String... parameter) throws Exception {
-        HTTPPost httpPost;
-        httpPost = new HTTPPost(SERVER_URL);
+        HTTPDelete httpDelete;
+        httpDelete = new HTTPDelete(SERVER_URL);
 
         for(int i = 0; i < parameter.length; i += 2) {
-            httpPost.addParameter(parameter[i], parameter[i+1]);
+            httpDelete.addParameter(parameter[i], parameter[i+1]);
         }
 
-        String antwort = httpPost.perform("needs/remote");
+        String antwort = httpDelete.perform("needs/remote");
 
         Log.d("Antwort", antwort);
 

@@ -224,7 +224,7 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
                 "mail",                     etMail.getText().toString(),
                 "password",                 etPasswort.getText().toString(),
                 "password_confirmation",    etConformation.getText().toString(),
-                "accommodation_id",         String.valueOf(unterkunft.getID()));
+                "accommodation_id",         String.valueOf(unterkunft.getId()));
     }
 
     private class NutzerPost extends FragmentLogin.NutzerGet {

@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -159,8 +160,11 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
     public void onClick(DialogInterface dialog, int which) {
         if(which == DialogInterface.BUTTON_POSITIVE) {
             Bedarf bedarf = (Bedarf) spBedarf.getSelectedItem();
+            Log.d("Bedarf ID", "" +bedarf.getId());
 
-            // nutzer.loescheBedarf(bedarf.getId());
+            new BedarfDelete().execute(
+                    "user_id",      String.valueOf(nutzer.getId()),
+                    "category_id",  String.valueOf(bedarf.getId()));
         }
     }
 
@@ -176,7 +180,7 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
         @Override
         protected Integer doInBackground(String... params) {
             try {
-                return WebFlirt.getInstance().postBedarf(params[0], params[1], params[2], params[3]);
+                return WebFlirt.getInstance().deleteBedarf(params[0], params[1], params[2], params[3]);
             } catch (Exception e){
                 return null;
             }
@@ -188,7 +192,7 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
             if(result == null) {
 //                Toast.makeText(getActivity(), "Konnte nicht hinzugefügt werden", Toast.LENGTH_SHORT).show();
             } else {
-                //
+                nutzer.loescheBedarf(result);
             }
 
             dismiss();

@@ -9,7 +9,7 @@ import java.util.LinkedList;
  *
  * @author Jens Awisus
  */
-public class DataMap<T> implements Iterable<T> {
+public class DataMap<T extends IDObject> implements Iterable<T> {
 
     private HashMap<Integer, T> map;
 
@@ -17,8 +17,8 @@ public class DataMap<T> implements Iterable<T> {
         map = new HashMap<>();
     }
 
-    public void add(int id, T daten) {
-        map.put(id, daten);
+    public void add(T daten) {
+        map.put(daten.getId(), daten);
     }
 
     public T get(int index) {

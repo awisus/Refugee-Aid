@@ -18,7 +18,7 @@ public class NeedParser {
     }
 
     public DataMap<Bedarf> parse(DataMap<Kategorie> kategorien, JSONArray json) throws JSONException {
-        DataMap<Bedarf> bedarf = new DataMap<>();
+        DataMap<Bedarf> bedarfe = new DataMap<>();
 
         for(int i = 0; i < json.length(); i++) {
             int[] ids = stringToInts(json.getString(i));
@@ -26,10 +26,10 @@ public class NeedParser {
             Kategorie kategorie;
             kategorie = kategorien.getFromID(ids[0]);
 
-            bedarf.add(i, kategorie.toBedarf(ids));
+            bedarfe.add(kategorie.toBedarf(ids));
         }
 
-        return bedarf;
+        return bedarfe;
     }
 
     private int[] stringToInts(String input) {

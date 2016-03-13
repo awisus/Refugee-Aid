@@ -23,9 +23,8 @@ public class HTTPDelete extends HTTPParameterAction {
 
     public String perform(String url) {
         try {
-
             HttpClient httpclient = HttpClients.createDefault();
-            HttpDelete httpdelete = new HttpDelete(serverUrl + url);
+            HttpDelete httpdelete = new HttpDelete(serverUrl +paramUrl(url));
             httpdelete.addHeader("accept", "application/json");
             
             HttpResponse response = httpclient.execute(httpdelete);

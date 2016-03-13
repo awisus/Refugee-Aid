@@ -26,9 +26,8 @@ import java.util.LinkedList;
  *
  * @author Jens Awisus
  */
-public class Bedarf implements Comparable<Bedarf> {
+public class Bedarf extends IDObject implements Comparable<Bedarf> {
 
-    private int id;
     private LinkedList<String> pfad;
 
 
@@ -44,10 +43,6 @@ public class Bedarf implements Comparable<Bedarf> {
     @Override
     public int compareTo(Bedarf another) {
         return -another.toString().compareTo(toString());
-    }
-
-    public int getId() {
-        return id;
     }
 
     @Override
