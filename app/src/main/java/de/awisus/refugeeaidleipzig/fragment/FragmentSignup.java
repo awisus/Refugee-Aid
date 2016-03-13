@@ -238,13 +238,7 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
         protected Nutzer doInBackground(String... params) {
             try {
                 return WebFlirt.getInstance().postNutzer(
-                        model.getUnterkuenfte(),
-                        model.getKategorien(),
-                        params[0], params[1],
-                        params[2], params[3],
-                        params[4], params[5],
-                        params[6], params[7],
-                        params[8], params[9]);
+                        model.getUnterkuenfte(), model.getKategorien(), params);
             } catch (JSONException | InterruptedException | ExecutionException e){
                 return null;
             }
