@@ -247,8 +247,8 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         @Override
         protected DataMap<Unterkunft> doInBackground(String... params) {
             try {
-                return WebFlirt.getInstance().getUnterkuenfte(model);
-            } catch (IOException | JSONException | InterruptedException | ExecutionException e){
+                return WebFlirt.getInstance().getUnterkuenfte(model.getKategorien());
+            } catch (IOException | JSONException | InterruptedException | ExecutionException e) {
                 return null;
             }
         }

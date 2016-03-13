@@ -71,7 +71,7 @@ public class Unterkunft implements Comparable<Unterkunft> {
         bedarf = new DataMap<>();
     }
 
-    public static Unterkunft fromJSON(Model model, JSONObject json) throws JSONException {
+    public static Unterkunft fromJSON(DataMap<Kategorie> kategorien, JSONObject json) throws JSONException {
 
         // Instatiate new accommodation
         Unterkunft unterkunft = new Unterkunft();
@@ -84,7 +84,7 @@ public class Unterkunft implements Comparable<Unterkunft> {
         unterkunft.name             = json.getString("name");
         unterkunft.groesse          = json.getInt("space");
         unterkunft.anzahlBewohner   = json.getInt("residents");
-        unterkunft.bedarf           = new NeedParser(model).parse(bedarfIDs);
+        unterkunft.bedarf           = NeedParser.getInstance().parse(kategorien, bedarfIDs);
         unterkunft.latLng = new LatLng(
                                       json.getDouble("longitude"),
                                       json.getDouble("latitude")

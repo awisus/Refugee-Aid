@@ -10,13 +10,13 @@ import org.json.JSONException;
  */
 public class NeedParser {
 
-    private Model model;
+    public static NeedParser INSTANCE = new NeedParser();
 
-    public NeedParser(Model model) {
-        this.model = model;
+    public static NeedParser getInstance() {
+        return INSTANCE;
     }
 
-    public DataMap<Bedarf> parse(JSONArray json) throws JSONException {
+    public DataMap<Bedarf> parse(DataMap<Kategorie> kategorien, JSONArray json) throws JSONException {
         DataMap<Bedarf> bedarf = new DataMap<>();
 
         for(int i = 0; i < json.length(); i++) {
@@ -24,7 +24,7 @@ public class NeedParser {
             int id = ids[ids.length - 1];
 
             Kategorie kategorie;
-            kategorie = model.getKategorieFromID(ids[0]);
+            kategorie = kategorien.getFromID(ids[0]);
 
             bedarf.add(i, new Bedarf(id, kategorie.getPath(ids)));
         }

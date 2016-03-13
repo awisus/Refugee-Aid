@@ -70,20 +70,20 @@ public class Nutzer extends Observable {
         bedarf = new DataMap<>();
     }
 
-    public static Nutzer fromJSON(Model model, JSONObject json) throws JSONException {
+    public static Nutzer fromJSON(DataMap<Unterkunft> unterkuenfte, DataMap<Kategorie> kategorien, JSONObject json) throws JSONException {
         // Instatiate new user
         Nutzer nutzer = new Nutzer();
 
         // put data to it from json object
         int unterkunftID       = json.getInt("accommodation_id");
 
-        JSONArray bedarfIDs = json.getJSONArray("needs");
+        JSONArray bedarfIDs    = json.getJSONArray("needs");
 
         nutzer.id              = json.getInt("id");
         nutzer.name            = json.getString("name");
         nutzer.mail            = json.getString("mail");
-        nutzer.unterkunft      = model.getUnterkunftFromID(unterkunftID);
-        nutzer.bedarf          = new NeedParser(model).parse(bedarfIDs);
+        nutzer.unterkunft      = unterkuenfte.getFromID(unterkunftID);
+        nutzer.bedarf          = NeedParser.getInstance().parse(kategorien, bedarfIDs);
 
         // Better trim Strings, get rid of white spaces
         nutzer.name = nutzer.name.trim();

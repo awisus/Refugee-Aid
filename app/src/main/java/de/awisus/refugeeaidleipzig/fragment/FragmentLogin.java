@@ -89,8 +89,9 @@ public abstract class FragmentLogin extends DialogFragment {
         @Override
         protected Nutzer doInBackground(String... params) {
             try {
-                return WebFlirt.getInstance().getNutzer(model, params[0], params[1]);
-            } catch (JSONException | InterruptedException | ExecutionException e){
+                return WebFlirt.getInstance().getNutzer(
+                        model.getUnterkuenfte(), model.getKategorien(), params[0], params[1]);
+            } catch (JSONException | InterruptedException | ExecutionException e) {
                 return null;
             }
         }

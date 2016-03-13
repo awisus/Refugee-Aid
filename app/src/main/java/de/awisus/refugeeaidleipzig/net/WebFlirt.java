@@ -9,7 +9,6 @@ import java.util.concurrent.ExecutionException;
 
 import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Kategorie;
-import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 
@@ -24,15 +23,14 @@ public class WebFlirt {
     public static final WebFlirt INSTANCE = new WebFlirt();
 
 
-    private WebFlirt() {
-    }
+    private WebFlirt() {}
 
     public static WebFlirt getInstance() {
         return INSTANCE;
     }
 
 
-    public DataMap<Unterkunft> getUnterkuenfte(Model model) throws IOException, JSONException, InterruptedException, ExecutionException {
+    public DataMap<Unterkunft> getUnterkuenfte(DataMap<Kategorie> kategorien) throws IOException, JSONException, InterruptedException, ExecutionException {
 
         DataMap<Unterkunft> unterkunftMap = new DataMap<>();
 
@@ -44,7 +42,7 @@ public class WebFlirt {
 
             JSONObject json = feld.getJSONObject(i);
 
-            unterkunftMap.add(json.getInt("id"), Unterkunft.fromJSON(model, json));
+            unterkunftMap.add(json.getInt("id"), Unterkunft.fromJSON(kategorien, json));
         }
 
         return unterkunftMap;
@@ -68,14 +66,14 @@ public class WebFlirt {
         return kategorieMap;
     }
 
-    public Nutzer getNutzer(Model model, String name, String passwort) throws JSONException, InterruptedException, ExecutionException {
+    public Nutzer getNutzer(DataMap<Unterkunft> unterkuenfte, DataMap<Kategorie> kategorien, String name, String passwort) throws JSONException, InterruptedException, ExecutionException {
         HTTPGetter httpGetter;
         httpGetter = new HTTPGetter(SERVER_URL);
 
-        return makeNutzer(model, httpGetter.get("getUser/" + name + "/" + passwort));
+        return makeNutzer(unterkuenfte, kategorien, httpGetter.get("getUser/" + name + "/" + passwort));
     }
 
-    public Nutzer postNutzer(Model model, String... parameter) throws JSONException, InterruptedException, ExecutionException {
+    public Nutzer postNutzer(DataMap<Unterkunft> unterkuenfte, DataMap<Kategorie> kategorien, String... parameter) throws JSONException, InterruptedException, ExecutionException {
         HTTPPoster httpPoster;
         httpPoster = new HTTPPoster(SERVER_URL);
 
@@ -83,10 +81,10 @@ public class WebFlirt {
             httpPoster.addParameter(parameter[i], parameter[i+1]);
         }
 
-        return makeNutzer(model, httpPoster.post("users/remote"));
+        return makeNutzer(unterkuenfte, kategorien, httpPoster.post("users/remote"));
     }
 
-    private Nutzer makeNutzer(Model model, String inhalt) throws JSONException {
-        return Nutzer.fromJSON(model, new JSONObject(inhalt));
+    private Nutzer makeNutzer(DataMap<Unterkunft> unterkuenfte, DataMap<Kategorie> kategorien, String inhalt) throws JSONException {
+        return Nutzer.fromJSON(unterkuenfte, kategorien, new JSONObject(inhalt));
     }
 }

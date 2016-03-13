@@ -188,13 +188,12 @@ public class Model extends Observable {
         return unterkuenfte;
     }
 
-
-    public Unterkunft getUnterkunftFromID(int id) {
-        return unterkuenfte.getFromID(id);
-    }
-
-    public Kategorie getKategorieFromID(int id) {
-        return kategorien.getFromID(id);
+    /**
+     * Get accommodation list
+     * @return accommodation list
+     */
+    public DataMap<Kategorie> getKategorien() {
+        return kategorien;
     }
 
     /**
