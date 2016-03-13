@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -184,7 +185,7 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
         protected void doPostExecute(Integer result) {
 
             if(result == null) {
-//                Toast.makeText(getActivity(), "Konnte nicht hinzugefügt werden", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
             } else {
                 nutzer.loescheBedarf(result);
             }

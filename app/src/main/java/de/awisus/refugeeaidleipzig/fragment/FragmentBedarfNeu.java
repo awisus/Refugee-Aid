@@ -27,6 +27,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
@@ -143,7 +144,7 @@ public class FragmentBedarfNeu extends DialogFragment implements DialogInterface
         protected void doPostExecute(Integer result) {
 
             if(result == null) {
-//                Toast.makeText(getActivity(), "Konnte nicht hinzugefügt werden", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
             } else {
                 //
             }
