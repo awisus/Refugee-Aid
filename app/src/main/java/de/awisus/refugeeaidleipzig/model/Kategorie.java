@@ -61,6 +61,10 @@ public class Kategorie extends IDObject {
         return name;
     }
 
+    public Vector<Kategorie> getSubkategorien() {
+        return subkategorien;
+    }
+
     public Bedarf toBedarf(int[] ids) {
         Bedarf bedarf;
         bedarf = new Bedarf();

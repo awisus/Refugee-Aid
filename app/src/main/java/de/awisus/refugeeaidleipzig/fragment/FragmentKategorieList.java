@@ -7,12 +7,13 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.R;
+import de.awisus.refugeeaidleipzig.model.Bedarf;
 import de.awisus.refugeeaidleipzig.model.Kategorie;
+import de.awisus.refugeeaidleipzig.model.Nutzer;
 
 /**
  * Created on 13.03.16.
@@ -25,12 +26,18 @@ public class FragmentKategorieList extends DialogFragment implements AdapterView
 
     private KategorieAdapter adapter;
 
+    private Nutzer nutzer;
+
     private Vector<Kategorie> liste;
 
+    private Bedarf bedarf;
 
-    public static FragmentKategorieList newInstance(Vector<Kategorie> liste) {
+
+    public static FragmentKategorieList newInstance(Nutzer nutzer, Vector<Kategorie> liste, Bedarf bedarf) {
         FragmentKategorieList frag = new FragmentKategorieList();
+        frag.nutzer = nutzer;
         frag.liste = liste;
+        frag.bedarf = bedarf;
         return frag;
     }
 
@@ -41,17 +48,31 @@ public class FragmentKategorieList extends DialogFragment implements AdapterView
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_list_kategorie, null);
 
-        listView = (ListView) view.findViewById(android.R.id.list);
-
         adapter = new KategorieAdapter(getActivity(), android.R.layout.simple_list_item_1, liste);
+
+        listView = (ListView) view.findViewById(android.R.id.list);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
 
         return builder.setTitle(R.string.titel_bedarf_neu).setView(view).create();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        Kategorie kategorie = liste.get(position);
+        bedarf.put(kategorie.getId(), kategorie.getName());
+
+        Vector<Kategorie> subkategorien = kategorie.getSubkategorien();
+        if(subkategorien.size() > 0) {
+            FragmentKategorieList fragmentBedarfNeu;
+            fragmentBedarfNeu = FragmentKategorieList.newInstance(nutzer, subkategorien, bedarf);
+            fragmentBedarfNeu.show(getFragmentManager(), "Kategorie wählen");
+        } else {
+
+            nutzer.addBedarf(bedarf);
+        }
+
         dismiss();
-        Toast.makeText(getActivity(), liste.get(position).toString(), Toast.LENGTH_SHORT).show();
     }
 }
