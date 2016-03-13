@@ -21,9 +21,7 @@ package de.awisus.refugeeaidleipzig.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -40,7 +38,6 @@ import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Bedarf;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
-import de.awisus.refugeeaidleipzig.util.Utility;
 
 /**
  * Created on 16.01.16.
@@ -162,19 +159,16 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
             Bedarf bedarf = (Bedarf) spBedarf.getSelectedItem();
             Log.d("Bedarf ID", "" +bedarf.getId());
 
-            new BedarfDelete().execute(
+            new BedarfDelete(getActivity(), R.string.meldung_entfernen).execute(
                     "user_id",      String.valueOf(nutzer.getId()),
                     "category_id",  String.valueOf(bedarf.getId()));
         }
     }
 
-    private class BedarfDelete extends AsyncTask<String, Integer, Integer> {
+    private class BedarfDelete extends BackgroundTask<String, Integer, Integer> {
 
-        private ProgressDialog ladebalken;
-
-        @Override
-        protected void onPreExecute() {
-            ladebalken = Utility.getInstance().zeigeLadebalken(getActivity(), getResources().getString(R.string.meldung_anmelden));
+        public BedarfDelete(Activity context, int textID) {
+            super(context, textID);
         }
 
         @Override
@@ -187,7 +181,7 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
         }
 
         @Override
-        protected void onPostExecute(Integer result) {
+        protected void doPostExecute(Integer result) {
 
             if(result == null) {
 //                Toast.makeText(getActivity(), "Konnte nicht hinzugefügt werden", Toast.LENGTH_SHORT).show();
@@ -196,7 +190,6 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
             }
 
             dismiss();
-            ladebalken.dismiss();
         }
     }
 }

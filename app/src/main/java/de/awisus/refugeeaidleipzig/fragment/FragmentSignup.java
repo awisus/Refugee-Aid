@@ -185,7 +185,7 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
         Collections.sort(unterkuenfte);
 
         ArrayAdapter<Unterkunft> adapter = new ArrayAdapter<>(
-                context,
+                getActivity(),
                 android.R.layout.simple_spinner_item,
                 unterkuenfte
         );

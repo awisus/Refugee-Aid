@@ -129,7 +129,7 @@ public class FragmentAnmelden extends FragmentLogin implements View.OnClickListe
         if (view.getId() == R.id.btNeu) {
             FragmentSignup fragmentSignup;
             fragmentSignup = FragmentSignup.newInstance(model);
-            fragmentSignup.show(context.getSupportFragmentManager(), "Neues Konto");
+            fragmentSignup.show(getActivity().getSupportFragmentManager(), "Neues Konto");
 
             dismiss();
         }

@@ -58,4 +58,6 @@
     <string name="meldung_abmelden">Abgemeldet</string>
     <string name="meldung_anmelden">Anmelden...</string>
     <string name="meldung_aktualisieren">Aktualisieren...</string>
+    <string name="meldung_entfernen">Entferne...</string>
+    <string name="meldung_hinzufuegen">Füge hinzu...</string>
 </resources>

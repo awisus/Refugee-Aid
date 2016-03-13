@@ -19,10 +19,9 @@
 
 package de.awisus.refugeeaidleipzig.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -32,7 +31,6 @@ import android.widget.EditText;
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
-import de.awisus.refugeeaidleipzig.util.Utility;
 
 /**
  * Created on 12.01.16.
@@ -117,7 +115,7 @@ public class FragmentBedarfNeu extends DialogFragment implements DialogInterface
                 int nutzerID = nutzer.getId();
                 int bedarfID = Integer.parseInt(etBedarfNeu.getText().toString());
 
-                new BedarfPost().execute(
+                new BedarfPost(getActivity(), R.string.meldung_hinzufuegen).execute(
                         "user_id",      String.valueOf(nutzerID),
                         "category_id",  String.valueOf(bedarfID));
             } catch (Exception e) {
@@ -126,13 +124,10 @@ public class FragmentBedarfNeu extends DialogFragment implements DialogInterface
         }
     }
 
-    private class BedarfPost extends AsyncTask<String, Integer, Integer> {
+    private class BedarfPost extends BackgroundTask<String, Integer, Integer> {
 
-        private ProgressDialog ladebalken;
-
-        @Override
-        protected void onPreExecute() {
-            ladebalken = Utility.getInstance().zeigeLadebalken(getActivity(), getResources().getString(R.string.meldung_anmelden));
+        public BedarfPost(Activity context, int textID) {
+            super(context, textID);
         }
 
         @Override
@@ -145,7 +140,7 @@ public class FragmentBedarfNeu extends DialogFragment implements DialogInterface
         }
 
         @Override
-        protected void onPostExecute(Integer result) {
+        protected void doPostExecute(Integer result) {
 
             if(result == null) {
 //                Toast.makeText(getActivity(), "Konnte nicht hinzugefügt werden", Toast.LENGTH_SHORT).show();
@@ -154,7 +149,6 @@ public class FragmentBedarfNeu extends DialogFragment implements DialogInterface
             }
 
             dismiss();
-            ladebalken.dismiss();
         }
     }
 }

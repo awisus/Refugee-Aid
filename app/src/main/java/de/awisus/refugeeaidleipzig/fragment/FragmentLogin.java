@@ -23,7 +23,6 @@ import android.app.Activity;
 import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
-import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 
@@ -35,27 +34,11 @@ import de.awisus.refugeeaidleipzig.model.Nutzer;
 public abstract class FragmentLogin extends DialogFragment {
 
     /**
-     * Activity as the Context for the accommodation spinner
-     */
-    protected MainActivity context;
-
-    /**
      * Reference to the model to log in the new user (or to be found in the chosen accommodation)
      */
     protected Model model;
 
     protected int warnungID;
-
-    /**
-     * This is called to set the parent Activity as the Context of the Fragment
-     *
-     * @param activity Activity to be set as context
-     */
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        context = (MainActivity) activity;
-    }
 
     protected abstract class NutzerGet extends BackgroundTask<String, Integer, Nutzer> {
 
