@@ -19,6 +19,7 @@
 
 package de.awisus.refugeeaidleipzig.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -219,7 +220,7 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
         // Get inserted name and selected accommodation from views
         Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();
 
-        new NutzerPost().execute(
+        new NutzerPost(getActivity(), R.string.meldung_anmelden).execute(
                 "name",                     etName.getText().toString(),
                 "mail",                     etMail.getText().toString(),
                 "password",                 etPasswort.getText().toString(),
@@ -228,6 +229,10 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
     }
 
     private class NutzerPost extends FragmentLogin.NutzerGet {
+
+        public NutzerPost(Activity context, int textID) {
+            super(context, textID);
+        }
 
         @Override
         protected Nutzer doInBackground(String... params) {

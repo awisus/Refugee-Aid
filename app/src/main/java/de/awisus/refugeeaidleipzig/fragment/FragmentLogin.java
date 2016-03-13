@@ -20,16 +20,12 @@
 package de.awisus.refugeeaidleipzig.fragment;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
 import de.awisus.refugeeaidleipzig.MainActivity;
-import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
-import de.awisus.refugeeaidleipzig.util.Utility;
 
 /**
  * Created on 12.03.16.
@@ -61,26 +57,21 @@ public abstract class FragmentLogin extends DialogFragment {
         context = (MainActivity) activity;
     }
 
-    protected abstract class NutzerGet extends AsyncTask<String, Integer, Nutzer> {
+    protected abstract class NutzerGet extends BackgroundTask<String, Integer, Nutzer> {
 
-        protected ProgressDialog ladebalken;
-
-        @Override
-        protected void onPreExecute() {
-            ladebalken = Utility.getInstance().zeigeLadebalken(context, getResources().getString(R.string.meldung_anmelden));
+        protected NutzerGet(Activity context, int textID) {
+            super(context, textID);
         }
 
         @Override
-        protected void onPostExecute(Nutzer result) {
+        protected void doPostExecute(Nutzer result) {
 
             if(result == null) {
                 Toast.makeText(context, warnungID, Toast.LENGTH_SHORT).show();
             } else {
                 model.anmelden(result);
             }
-
             dismiss();
-            ladebalken.dismiss();
         }
     }
 }

@@ -19,6 +19,7 @@
 
 package de.awisus.refugeeaidleipzig.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -139,10 +140,14 @@ public class FragmentAnmelden extends FragmentLogin implements View.OnClickListe
         String name = etName.getText().toString();
         String passwort = etPasswort.getText().toString();
 
-        new NutzerGet().execute(name, passwort);
+        new NutzerGet(getActivity(), R.string.meldung_anmelden).execute(name, passwort);
     }
 
     private class NutzerGet extends FragmentLogin.NutzerGet {
+
+        protected NutzerGet(Activity context, int textID) {
+            super(context, textID);
+        }
 
         @Override
         protected Nutzer doInBackground(String... params) {
