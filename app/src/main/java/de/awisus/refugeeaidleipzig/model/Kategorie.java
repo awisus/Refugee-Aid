@@ -23,7 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.LinkedList;
+import java.util.Vector;
 
 /**
  * Created on 11.01.16.
@@ -33,11 +33,11 @@ import java.util.LinkedList;
 public class Kategorie extends IDObject {
     private String name;
 
-    private LinkedList<Kategorie> subkategorien;
+    private Vector<Kategorie> subkategorien;
 
 
     private Kategorie() {
-        this.subkategorien = new LinkedList<>();
+        this.subkategorien = new Vector<>();
     }
 
     public static Kategorie fromJSON(JSONObject json) throws JSONException {

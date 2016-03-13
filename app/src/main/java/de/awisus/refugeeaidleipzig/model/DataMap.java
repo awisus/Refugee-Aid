@@ -3,6 +3,7 @@ package de.awisus.refugeeaidleipzig.model;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Vector;
 
 /**
  * Created on 10.03.16.
@@ -39,6 +40,10 @@ public class DataMap<T extends IDObject> implements Iterable<T> {
 
     public LinkedList<T> asList() {
         return new LinkedList<>(map.values());
+    }
+
+    public Vector<T> asVector() {
+        return new Vector<>(map.values());
     }
 
     @Override

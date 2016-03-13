@@ -112,16 +112,17 @@ public class FragmentBedarfNeu extends DialogFragment implements DialogInterface
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if(which == DialogInterface.BUTTON_POSITIVE) {
-            try {
-                int nutzerID = nutzer.getId();
-                int bedarfID = Integer.parseInt(etBedarfNeu.getText().toString());
 
-                new BedarfPost(getActivity(), R.string.meldung_hinzufuegen).execute(
-                        "user_id",      String.valueOf(nutzerID),
-                        "category_id",  String.valueOf(bedarfID));
-            } catch (Exception e) {
-                return;
-            }
+//            try {
+//                int nutzerID = nutzer.getId();
+//                int bedarfID = Integer.parseInt(etBedarfNeu.getText().toString());
+//
+//                new BedarfPost(getActivity(), R.string.meldung_hinzufuegen).execute(
+//                        "user_id",      String.valueOf(nutzerID),
+//                        "category_id",  String.valueOf(bedarfID));
+//            } catch (Exception e) {
+//                return;
+//            }
         }
     }
 

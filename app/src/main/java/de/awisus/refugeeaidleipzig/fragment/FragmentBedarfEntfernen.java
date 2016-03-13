@@ -32,7 +32,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
@@ -117,7 +117,7 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
      */
     private void initSpinnerAdapter() {
 
-        LinkedList<Bedarf> bedarf = nutzer.getBedarf().asList();
+        Vector<Bedarf> bedarf = nutzer.getBedarf().asVector();
         Collections.sort(bedarf);
 
         ArrayAdapter<Bedarf> adapter = new ArrayAdapter<>(

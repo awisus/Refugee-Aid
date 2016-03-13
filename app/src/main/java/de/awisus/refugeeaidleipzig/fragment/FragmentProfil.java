@@ -241,7 +241,9 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
 
         // Click on the FloatingAction Plus button calls fragment for adding a need
         if(id == R.id.fab_plus) {
-            fragmentBedarfNeu.show(getChildFragmentManager(), "Neuer Bedarf");
+
+            FragmentKategorieList.newInstance(model.getKategorien().asVector()).show(getFragmentManager(), "Kategorien");
+            //fragmentBedarfNeu.show(getChildFragmentManager(), "Neuer Bedarf");
         }
 
         // Click on the FloatingAction Delete button calls fragment for removing needs

@@ -23,7 +23,7 @@
     <string name="titel_login">Anmelden</string>
     <string name="titel_signup">Neuer Benutzer</string>
     <string name="titel_bedarf_entfernen">Bedarf entfernen</string>
-    <string name="titel_bedarf_neu">Neuen Bedarf angeben</string>
+    <string name="titel_bedarf_neu">Kategorie wählen</string>
 
     <string name="dialog_anmelden">Anmelden</string>
     <string name="dialog_loeschen">Löschen</string>
