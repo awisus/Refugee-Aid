@@ -54,6 +54,7 @@ public class FragmentKategorieList extends DialogFragment implements AdapterView
         adapter = new KategorieAdapter(getActivity(), android.R.layout.simple_list_item_1, liste);
 
         listView = (ListView) view.findViewById(android.R.id.list);
+        listView.setDivider(null);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
