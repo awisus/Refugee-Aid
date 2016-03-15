@@ -21,13 +21,13 @@ package de.awisus.refugeeaidleipzig.fragment;
 
 import android.app.Activity;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import java.io.IOException;
 
-import de.awisus.refugeeaidleipzig.model.LoginData;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
@@ -49,11 +49,8 @@ public abstract class FragmentLogin extends DialogFragment {
 
     protected abstract class NutzerGet extends BackgroundTask<String, Integer, Nutzer> {
 
-        protected LoginData login;
-
-        protected NutzerGet(Activity context, int textID,  LoginData login) {
+        protected NutzerGet(Activity context, int textID) {
             super(context, textID);
-            this.login = login;
         }
 
         @Override
@@ -66,8 +63,10 @@ public abstract class FragmentLogin extends DialogFragment {
 
                 // save login data
                 try {
-                    Datei.getInstance().schreiben(context, "login.json", new Gson().toJson(login));
-                } catch (IOException e) {}
+                    Datei.getInstance().schreiben(context, "user.json", new Gson().toJson(result));
+                } catch (IOException e) {
+                    Log.e("Anmelden", "Fehler beim Speichern der Nutzerdaten");
+                }
             }
             dismiss();
         }

@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -216,9 +217,12 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
                 return false;
             case R.id.itAbmelden:
                 model.abmelden();
+
                 try {
-                    Datei.getInstance().loeschen(getActivity(), "login.json");
-                } catch (IOException e) {}
+                    Datei.getInstance().loeschen(getActivity(), "user.json");
+                } catch (IOException e) {
+                    Log.e("Abmelden", "Fehler beim Löschen der Nutzerdaten");
+                }
                 return true;
             default:
                 break;
