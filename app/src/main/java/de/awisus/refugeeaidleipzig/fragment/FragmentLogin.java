@@ -52,7 +52,7 @@ public abstract class FragmentLogin extends DialogFragment {
 
         protected LoginData login;
 
-        protected NutzerGet(Activity context, int textID,  LoginData login) {
+        protected NutzerGet(Activity context, int textID, LoginData login) {
             super(context, textID);
             this.login = login;
         }

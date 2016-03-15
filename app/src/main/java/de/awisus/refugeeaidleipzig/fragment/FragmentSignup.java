@@ -234,7 +234,7 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
 
     private class NutzerPost extends FragmentLogin.NutzerGet {
 
-        public NutzerPost(Activity context, int textID,  LoginData login) {
+        public NutzerPost(Activity context, int textID, LoginData login) {
             super(context, textID, login);
         }
 
