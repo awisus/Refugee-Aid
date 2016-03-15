@@ -265,9 +265,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Show user profile if logged on
         if(id == R.id.nav_profil && id != selectedItemID) {
             if(model.angemeldet()) {
-                wechsleFragment(FragmentProfil.newInstance(model));
                 selectedItemID = R.id.nav_profil;
                 correctNavigationItem();
+                wechsleFragment(FragmentProfil.newInstance(model));
             } else {
                 selectedItemID = R.id.nav_karte;
                 correctNavigationItem();

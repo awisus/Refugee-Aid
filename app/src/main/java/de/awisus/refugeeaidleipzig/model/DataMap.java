@@ -13,17 +13,23 @@ import java.util.Vector;
 public class DataMap<T extends IDObject> implements Iterable<T> {
 
     private HashMap<Integer, T> map;
+    private LinkedList<T> list;
+    private Vector<T> vector;
 
     public DataMap() {
         map = new HashMap<>();
+        list = new LinkedList<>();
+        vector = new Vector<>();
     }
 
     public void add(T daten) {
         map.put(daten.getId(), daten);
+        list.add(daten);
+        vector.add(daten);
     }
 
     public T get(int index) {
-        return asList().get(index);
+        return list.get(index);
     }
 
     public T getFromID(int id) {
@@ -31,7 +37,12 @@ public class DataMap<T extends IDObject> implements Iterable<T> {
     }
 
     public T remove(Integer i) {
-        return map.remove(i);
+        T toRemove = map.remove(i);
+
+        list.remove(toRemove);
+        vector.remove(toRemove);
+
+        return toRemove;
     }
 
     public int size() {
@@ -39,11 +50,11 @@ public class DataMap<T extends IDObject> implements Iterable<T> {
     }
 
     public LinkedList<T> asList() {
-        return new LinkedList<>(map.values());
+        return list;
     }
 
     public Vector<T> asVector() {
-        return new Vector<>(map.values());
+        return vector;
     }
 
     @Override

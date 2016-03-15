@@ -10,18 +10,18 @@ import android.widget.TextView;
 import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.R;
-import de.awisus.refugeeaidleipzig.model.Kategorie;
+import de.awisus.refugeeaidleipzig.model.Bedarf;
 
 /**
  * Created on 13.03.16.
  *
  * @author Jens Awisus
  */
-public class KategorieAdapter extends ArrayAdapter<Kategorie> {
+public class AdapterBedarf extends ArrayAdapter<Bedarf> {
 
-    private Vector<Kategorie> liste;
+    private Vector<Bedarf> liste;
 
-    public KategorieAdapter(Context context, int resource, Vector<Kategorie> objects) {
+    public AdapterBedarf(Context context, int resource, Vector<Bedarf> objects) {
         super(context, resource, objects);
         this.liste = objects;
     }
@@ -35,7 +35,7 @@ public class KategorieAdapter extends ArrayAdapter<Kategorie> {
 
         TextView tvName;
         tvName = (TextView) view.findViewById(R.id.tvName);
-        tvName.setText(liste.get(position).getName());
+        tvName.setText(liste.get(position).toString());
 
         return view;
     }

@@ -19,24 +19,32 @@
 
 package de.awisus.refugeeaidleipzig.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.R;
+import de.awisus.refugeeaidleipzig.model.Bedarf;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
+import de.awisus.refugeeaidleipzig.net.WebFlirt;
+import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 
 /**
  * Created on 12.01.16.
@@ -48,18 +56,13 @@ import de.awisus.refugeeaidleipzig.model.Nutzer;
  * A LogOut button performs log out from the model
  * @author Jens Awisus
  */
-public class FragmentProfil extends Fragment implements Observer, View.OnClickListener {
+public class FragmentProfil extends Fragment implements Observer, View.OnClickListener, AdapterView.OnItemClickListener {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
     private FragmentKategorieList fragmentBedarfNeu;
-
-    /**
-     * Fragment for removing new needs by the user
-     */
-    private FragmentBedarfEntfernen fragmentBedarfEntfernen;
 
     /**
      * Label showing the user name
@@ -71,10 +74,11 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
      */
     private TextView tvEinrichtung;
 
-    /**
-     * Label listung the user's needs
-     */
-    private TextView tvBedarfe;
+    private ListView listView;
+
+    private AdapterBedarf adapter;
+
+    private Vector<Bedarf> liste;
 
     /**
      * Reference to the model for logging the user out
@@ -99,6 +103,7 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
         FragmentProfil frag = new FragmentProfil();
         frag.model = model;
         frag.nutzer = model.getNutzerAktuell();
+        frag.liste = frag.nutzer.getBedarf().asVector();
         return frag;
     }
 
@@ -141,12 +146,15 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
     private void initUI(View view) {
         tvName = (TextView) view.findViewById(R.id.tvUnterkunft);
         tvEinrichtung = (TextView) view.findViewById(R.id.tvEinrichtung);
-        tvBedarfe = (TextView) view.findViewById(R.id.tvBedarfe);
+
+        adapter = new AdapterBedarf(getActivity(), android.R.layout.simple_list_item_1, liste);
+
+        listView = (ListView) view.findViewById(android.R.id.list);
+        listView.setAdapter(adapter);
+        registerForContextMenu(listView);
 
         FloatingActionButton btPlus = (FloatingActionButton) view.findViewById(R.id.fab_plus);
-        FloatingActionButton btMinus = (FloatingActionButton) view.findViewById(R.id.fab_minus);
         btPlus.setOnClickListener(this);
-        btMinus.setOnClickListener(this);
     }
 
     /**
@@ -157,8 +165,6 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
             tvName.setText(nutzer.getName());
             tvEinrichtung.setText(nutzer.getUnterkunft().toString());
 
-            updateBedarfe();
-
             nutzer.addObserver(this);
         }
     }
@@ -168,6 +174,37 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_profile_menu, menu);
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        getActivity().getMenuInflater().inflate(R.menu.fragment_profil_context, menu);
+    }
+
+      ////////////////////////////////////////////////////////////////////////////////
+     // Observer ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Update method called, if list of the user's needs changes.
+     * Causes label of user's needs to chow current information
+     * @param observable unused data model notifying about a change
+     * @param data unused data object given by the Observable
+     */
+    @Override
+    public void update(Observable observable, Object data) {
+        updateBedarf();
+    }
+
+    /**
+     * Private method called to set the needs label for the current user's needs
+     */
+    private void updateBedarf() {
+        adapter.notifyDataSetChanged();
+    }
+
+      ////////////////////////////////////////////////////////////////////////////////
+     // Listener ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -185,46 +222,6 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
         return false;
     }
 
-      ////////////////////////////////////////////////////////////////////////////////
-     // Observer ////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Update method called, if list of the user's needs changes.
-     * Causes label of user's needs to chow current information
-     * @param observable unused data model notifying about a change
-     * @param data unused data object given by the Observable
-     */
-    @Override
-    public void update(Observable observable, Object data) {
-        updateBedarfe();
-    }
-
-    /**
-     * Private method called to set the needs label for the current user's needs
-     */
-    private void updateBedarfe() {
-        if(nutzer != null) {
-            if (!nutzer.hatBedarf()) {
-                tvBedarfe.setText(R.string.string_keine_bedarfe);
-            } else {
-
-                /* Needs are shown as a list like:
-                 * Needs:
-                 *  - Jacket
-                 *  - Toothbrush
-                 */
-                tvBedarfe.setText(R.string.string_bedarfe);
-                tvBedarfe.append("\n\n");
-                tvBedarfe.append(nutzer.bedarfAlsListe());
-            }
-        }
-    }
-
-      ////////////////////////////////////////////////////////////////////////////////
-     // Listener ////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-
     /**
      * This Method is called, if any of the Buttons  is clicked
      * @param view the View pressed
@@ -232,23 +229,55 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
     @Override
     public void onClick(View view) {
         int id = view.getId();
-
         // Click on the FloatingAction Plus button calls fragment for adding a need
         if(id == R.id.fab_plus) {
             fragmentBedarfNeu = FragmentKategorieList.newInstance(
                     nutzer, model.getKategorien().asVector());
             fragmentBedarfNeu.show(getFragmentManager(), "Kategorien");
         }
+    }
 
-        // Click on the FloatingAction Delete button calls fragment for removing needs
-        if(id == R.id.fab_minus) {
-            if(nutzer.hatBedarf()) {
-                fragmentBedarfEntfernen = FragmentBedarfEntfernen.newInstance(nutzer);
-                fragmentBedarfEntfernen.show(getChildFragmentManager(), "Bedarf entfernen");
+    @Override
+    public void onItemClick(AdapterView<?> arg0, View view, int pos, long id) {
+        getActivity().openContextMenu(listView);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itLoeschen:
+
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+                new BedarfDelete(getActivity(), R.string.meldung_entfernen).execute(
+                        "id", "" + liste.get(info.position).getId());
+
+                return true;
+            default: return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private class BedarfDelete extends BackgroundTask<String, Integer, Integer> {
+
+        public BedarfDelete(Activity context, int textID) {
+            super(context, textID);
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+            try {
+                return WebFlirt.getInstance().deleteBedarf(params);
+            } catch (Exception e){
+                return null;
+            }
+        }
+
+        @Override
+        protected void doPostExecute(Integer result) {
+            if(result == null) {
+                Toast.makeText(getActivity(), R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
             } else {
-
-                // Tell user, if there is no need to be deleted
-                Toast.makeText(getActivity(), R.string.warnung_loeschen, Toast.LENGTH_SHORT).show();
+                nutzer.loescheBedarf(result);
             }
         }
     }
