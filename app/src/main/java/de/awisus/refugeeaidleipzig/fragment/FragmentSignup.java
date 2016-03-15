@@ -37,6 +37,7 @@ import java.util.LinkedList;
 import java.util.concurrent.ExecutionException;
 
 import de.awisus.refugeeaidleipzig.R;
+import de.awisus.refugeeaidleipzig.model.LoginData;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
@@ -223,7 +224,7 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
         String name = etName.getText().toString();
         String passwort = etPasswort.getText().toString();
 
-        new NutzerPost(getActivity(), R.string.meldung_anmelden).execute(
+        new NutzerPost(getActivity(), R.string.meldung_anmelden, new LoginData(name, passwort)).execute(
                 "name",                     name,
                 "mail",                     etMail.getText().toString(),
                 "password",                 passwort,
@@ -233,8 +234,8 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
 
     private class NutzerPost extends FragmentLogin.NutzerGet {
 
-        public NutzerPost(Activity context, int textID) {
-            super(context, textID);
+        public NutzerPost(Activity context, int textID,  LoginData login) {
+            super(context, textID, login);
         }
 
         @Override
