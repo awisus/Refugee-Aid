@@ -35,7 +35,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import de.awisus.refugeeaidleipzig.R;
-import de.awisus.refugeeaidleipzig.model.Bedarf;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 
@@ -237,7 +236,7 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
         // Click on the FloatingAction Plus button calls fragment for adding a need
         if(id == R.id.fab_plus) {
             fragmentBedarfNeu = FragmentKategorieList.newInstance(
-                    nutzer, model.getKategorien().asVector(), new Bedarf());
+                    nutzer, model.getKategorien().asVector());
             fragmentBedarfNeu.show(getFragmentManager(), "Kategorien");
         }
 

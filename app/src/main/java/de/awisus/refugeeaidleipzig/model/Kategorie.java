@@ -64,27 +64,4 @@ public class Kategorie extends IDObject {
     public Vector<Kategorie> getSubkategorien() {
         return subkategorien;
     }
-
-    public Bedarf toBedarf(int[] ids) {
-        Bedarf bedarf;
-        bedarf = new Bedarf();
-        toBedarf(bedarf, ids, 0);
-        return bedarf;
-    }
-
-    private void toBedarf(Bedarf bedarf, int[] ids, int index) {
-        bedarf.put(id, name);
-        if(subkategorien.size() > 0) {
-            getSubkategorie(ids[index + 1]).toBedarf(bedarf, ids, index + 1);
-        }
-    }
-
-    private Kategorie getSubkategorie(int index) {
-        for(Kategorie kategorie : subkategorien) {
-            if(kategorie.id == index) {
-                return kategorie;
-            }
-        }
-        return null;
-    }
 }

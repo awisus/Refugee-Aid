@@ -19,7 +19,8 @@
 
 package de.awisus.refugeeaidleipzig.model;
 
-import java.util.LinkedList;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by on 11.01.16.
@@ -28,17 +29,26 @@ import java.util.LinkedList;
  */
 public class Bedarf extends IDObject implements Comparable<Bedarf> {
 
-    private LinkedList<String> pfad;
+    private String name;
 
 
-    public Bedarf() {
-        this.pfad = new LinkedList<>();
+    private Bedarf() {
     }
 
-    public void put(int id, String name) {
-        this.id = id;
-        this.pfad.add(name);
+    public static Bedarf fromJSON(JSONObject json) throws JSONException {
+        // Instatiate new user
+        Bedarf bedarf = new Bedarf();
+
+        // put data to it from json object
+        bedarf.id              = json.getInt("id");
+        bedarf.name            = json.getString("name");
+
+        // Better trim Strings, perform rid of white spaces
+        bedarf.name = bedarf.name.trim();
+
+        return bedarf;
     }
+
 
     @Override
     public int compareTo(Bedarf another) {
@@ -47,10 +57,6 @@ public class Bedarf extends IDObject implements Comparable<Bedarf> {
 
     @Override
     public String toString() {
-        String str = pfad.get(0);
-        for(int i = 1; i < pfad.size(); i++) {
-            str += " > " + pfad.get(i);
-        }
-        return str;
+        return name;
     }
 }

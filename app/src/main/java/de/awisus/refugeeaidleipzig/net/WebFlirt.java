@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
+import de.awisus.refugeeaidleipzig.model.Bedarf;
 import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Kategorie;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
@@ -92,7 +93,7 @@ public class WebFlirt {
     }
 
 
-    public Integer postBedarf(String... parameter) throws Exception {
+    public Bedarf postBedarf(String... parameter) throws Exception {
         HTTPPost httpPost;
         httpPost = new HTTPPost(SERVER_URL);
 
@@ -100,7 +101,7 @@ public class WebFlirt {
             httpPost.addParameter(parameter[i], parameter[i+1]);
         }
 
-        return Integer.parseInt(httpPost.perform("needs/remote"));
+        return Bedarf.fromJSON(new JSONObject(httpPost.perform("needs/remote")));
     }
 
     public Integer deleteBedarf(String... parameter) throws Exception {

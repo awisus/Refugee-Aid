@@ -74,19 +74,22 @@ public class Unterkunft extends IDObject implements Comparable<Unterkunft> {
         // Instatiate new accommodation
         Unterkunft unterkunft = new Unterkunft();
 
-        JSONArray bedarfIDs = json.getJSONArray("needs");
-
         // put data to it from json object
         unterkunft.id               = json.getInt("id");
         unterkunft.stadt            = json.getString("city");
         unterkunft.name             = json.getString("name");
         unterkunft.groesse          = json.getInt("space");
         unterkunft.anzahlBewohner   = json.getInt("residents");
-        unterkunft.bedarf           = NeedParser.getInstance().parse(kategorien, bedarfIDs);
         unterkunft.latLng = new LatLng(
                                       json.getDouble("longitude"),
                                       json.getDouble("latitude")
         );
+
+        JSONArray jsonBedarf   = json.getJSONArray("needs");
+
+        for(int i = 0; i < jsonBedarf.length(); i++) {
+            unterkunft.bedarf.add(Bedarf.fromJSON(jsonBedarf.getJSONObject(i)));
+        }
 
         // Better trim Strings, perform rid of white spaces
         unterkunft.stadt = unterkunft.stadt.trim();

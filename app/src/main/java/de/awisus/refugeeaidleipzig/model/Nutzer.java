@@ -71,15 +71,16 @@ public class Nutzer extends ObservableIDObject {
         Nutzer nutzer = new Nutzer();
 
         // put data to it from json object
-        int unterkunftID       = json.getInt("accommodation_id");
-
-        JSONArray bedarfIDs    = json.getJSONArray("needs");
 
         nutzer.id              = json.getInt("id");
         nutzer.name            = json.getString("name");
         nutzer.mail            = json.getString("mail");
-        nutzer.unterkunft      = unterkuenfte.getFromID(unterkunftID);
-        nutzer.bedarf          = NeedParser.getInstance().parse(kategorien, bedarfIDs);
+        nutzer.unterkunft      = unterkuenfte.getFromID(json.getInt("accommodation_id"));
+
+        JSONArray jsonBedarf   = json.getJSONArray("needs");
+        for(int i = 0; i < jsonBedarf.length(); i++) {
+            nutzer.bedarf.add(Bedarf.fromJSON(jsonBedarf.getJSONObject(i)));
+        }
 
         // Better trim Strings, perform rid of white spaces
         nutzer.name = nutzer.name.trim();
