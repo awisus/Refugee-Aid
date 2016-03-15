@@ -51,6 +51,7 @@ import de.awisus.refugeeaidleipzig.fragment.FragmentKarte;
 import de.awisus.refugeeaidleipzig.fragment.FragmentProfil;
 import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Kategorie;
+import de.awisus.refugeeaidleipzig.model.LoginData;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
@@ -278,14 +279,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 // get saved login data
                 String datei = null;
                 try {
-                    datei = Datei.getInstance().lesen(this, "user.json");
+                    datei = Datei.getInstance().lesen(this, "login.json");
                 } catch (IOException e) {
                     Log.e("Laden", "Fehler beim Lesen der Logindatei");
                 }
 
                 if (datei != null) {
-                    Nutzer nutzer = new Gson().fromJson(datei, Nutzer.class);
-                    model.anmelden(nutzer);
+                    LoginData login = new Gson().fromJson(datei, LoginData.class);
+                    new NutzerGet(this, R.string.warnung_anmelden).execute(login);
                 } else {
                     selectedItemID = R.id.nav_karte;
                     correctNavigationItem();
@@ -318,6 +319,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Close drawer
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private class NutzerGet extends BackgroundTask<LoginData, Integer, Nutzer> {
+
+        protected NutzerGet(Activity context, int textID) {
+            super(context, textID);
+        }
+
+        @Override
+        protected Nutzer doInBackground(LoginData... params) {
+            try {
+                String name = params[0].getName();
+                String passwort = params[0].getPasswort();
+
+                return WebFlirt.getInstance().getNutzer(model.getUnterkuenfte(), name, passwort);
+            } catch (JSONException | InterruptedException | ExecutionException e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void doPostExecute(Nutzer result) {
+            if(result != null) {
+                model.anmelden(result);
+            }
+        }
     }
 
     /**
