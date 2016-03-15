@@ -5,7 +5,7 @@
     <item
         android:id="@+id/itBearbeiten"
         android:title="Daten bearbeiten"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:icon="@drawable/ic_create_white_48dp"
         app:showAsAction="always" />
 
     <item
