@@ -23,9 +23,15 @@ import android.app.Activity;
 import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.io.IOException;
+
+import de.awisus.refugeeaidleipzig.model.LoginData;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
+import de.awisus.refugeeaidleipzig.util.Datei;
 
 /**
  * Created on 12.03.16.
@@ -43,8 +49,11 @@ public abstract class FragmentLogin extends DialogFragment {
 
     protected abstract class NutzerGet extends BackgroundTask<String, Integer, Nutzer> {
 
-        protected NutzerGet(Activity context, int textID) {
+        protected LoginData login;
+
+        protected NutzerGet(Activity context, int textID,  LoginData login) {
             super(context, textID);
+            this.login = login;
         }
 
         @Override
@@ -54,6 +63,11 @@ public abstract class FragmentLogin extends DialogFragment {
                 Toast.makeText(context, warnungID, Toast.LENGTH_SHORT).show();
             } else {
                 model.anmelden(result);
+
+                // save login data
+                try {
+                    Datei.getInstance().schreiben(context, "login.json", new Gson().toJson(login));
+                } catch (IOException e) {}
             }
             dismiss();
         }

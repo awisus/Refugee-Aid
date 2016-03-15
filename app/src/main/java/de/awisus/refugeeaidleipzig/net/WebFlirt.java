@@ -68,11 +68,11 @@ public class WebFlirt {
     }
 
 
-    public Nutzer getNutzer(DataMap<Unterkunft> unterkuenfte, String name, String passwort) throws JSONException, InterruptedException, ExecutionException {
+    public Nutzer getNutzer(DataMap<Unterkunft> unterkuenfte, String... params) throws JSONException, InterruptedException, ExecutionException {
         HTTPGet httpGet;
         httpGet = new HTTPGet(SERVER_URL);
 
-        return makeNutzer(unterkuenfte, httpGet.perform("getUser/" + name + "/" + passwort));
+        return makeNutzer(unterkuenfte, httpGet.perform("getUser/" + params[0] + "/" + params[1]));
     }
 
     public Nutzer postNutzer(DataMap<Unterkunft> unterkuenfte, String... parameter) throws JSONException, InterruptedException, ExecutionException {

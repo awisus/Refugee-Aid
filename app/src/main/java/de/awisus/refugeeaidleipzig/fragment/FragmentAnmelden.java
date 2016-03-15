@@ -32,6 +32,7 @@ import org.json.JSONException;
 import java.util.concurrent.ExecutionException;
 
 import de.awisus.refugeeaidleipzig.R;
+import de.awisus.refugeeaidleipzig.model.LoginData;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
@@ -140,20 +141,20 @@ public class FragmentAnmelden extends FragmentLogin implements View.OnClickListe
         String name = etName.getText().toString();
         String passwort = etPasswort.getText().toString();
 
-        new NutzerGet(getActivity(), R.string.meldung_anmelden).execute(name, passwort);
+        new NutzerGet(getActivity(), R.string.meldung_anmelden, new LoginData(name, passwort))
+        .execute(name, passwort);
     }
 
     private class NutzerGet extends FragmentLogin.NutzerGet {
 
-        protected NutzerGet(Activity context, int textID) {
-            super(context, textID);
+        protected NutzerGet(Activity context, int textID, LoginData login) {
+            super(context, textID, login);
         }
 
         @Override
         protected Nutzer doInBackground(String... params) {
             try {
-                return WebFlirt.getInstance().getNutzer(
-                        model.getUnterkuenfte(), params[0], params[1]);
+                return WebFlirt.getInstance().getNutzer(model.getUnterkuenfte(), params);
             } catch (JSONException | InterruptedException | ExecutionException e) {
                 return null;
             }

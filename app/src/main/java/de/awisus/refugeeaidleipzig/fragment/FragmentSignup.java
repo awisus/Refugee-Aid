@@ -37,6 +37,7 @@ import java.util.LinkedList;
 import java.util.concurrent.ExecutionException;
 
 import de.awisus.refugeeaidleipzig.R;
+import de.awisus.refugeeaidleipzig.model.LoginData;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
@@ -220,18 +221,21 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
         // Get inserted name and selected accommodation from views
         Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();
 
-        new NutzerPost(getActivity(), R.string.meldung_anmelden).execute(
-                "name",                     etName.getText().toString(),
+        String name = etName.getText().toString();
+        String passwort = etPasswort.getText().toString();
+
+        new NutzerPost(getActivity(), R.string.meldung_anmelden, new LoginData(name, passwort)).execute(
+                "name",                     name,
                 "mail",                     etMail.getText().toString(),
-                "password",                 etPasswort.getText().toString(),
+                "password",                 passwort,
                 "password_confirmation",    etConformation.getText().toString(),
                 "accommodation_id",         String.valueOf(unterkunft.getId()));
     }
 
     private class NutzerPost extends FragmentLogin.NutzerGet {
 
-        public NutzerPost(Activity context, int textID) {
-            super(context, textID);
+        public NutzerPost(Activity context, int textID,  LoginData login) {
+            super(context, textID, login);
         }
 
         @Override

@@ -35,6 +35,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
@@ -45,6 +46,7 @@ import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
+import de.awisus.refugeeaidleipzig.util.Datei;
 
 /**
  * Created on 12.01.16.
@@ -214,6 +216,9 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
                 return false;
             case R.id.itAbmelden:
                 model.abmelden();
+                try {
+                    Datei.getInstance().loeschen(getActivity(), "login.json");
+                } catch (IOException e) {}
                 return true;
             default:
                 break;

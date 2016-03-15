@@ -35,6 +35,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -48,10 +50,13 @@ import de.awisus.refugeeaidleipzig.fragment.FragmentKarte;
 import de.awisus.refugeeaidleipzig.fragment.FragmentProfil;
 import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Kategorie;
+import de.awisus.refugeeaidleipzig.model.LoginData;
 import de.awisus.refugeeaidleipzig.model.Model;
+import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
+import de.awisus.refugeeaidleipzig.util.Datei;
 
 /**
  * Created on 11.01.16.
@@ -267,15 +272,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(model.angemeldet()) {
                 selectedItemID = R.id.nav_profil;
                 correctNavigationItem();
+
                 wechsleFragment(FragmentProfil.newInstance(model));
             } else {
-                selectedItemID = R.id.nav_karte;
-                correctNavigationItem();
+                // get saved login data
+                String datei = null;
+                try {
+                    datei = Datei.getInstance().lesen(this, "login.json");
+                } catch (IOException e) {
 
-                // Else, show login dialogue
-                FragmentAnmelden fragAnmelden;
-                fragAnmelden = FragmentAnmelden.newInstance(model);
-                fragAnmelden.show(getSupportFragmentManager(), "Anmelden");
+                }
+                if (datei != null) {
+                    LoginData login = new Gson().fromJson(datei, LoginData.class);
+                    new NutzerGet(this, R.string.warnung_anmelden).execute(login);
+                } else {
+                    selectedItemID = R.id.nav_karte;
+                    correctNavigationItem();
+
+                    // Else, show login dialogue
+                    FragmentAnmelden fragAnmelden;
+                    fragAnmelden = FragmentAnmelden.newInstance(model);
+                    fragAnmelden.show(getSupportFragmentManager(), "Anmelden");
+                }
             }
         }
 
@@ -299,6 +317,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Close drawer
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private class NutzerGet extends BackgroundTask<LoginData, Integer, Nutzer> {
+
+        protected NutzerGet(Activity context, int textID) {
+            super(context, textID);
+        }
+
+        @Override
+        protected Nutzer doInBackground(LoginData... params) {
+            try {
+                String name = params[0].getName();
+                String passwort = params[0].getPasswort();
+
+                return WebFlirt.getInstance().getNutzer(model.getUnterkuenfte(), name, passwort);
+            } catch (JSONException | InterruptedException | ExecutionException e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void doPostExecute(Nutzer result) {
+            if(result != null) {
+                model.anmelden(result);
+            }
+        }
     }
 
     /**
