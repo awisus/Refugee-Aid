@@ -219,7 +219,7 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
                 model.abmelden();
 
                 try {
-                    Datei.getInstance().loeschen(getActivity(), "user.json");
+                    Datei.getInstance().loeschen(getActivity(), "login.json");
                 } catch (IOException e) {
                     Log.e("Abmelden", "Fehler beim Löschen der Nutzerdaten");
                 }
