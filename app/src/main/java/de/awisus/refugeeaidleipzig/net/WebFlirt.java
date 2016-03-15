@@ -1,7 +1,5 @@
 package de.awisus.refugeeaidleipzig.net;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -113,8 +111,6 @@ public class WebFlirt {
         }
 
         String antwort = httpDelete.perform("needs/remote");
-
-        Log.d("Antwort", antwort);
 
         return Integer.parseInt(antwort);
     }

@@ -25,7 +25,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -39,6 +38,7 @@ import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Bedarf;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
+import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 
 /**
  * Created on 16.01.16.
@@ -180,9 +180,6 @@ public class FragmentBedarfEntfernen extends DialogFragment implements DialogInt
 
         @Override
         protected void doPostExecute(Integer result) {
-
-            Log.d("Bedarf löschen", "id=" + result);
-
             if(result == null) {
                 Toast.makeText(getActivity(), R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
             } else {

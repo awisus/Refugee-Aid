@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,6 +17,7 @@ import de.awisus.refugeeaidleipzig.model.Bedarf;
 import de.awisus.refugeeaidleipzig.model.Kategorie;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
+import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 
 /**
  * Created on 13.03.16.
@@ -101,7 +101,6 @@ public class FragmentKategorieList extends DialogFragment implements AdapterView
             if(result == null) {
                 Toast.makeText(context, R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
             } else {
-                Log.d("Bedarf neu", "id=" + result.getId() +", name=" + result.toString());
                 nutzer.addBedarf(result);
             }
         }

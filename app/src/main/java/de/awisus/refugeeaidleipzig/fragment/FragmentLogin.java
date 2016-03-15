@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
+import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 
 /**
  * Created on 12.03.16.

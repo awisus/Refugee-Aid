@@ -1,10 +1,8 @@
-package de.awisus.refugeeaidleipzig.fragment;
+package de.awisus.refugeeaidleipzig.util;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-
-import de.awisus.refugeeaidleipzig.util.Utility;
 
 /**
  * Created on 13.03.16.

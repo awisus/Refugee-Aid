@@ -19,11 +19,10 @@
 
 package de.awisus.refugeeaidleipzig;
 
-import android.app.ProgressDialog;
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -43,16 +42,16 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 
+import de.awisus.refugeeaidleipzig.fragment.FragmentAnmelden;
 import de.awisus.refugeeaidleipzig.fragment.FragmentInfo;
 import de.awisus.refugeeaidleipzig.fragment.FragmentKarte;
-import de.awisus.refugeeaidleipzig.fragment.FragmentAnmelden;
 import de.awisus.refugeeaidleipzig.fragment.FragmentProfil;
 import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Kategorie;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
-import de.awisus.refugeeaidleipzig.util.Utility;
+import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 
 /**
  * Created on 11.01.16.
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
 
         if(connected()) {
-            new Initialiser().execute();
+            new Initialiser(this, R.string.meldung_aktualisieren).execute();
         } else {
             setContentView(R.layout.activity_main_error);
         }
@@ -112,19 +111,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return nwInfo != null && nwInfo.isConnectedOrConnecting();
     }
 
-    private class Initialiser extends AsyncTask<String, Integer, Model> {
+    private class Initialiser extends BackgroundTask<String, Integer, Model> {
 
-        private ProgressDialog ladebalken;
-
-        @Override
-        protected void onPreExecute() {
-            ladebalken = Utility.getInstance().zeigeLadebalken(MainActivity.this, getResources().getString(R.string.meldung_aktualisieren));
+        public Initialiser(Activity context, int textID) {
+            super(context, textID);
         }
 
         @Override
-        protected void onPostExecute(Model result) {
-
-            ladebalken.dismiss();
+        protected void doPostExecute(Model result) {
 
             if(result == null) {
                 Toast.makeText(MainActivity.this, R.string.warnung_laden, Toast.LENGTH_SHORT).show();
@@ -156,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 model.setUnterkuenfte(unterkuenfte);
 
                 return model;
-            } catch (IOException | JSONException | InterruptedException | ExecutionException e){
+            } catch (IOException | JSONException | InterruptedException | ExecutionException e) {
                 return null;
             }
         }
@@ -222,14 +216,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Check whether model returns log in or log off by user
         Boolean anmeldung = (Boolean) data;
         if(anmeldung.equals(Boolean.TRUE)) {    // Show profile on log in
-            wechsleFragment(FragmentProfil.newInstance(model));
             selectedItemID = R.id.nav_profil;
             correctNavigationItem();
+
+            wechsleFragment(FragmentProfil.newInstance(model));
         } else {                                // return to map on log off
-            wechsleFragment(FragmentKarte.newInstance(this, model));
             selectedItemID = R.id.nav_karte;
             correctNavigationItem();
 
+            wechsleFragment(FragmentKarte.newInstance(this, model));
             Toast.makeText(this, R.string.meldung_abmelden, Toast.LENGTH_SHORT).show();
         }
     }
