@@ -99,7 +99,7 @@ public class FragmentKategorieList extends DialogFragment implements AdapterView
         protected void doPostExecute(Bedarf result) {
 
             if(result == null) {
-                Toast.makeText(context, R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.warnung_bedarf_vorhanden, Toast.LENGTH_SHORT).show();
             } else {
                 nutzer.addBedarf(result);
             }

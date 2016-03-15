@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/nav_header_height"
         android:padding="@dimen/activity_horizontal_margin"
-        android:id="@+id/llTop">
+        android:id="@+id/rlOben">
 
         <TextView
             android:layout_width="wrap_content"
@@ -53,28 +53,15 @@
         android:layout_alignParentBottom="false"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_below="@+id/llTop"
+        android:layout_below="@+id/rlOben"
         android:layout_marginTop="-28dp" />
 
-    <RelativeLayout
-        android:orientation="vertical"
-        android:background="@android:color/white"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_anchor="@id/llTop"
-        app:layout_anchorGravity="top"
-        android:id="@+id/llBottom"
-        android:layout_below="@+id/llTop"
-        android:layout_marginTop="@dimen/activity_horizontal_margin">
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@android:id/list"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            tools:listitem="@layout/entry_bedarf" />
-
-    </RelativeLayout>
-
+        android:layout_height="match_parent"
+        android:id="@android:id/list"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/rlOben"
+        tools:listitem="@layout/entry_bedarf" />
 </RelativeLayout>

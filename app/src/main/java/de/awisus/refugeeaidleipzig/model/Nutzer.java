@@ -66,7 +66,7 @@ public class Nutzer extends ObservableIDObject {
         bedarf = new DataMap<>();
     }
 
-    public static Nutzer fromJSON(DataMap<Unterkunft> unterkuenfte, DataMap<Kategorie> kategorien, JSONObject json) throws JSONException {
+    public static Nutzer fromJSON(DataMap<Unterkunft> unterkuenfte, JSONObject json) throws JSONException {
         // Instatiate new user
         Nutzer nutzer = new Nutzer();
 
@@ -142,34 +142,10 @@ public class Nutzer extends ObservableIDObject {
     }
 
     /**
-     * Turns list of needs this into a key point list string to be shown on profile page,
-     * Format:
-     *  - Jacket
-     *  - Toothbrush
-     *  - ...
-     * @return key point list string of personal needs
-     */
-    public String bedarfAlsListe() {
-        if(!hatBedarf()) {
-            return null;
-        } else {
-            String str = "";
-            for(int i = 0; i < bedarf.size(); i++) {
-                str += bedarf.get(i);
-                if(i < bedarf.size() - 1) {
-                    str += "\n";
-                }
-            }
-
-            return str;
-        }
-    }
-
-    /**
      * Information whether this user has needs
      * @return true, if list of needs > 0; false else
      */
-    public boolean hatBedarf() {
+    public boolean hatBedarf(int kategoieID) {
         return bedarf.size() > 0;
     }
 }

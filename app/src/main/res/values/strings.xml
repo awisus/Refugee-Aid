@@ -51,10 +51,10 @@
 
     <string name="warnung_netz">Netzwerk aktivieren und neu starten</string>
     <string name="warnung_laden">Kann Informationen nicht laden</string>
-    <string name="warnung_loeschen">Kein Bedarf zum Löschen</string>
     <string name="warnung_signup">Benutzer konnte nicht erstellt werden</string>
     <string name="warnung_anmelden">Nutzername oder Passwort falsch</string>
     <string name="warnung_fehler">Es ist ein Fehler aufgetreten</string>
+    <string name="warnung_bedarf_vorhanden">Hinzufügen nicht möglich. Bereits vorhanden.</string>
 
     <string name="meldung_abmelden">Abgemeldet</string>
     <string name="meldung_anmelden">Anmelden...</string>

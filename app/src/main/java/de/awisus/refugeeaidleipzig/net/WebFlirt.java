@@ -68,14 +68,14 @@ public class WebFlirt {
     }
 
 
-    public Nutzer getNutzer(DataMap<Unterkunft> unterkuenfte, DataMap<Kategorie> kategorien, String name, String passwort) throws JSONException, InterruptedException, ExecutionException {
+    public Nutzer getNutzer(DataMap<Unterkunft> unterkuenfte, String name, String passwort) throws JSONException, InterruptedException, ExecutionException {
         HTTPGet httpGet;
         httpGet = new HTTPGet(SERVER_URL);
 
-        return makeNutzer(unterkuenfte, kategorien, httpGet.perform("getUser/" + name + "/" + passwort));
+        return makeNutzer(unterkuenfte, httpGet.perform("getUser/" + name + "/" + passwort));
     }
 
-    public Nutzer postNutzer(DataMap<Unterkunft> unterkuenfte, DataMap<Kategorie> kategorien, String... parameter) throws JSONException, InterruptedException, ExecutionException {
+    public Nutzer postNutzer(DataMap<Unterkunft> unterkuenfte, String... parameter) throws JSONException, InterruptedException, ExecutionException {
         HTTPPost httpPost;
         httpPost = new HTTPPost(SERVER_URL);
 
@@ -83,11 +83,11 @@ public class WebFlirt {
             httpPost.addParameter(parameter[i], parameter[i+1]);
         }
 
-        return makeNutzer(unterkuenfte, kategorien, httpPost.perform("users/remote"));
+        return makeNutzer(unterkuenfte, httpPost.perform("users/remote"));
     }
 
-    private Nutzer makeNutzer(DataMap<Unterkunft> unterkuenfte, DataMap<Kategorie> kategorien, String inhalt) throws JSONException {
-        return Nutzer.fromJSON(unterkuenfte, kategorien, new JSONObject(inhalt));
+    private Nutzer makeNutzer(DataMap<Unterkunft> unterkuenfte, String inhalt) throws JSONException {
+        return Nutzer.fromJSON(unterkuenfte, new JSONObject(inhalt));
     }
 
 

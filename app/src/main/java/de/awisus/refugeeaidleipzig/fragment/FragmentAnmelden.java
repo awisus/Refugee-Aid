@@ -153,7 +153,7 @@ public class FragmentAnmelden extends FragmentLogin implements View.OnClickListe
         protected Nutzer doInBackground(String... params) {
             try {
                 return WebFlirt.getInstance().getNutzer(
-                        model.getUnterkuenfte(), model.getKategorien(), params[0], params[1]);
+                        model.getUnterkuenfte(), params[0], params[1]);
             } catch (JSONException | InterruptedException | ExecutionException e) {
                 return null;
             }
