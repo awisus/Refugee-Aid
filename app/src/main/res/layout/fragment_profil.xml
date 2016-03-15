@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/verlauf">
 
     <RelativeLayout
         android:orientation="vertical"
@@ -21,7 +22,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="[NAME]"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@android:color/white"
             android:id="@+id/tvUnterkunft"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="false"
@@ -37,7 +38,8 @@
             android:id="@+id/tvEinrichtung"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="false"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/colorPrimaryDark" />
 
     </RelativeLayout>
 
@@ -59,7 +61,7 @@
         android:id="@+id/card"
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:cardCornerRadius="6dp"
         android:layout_centerHorizontal="true"
         android:layout_margin="8dp"
