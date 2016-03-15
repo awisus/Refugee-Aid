@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 if (datei != null) {
                     LoginData login = new Gson().fromJson(datei, LoginData.class);
-                    new NutzerGet(this, R.string.warnung_anmelden).execute(login);
+                    new NutzerGet(this, R.string.meldung_anmelden).execute(login);
                 } else {
                     // Else, show login dialogue
                     FragmentAnmelden fragAnmelden;
