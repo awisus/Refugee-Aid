@@ -17,7 +17,8 @@
     <string name="nav_profil">Profil</string>
     <string name="nav_karte">Karte</string>
 
-    <string name="nav_titel_ueber">Über</string>
+    <string name="nav_titel_nav">Navigation</string>
+    <string name="nav_titel_ueber">Information</string>
 
     <string name="titel_profil">Bedarf verwalten</string>
     <string name="titel_login">Anmelden</string>

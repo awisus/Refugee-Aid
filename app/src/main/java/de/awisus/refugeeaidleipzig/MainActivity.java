@@ -80,10 +80,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     private DrawerLayout drawer;
 
-    private NavigationView navigationView;
-
-    private int selectedItemID;
-
     /**
      * Instance of modelled problem
      */
@@ -192,7 +188,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Listen for item selection in nav drawer
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        this.navigationView = navigationView;
     }
 
     /**
@@ -202,9 +197,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container, FragmentKarte.newInstance(this, model));
         transaction.commit();
-
-        selectedItemID = R.id.nav_karte;
-        correctNavigationItem();
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -222,14 +214,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Check whether model returns log in or log off by user
         Boolean anmeldung = (Boolean) data;
         if(anmeldung.equals(Boolean.TRUE)) {    // Show profile on log in
-            selectedItemID = R.id.nav_profil;
-            correctNavigationItem();
-
             wechsleFragment(FragmentProfil.newInstance(model));
         } else {                                // return to map on log off
-            selectedItemID = R.id.nav_karte;
-            correctNavigationItem();
-
             wechsleFragment(FragmentKarte.newInstance(this, model));
             Toast.makeText(this, R.string.meldung_abmelden, Toast.LENGTH_SHORT).show();
         }
@@ -250,8 +236,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
-
-        correctNavigationItem();
     }
 
     /**
@@ -269,11 +253,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = (item.getItemId());
 
         // Show user profile if logged on
-        if(id == R.id.nav_profil && id != selectedItemID) {
+        if(id == R.id.nav_profil) {
             if(model.angemeldet()) {
-                selectedItemID = R.id.nav_profil;
-                correctNavigationItem();
-
                 wechsleFragment(FragmentProfil.newInstance(model));
             } else {
                 // get saved login data
@@ -288,9 +269,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     LoginData login = new Gson().fromJson(datei, LoginData.class);
                     new NutzerGet(this, R.string.warnung_anmelden).execute(login);
                 } else {
-                    selectedItemID = R.id.nav_karte;
-                    correctNavigationItem();
-
                     // Else, show login dialogue
                     FragmentAnmelden fragAnmelden;
                     fragAnmelden = FragmentAnmelden.newInstance(model);
@@ -300,10 +278,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         // Switch to Google Map
-        if(id == R.id.nav_karte && id != selectedItemID) {
+        if(id == R.id.nav_karte) {
             wechsleFragment(FragmentKarte.newInstance(this, model));
-            selectedItemID = R.id.nav_karte;
-            correctNavigationItem();
         }
 
         // Show About Dialogue
@@ -355,14 +331,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();
-    }
-
-    private void correctNavigationItem() {
-        int neu = 0;
-        if(selectedItemID == R.id.nav_karte) {
-            neu = 1;
-        }
-
-        navigationView.getMenu().getItem(neu).setChecked(true);
     }
 }
