@@ -3,8 +3,4 @@
     <color name="colorPrimary">#673ab7</color>
     <color name="colorPrimaryDark">#512da8</color>
     <color name="colorAccent">#ffab00</color>
-
-    <color name="rot">#f44336</color>
-    <color name="grau">#cbcbcb</color>
-    <color name="weiss">#ffffff</color>
 </resources>

@@ -24,11 +24,10 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -61,7 +60,7 @@ import de.awisus.refugeeaidleipzig.util.BackgroundTask;
  * information about sizes, number of residents and a list of needs for each accommodation
  * @author Jens Awisus
  */
-public class FragmentKarte extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener, View.OnClickListener {
+public class FragmentKarte extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, View.OnClickListener {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
@@ -72,6 +71,10 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     private GoogleMap karte;
 
     private FloatingActionButton fabUpdate;
+
+    private Animation fabHide, fabShow;
+
+    private boolean hidden = false;
 
     /**
      * Model to access information about the accommodations and their respective marker info
@@ -119,7 +122,10 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         fabUpdate = (FloatingActionButton) view.findViewById(R.id.fabUpdate);
         fabUpdate.setOnClickListener(this);
 
-        getActivity().setTitle(R.string.nav_karte);
+        fabHide = AnimationUtils.loadAnimation(context, R.anim.bt_hide);
+        fabShow = AnimationUtils.loadAnimation(context, R.anim.bt_show);
+
+        getActivity().setTitle(R.string.app_name);
         return view;
     }
 
@@ -137,12 +143,6 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         mapFragment.getMapAsync(this);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_map_menu, menu);
-    }
-
       ////////////////////////////////////////////////////////////////////////////////
      // Google Map //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
@@ -156,6 +156,8 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     @Override
     public void onMapReady(GoogleMap karte) {
         this.karte = karte;
+        this.karte.setOnMarkerClickListener(this);
+        this.karte.setOnMapClickListener(this);
         this.setMarkers();
 
         // Zoom on users accommodation, if logged in
@@ -223,16 +225,22 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.itUpdate:
-                new Updater(context, R.string.meldung_aktualisieren).execute();
-                return true;
-            default:
-                break;
+    public boolean onMarkerClick(Marker marker) {
+        if(!hidden) {
+            fabUpdate.startAnimation(fabHide);
+            fabUpdate.setClickable(false);
+            hidden = true;
         }
-
         return false;
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        if(hidden) {
+            fabUpdate.startAnimation(fabShow);
+            fabUpdate.setClickable(true);
+            hidden = false;
+        }
     }
 
     @Override
