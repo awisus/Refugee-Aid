@@ -285,10 +285,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Show About Dialogue
         if(id == R.id.nav_ueber) {
             FragmentInfo fragUeber =
-            FragmentInfo.newInstance(
-                    getResources().getString(R.string.nav_titel_ueber),
-                    getResources().getString(R.string.info) +"\n\nv" +BuildConfig.VERSION_NAME);
-
+            FragmentInfo.newInstance(R.string.nav_titel_ueber, R.string.info);
             fragUeber.show(getSupportFragmentManager(), "Info");
         }
 

@@ -41,9 +41,10 @@ public class FragmentInfo extends DialogFragment {
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * String to be set as content
-     */
+    private int inhaltID;
+
+    private int titelID;
+
     private String inhalt;
 
     private String titel;
@@ -58,6 +59,13 @@ public class FragmentInfo extends DialogFragment {
      * @param inhalt desired content
      * @return Fragment making up information window
      */
+    public static FragmentInfo newInstance(int titel, int inhalt) {
+        FragmentInfo frag = new FragmentInfo();
+        frag.inhaltID = inhalt;
+        frag.titelID = titel;
+        return frag;
+    }
+
     public static FragmentInfo newInstance(String titel, String inhalt) {
         FragmentInfo frag = new FragmentInfo();
         frag.inhalt = inhalt;
@@ -83,13 +91,22 @@ public class FragmentInfo extends DialogFragment {
 
         TextView tvInfo = (TextView) view.findViewById(R.id.tvInfo);
 
-        tvInfo.setText(inhalt);
+        if(inhalt == null) {
+            tvInfo.setText(inhaltID);
+        } else {
+            tvInfo.setText(inhalt);
+        }
 
         builder.setView(view);
 
         Dialog dialog;
         dialog = builder.create();
-        dialog.setTitle(titel);
+
+        if(titel == null) {
+            dialog.setTitle(titelID);
+        } else {
+            dialog.setTitle(titel);
+        }
 
         return dialog;
     }

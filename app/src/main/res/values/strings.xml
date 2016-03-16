@@ -3,10 +3,21 @@
     <string name="app_name">Refugee Aid</string>
 
     <string name="info">
-        <b>Refugee Aid</b> ist eine Plattform, die Geflüchtete befähigt, ihre Befürfnisse direkt
-        auszudrücken.\n
-        Auf der Karte werden Hilfsmöglichkeiten im nahem Umfeld ersichtlich. So müssen keine
-        unliebsamen Wege zu zentralen Spendenannahmen in Kauf genommen werden.\n\n
+        <b>Refugee Aid</b> ist die Plattform, die geflüchtete Menschen und hilfsbereite Bürger
+        zusammenbringt.
+        \n
+        \n
+
+        <b>Registrieren</b> Sie sich als Geflüchteter und erstellen Sie übersichtlich eine Liste
+        ihrer Bedürfnisse.
+        \n
+        \n
+
+        <b>Sehen</b> Sie auf der Karte, wo sich Unterkünfte für Geflüchtete in ihrer Umgebung
+        befinden. Nutzen Sie die kurze Entfernung oder den täglichen Arbeitsweg, um <b>Spenden</b>
+        zu leisten. Zu Jeder Unterkunft können Sie den genauen Bedarf der Menschen einsehen.
+        \n
+        \n
 
         Hergestellt von J. Awisus, 2016
     </string>
