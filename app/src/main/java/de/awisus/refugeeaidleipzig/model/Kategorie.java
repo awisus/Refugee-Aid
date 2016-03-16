@@ -31,7 +31,6 @@ import java.util.Vector;
  * @author Jens Awisus
  */
 public class Kategorie extends IDObject {
-    private String name;
 
     private Vector<Kategorie> subkategorien;
 
@@ -56,10 +55,6 @@ public class Kategorie extends IDObject {
         return kategorie;
     }
 
-
-    public String getName() {
-        return name;
-    }
 
     public Vector<Kategorie> getSubkategorien() {
         return subkategorien;

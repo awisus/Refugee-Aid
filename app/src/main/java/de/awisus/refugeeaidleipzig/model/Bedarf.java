@@ -27,13 +27,9 @@ import org.json.JSONObject;
  *
  * @author Jens Awisus
  */
-public class Bedarf extends IDObject implements Comparable<Bedarf> {
+public class Bedarf extends IDObject {
 
-    private String name;
-
-
-    private Bedarf() {
-    }
+    private Bedarf() {}
 
     public static Bedarf fromJSON(JSONObject json) throws JSONException {
         // Instatiate new user
@@ -47,16 +43,5 @@ public class Bedarf extends IDObject implements Comparable<Bedarf> {
         bedarf.name = bedarf.name.trim();
 
         return bedarf;
-    }
-
-
-    @Override
-    public int compareTo(Bedarf another) {
-        return -another.toString().compareTo(toString());
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 }

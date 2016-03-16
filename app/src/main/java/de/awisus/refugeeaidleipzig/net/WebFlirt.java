@@ -31,7 +31,7 @@ public class WebFlirt {
     }
 
 
-    public DataMap<Unterkunft> getUnterkuenfte(DataMap<Kategorie> kategorien) throws IOException, JSONException, InterruptedException, ExecutionException {
+    public DataMap<Unterkunft> getUnterkuenfte() throws IOException, JSONException, InterruptedException, ExecutionException {
 
         DataMap<Unterkunft> unterkunftMap = new DataMap<>();
 
@@ -43,7 +43,7 @@ public class WebFlirt {
 
             JSONObject json = feld.getJSONObject(i);
 
-            unterkunftMap.add(Unterkunft.fromJSON(kategorien, json));
+            unterkunftMap.add(Unterkunft.fromJSON(json));
         }
 
         return unterkunftMap;

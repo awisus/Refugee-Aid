@@ -23,8 +23,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Observable;
+import java.util.Set;
 
 /**
  * Created on 12.01.16.
@@ -53,10 +53,7 @@ public class Model extends Observable {
      */
     private HashMap<Marker, Unterkunft> mapUnterkuenfte;
 
-    /**
-     * List of MarkerOptions storing information for each Marker for each accommodation
-     */
-    private LinkedList<MarkerOptions> markerOptionen;
+    private HashMap<MarkerOptions, Unterkunft> mapMarkerOptionenUnterkuenfte;
 
     /**
      * Current user (may be null, if not logged in)
@@ -71,8 +68,8 @@ public class Model extends Observable {
      * public constructor initialising lists and the HashMap
      */
     public Model() {
-        markerOptionen = new LinkedList<>();
         mapUnterkuenfte = new HashMap<>();
+        mapMarkerOptionenUnterkuenfte = new HashMap<>();
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -114,21 +111,6 @@ public class Model extends Observable {
      // Setters /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Method for adding MapMarkers to the HashMap for easy information retrieval.
-     * Clears HashMap, if a very new set of Markers is to be stores (happens, if MapFragment is
-     * newly created in Android view code)
-     * @param marke Marker for Map
-     * @param position Iterator indicating position in accommodation list to check for "full" Map
-     */
-    public void addMarke(Marker marke, int position) {
-        Unterkunft unterkunft = unterkuenfte.get(position);
-        if(unterkuenfte.size() == mapUnterkuenfte.size()) {
-            mapUnterkuenfte.clear();
-        }
-        mapUnterkuenfte.put(marke, unterkunft);
-    }
-
     public void setKategorien(DataMap<Kategorie> kategorien) {
         this.kategorien = kategorien;
     }
@@ -140,7 +122,7 @@ public class Model extends Observable {
     public void setUnterkuenfte(DataMap<Unterkunft> unterkuenfte) {
         this.unterkuenfte = unterkuenfte;
 
-        markerOptionen.clear();
+        mapMarkerOptionenUnterkuenfte.clear();
         for(Unterkunft unterkunft : unterkuenfte) {
             addMarkerOption(unterkunft);
         }
@@ -151,24 +133,38 @@ public class Model extends Observable {
      * @param unterkunft accommodation data with data to be got
      */
     private void addMarkerOption(Unterkunft unterkunft) {
-        MarkerOptions marke = new MarkerOptions();
-        marke.title(unterkunft.toString());
-        marke.position(unterkunft.getLatLng());
+        MarkerOptions markerOption;
+        markerOption = new MarkerOptions();
+        markerOption.title(unterkunft.toString());
+        markerOption.position(unterkunft.getLatLng());
 
-        markerOptionen.add(marke);
+        mapMarkerOptionenUnterkuenfte.put(markerOption, unterkunft);
+    }
+
+    /**
+     * Method for adding MapMarkers to the HashMap for easy information retrieval.
+     * Clears HashMap, if a very new set of Markers is to be stores (happens, if MapFragment is
+     * newly created in Android view code)
+     * @param marke Marker for Map
+     * @param markerOption
+     */
+    public void addMarke(Marker marke, MarkerOptions markerOption) {
+        if(unterkuenfte.size() == mapUnterkuenfte.size()) {
+            mapUnterkuenfte.clear();
+        }
+
+        Unterkunft unterkunft;
+        unterkunft = mapMarkerOptionenUnterkuenfte.get(markerOption);
+
+        mapUnterkuenfte.put(marke, unterkunft);
     }
 
       ////////////////////////////////////////////////////////////////////////////////
      // Getters /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Getter method for specific MarkerOption in MarkerOption list
-     * @param position position of MarkerOption to be got
-     * @return desired MarkerOption
-     */
-    public MarkerOptions getMarkerOption(int position) {
-        return markerOptionen.get(position);
+    public Set<MarkerOptions> getMarkerOptionen() {
+        return mapMarkerOptionenUnterkuenfte.keySet();
     }
 
     /**

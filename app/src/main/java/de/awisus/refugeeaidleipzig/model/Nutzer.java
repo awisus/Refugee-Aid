@@ -31,16 +31,11 @@ import org.json.JSONObject;
  * removed
  * @author Jens Awisus
  */
-public class Nutzer extends ObservableIDObject {
+public class Nutzer extends IDObject {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * User name
-     */
-    private String name;
 
     private String mail;
 
@@ -109,18 +104,6 @@ public class Nutzer extends ObservableIDObject {
      // Getters /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Get user name
-     * @return user name
-     */
-    public String getName() {
-        return name;
-    }
-
     public String getMail() {
         return mail;
     }
@@ -139,13 +122,5 @@ public class Nutzer extends ObservableIDObject {
      */
     public DataMap<Bedarf> getBedarf() {
         return bedarf;
-    }
-
-    /**
-     * Information whether this user has needs
-     * @return true, if list of needs > 0; false else
-     */
-    public boolean hatBedarf(int kategoieID) {
-        return bedarf.size() > 0;
     }
 }

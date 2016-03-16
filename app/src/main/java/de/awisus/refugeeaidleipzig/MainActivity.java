@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             try {
                 // initialise the model
                 DataMap<Kategorie> kategorien = WebFlirt.getInstance().getKategorien();
-                DataMap<Unterkunft> unterkuenfte = WebFlirt.getInstance().getUnterkuenfte(kategorien);
+                DataMap<Unterkunft> unterkuenfte = WebFlirt.getInstance().getUnterkuenfte();
 
                 Model model;
                 model = new Model();

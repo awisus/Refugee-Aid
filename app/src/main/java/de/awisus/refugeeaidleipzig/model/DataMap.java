@@ -1,5 +1,6 @@
 package de.awisus.refugeeaidleipzig.model;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -26,6 +27,9 @@ public class DataMap<T extends IDObject> implements Iterable<T> {
         map.put(daten.getId(), daten);
         list.add(daten);
         vector.add(daten);
+
+        Collections.sort(list);
+        Collections.sort(vector);
     }
 
     public T get(int index) {

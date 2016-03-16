@@ -19,8 +19,7 @@
 
 package de.awisus.refugeeaidleipzig.fragment;
 
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -35,6 +34,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
 
@@ -47,7 +47,7 @@ import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
-import de.awisus.refugeeaidleipzig.util.Utility;
+import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 
 /**
  * Created on 11.01.16.
@@ -157,16 +157,9 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     }
 
     private void setMarkers() {
-
-        // perform accommodations loaded into the model
-        final DataMap<Unterkunft> unterkuenfte = model.getUnterkuenfte();
-
-        // Bring marker for each accommodation to the map
-        for (int i = 0; i < unterkuenfte.size(); i++) {
-            Marker marke = karte.addMarker(model.getMarkerOption(i));
-
-            // Store this marker in the model
-            model.addMarke(marke, i);
+        for(MarkerOptions markerOption : model.getMarkerOptionen()) {
+            Marker marke = karte.addMarker(markerOption);
+            model.addMarke(marke, markerOption);
         }
     }
 
@@ -217,21 +210,18 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.fabUpdate) {
-            new Updater().execute();
+            new Updater(context, R.string.meldung_aktualisieren).execute();
         }
     }
 
-    private class Updater extends AsyncTask<String, Integer, DataMap<Unterkunft>> {
+    private class Updater extends BackgroundTask<String, Integer, DataMap<Unterkunft>> {
 
-        private ProgressDialog ladebalken;
-
-        @Override
-        protected void onPreExecute() {
-            ladebalken = Utility.getInstance().zeigeLadebalken(context, getResources().getString(R.string.meldung_aktualisieren));
+        protected Updater(Activity context, int textID) {
+            super(context, textID);
         }
 
         @Override
-        protected void onPostExecute(DataMap<Unterkunft> result) {
+        protected void doPostExecute(DataMap<Unterkunft> result) {
 
             if(result == null) {
                 Toast.makeText(context, "Download gescheitert", Toast.LENGTH_SHORT).show();
@@ -240,14 +230,12 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
                 karte.clear();
                 setMarkers();
             }
-
-            ladebalken.dismiss();
         }
 
         @Override
         protected DataMap<Unterkunft> doInBackground(String... params) {
             try {
-                return WebFlirt.getInstance().getUnterkuenfte(model.getKategorien());
+                return WebFlirt.getInstance().getUnterkuenfte();
             } catch (IOException | JSONException | InterruptedException | ExecutionException e) {
                 return null;
             }

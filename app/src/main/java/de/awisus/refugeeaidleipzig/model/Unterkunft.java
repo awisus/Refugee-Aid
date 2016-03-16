@@ -31,18 +31,13 @@ import org.json.JSONObject;
  * Class modelling an accommodation by storing its name, langitude, longitude, size and residents
  * @author Jens Awisus
  */
-public class Unterkunft extends IDObject implements Comparable<Unterkunft> {
+public class Unterkunft extends IDObject {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
     private String stadt;
-
-    /**
-     * Name of the accommodation (e.g. Eythstrasse)
-     */
-    private String name;
 
     /**
      * Geographic coordinates
@@ -69,7 +64,7 @@ public class Unterkunft extends IDObject implements Comparable<Unterkunft> {
         bedarf = new DataMap<>();
     }
 
-    public static Unterkunft fromJSON(DataMap<Kategorie> kategorien, JSONObject json) throws JSONException {
+    public static Unterkunft fromJSON(JSONObject json) throws JSONException {
 
         // Instatiate new accommodation
         Unterkunft unterkunft = new Unterkunft();
@@ -101,12 +96,6 @@ public class Unterkunft extends IDObject implements Comparable<Unterkunft> {
       ////////////////////////////////////////////////////////////////////////////////
      // Methods /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-
-
-    @Override
-    public int compareTo(Unterkunft another) {
-        return -another.toString().compareTo(toString());
-    }
 
     /**
      * Overridden equals function.
