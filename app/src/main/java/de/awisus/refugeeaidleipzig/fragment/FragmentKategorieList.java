@@ -28,7 +28,7 @@ public class FragmentKategorieList extends DialogFragment implements AdapterView
 
     private ListView listView;
 
-    private AdapterKategorie adapter;
+    private Adapter<Kategorie> adapter;
 
     private Nutzer nutzer;
 
@@ -49,7 +49,7 @@ public class FragmentKategorieList extends DialogFragment implements AdapterView
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_list_kategorie, null);
 
-        adapter = new AdapterKategorie(getActivity(), android.R.layout.simple_list_item_1, liste);
+        adapter = new Adapter<>(getActivity(), android.R.layout.simple_list_item_1, liste, R.layout.entry_kategorie);
 
         listView = (ListView) view.findViewById(android.R.id.list);
         listView.setDivider(null);

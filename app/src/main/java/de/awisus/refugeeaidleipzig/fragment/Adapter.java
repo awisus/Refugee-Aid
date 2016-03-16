@@ -10,20 +10,22 @@ import android.widget.TextView;
 import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.R;
-import de.awisus.refugeeaidleipzig.model.Kategorie;
+import de.awisus.refugeeaidleipzig.model.IDObject;
 
 /**
  * Created on 13.03.16.
  *
  * @author Jens Awisus
  */
-public class AdapterKategorie extends ArrayAdapter<Kategorie> {
+public class Adapter<T extends IDObject> extends ArrayAdapter<T> {
 
-    private Vector<Kategorie> liste;
+    protected Vector<T> liste;
+    protected int layoutID;
 
-    public AdapterKategorie(Context context, int resource, Vector<Kategorie> objects) {
+    public Adapter(Context context, int resource, Vector<T> objects, int layoutID) {
         super(context, resource, objects);
         this.liste = objects;
+        this.layoutID = layoutID;
     }
 
     @Override
@@ -31,12 +33,16 @@ public class AdapterKategorie extends ArrayAdapter<Kategorie> {
 
         Context ctx = parent.getContext();
         LayoutInflater inflator = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflator.inflate(R.layout.entry_kategorie, parent, false);
+        View view = inflator.inflate(layoutID, parent, false);
 
         TextView tvName;
         tvName = (TextView) view.findViewById(R.id.tvName);
         tvName.setText(liste.get(position).toString());
 
+        doExtraBits(position, view);
+
         return view;
     }
+
+    protected void doExtraBits(int position, View view) {}
 }

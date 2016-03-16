@@ -19,7 +19,6 @@
 
 package de.awisus.refugeeaidleipzig.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -31,7 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -42,8 +40,6 @@ import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Bedarf;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
-import de.awisus.refugeeaidleipzig.net.WebFlirt;
-import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 import de.awisus.refugeeaidleipzig.util.Datei;
 
 /**
@@ -142,7 +138,7 @@ public class FragmentProfil extends Fragment implements Observer {
         tvName = (TextView) view.findViewById(R.id.tvUnterkunft);
         tvEinrichtung = (TextView) view.findViewById(R.id.tvEinrichtung);
 
-        adapter = new AdapterBedarf(getActivity(), android.R.layout.simple_list_item_1, liste);
+        adapter = new AdapterBedarf(getActivity(), android.R.layout.simple_list_item_1, liste, nutzer);
 
         ListView listView;
         listView = (ListView) view.findViewById(android.R.id.list);
@@ -218,30 +214,5 @@ public class FragmentProfil extends Fragment implements Observer {
         }
 
         return false;
-    }
-
-    private class BedarfDelete extends BackgroundTask<String, Integer, Integer> {
-
-        public BedarfDelete(Activity context, int textID) {
-            super(context, textID);
-        }
-
-        @Override
-        protected Integer doInBackground(String... params) {
-            try {
-                return WebFlirt.getInstance().deleteBedarf(params);
-            } catch (Exception e){
-                return null;
-            }
-        }
-
-        @Override
-        protected void doPostExecute(Integer result) {
-            if(result == null) {
-                Toast.makeText(getActivity(), R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
-            } else {
-                nutzer.loescheBedarf(result);
-            }
-        }
     }
 }
