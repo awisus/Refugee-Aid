@@ -113,6 +113,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return nwInfo != null && nwInfo.isConnectedOrConnecting();
     }
 
+    private void initialise() {
+
+        // this Activity listens to model changes (login and logout)
+        model.addObserver(MainActivity.this);
+
+        // set the view by layout xml file
+        setContentView(R.layout.activity_main);
+
+        Toolbar tb = initToolbar();
+        initNavigationDrawer(tb);
+        initContainer();
+    }
+
     private class Initialiser extends BackgroundTask<String, Integer, Model> {
 
         public Initialiser(Activity context, int textID) {
@@ -126,16 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(MainActivity.this, R.string.warnung_laden, Toast.LENGTH_SHORT).show();
             } else {
                 model = result;
-
-                // this Activity listens to model changes (login and logout)
-                model.addObserver(MainActivity.this);
-
-                // set the view by layout xml file
-                setContentView(R.layout.activity_main);
-
-                Toolbar tb = initToolbar();
-                initNavigationDrawer(tb);
-                initContainer();
+                initialise();
             }
         }
 
