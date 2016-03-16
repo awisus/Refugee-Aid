@@ -21,17 +21,14 @@ package de.awisus.refugeeaidleipzig.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,13 +56,11 @@ import de.awisus.refugeeaidleipzig.util.Datei;
  * A LogOut button performs log out from the model
  * @author Jens Awisus
  */
-public class FragmentProfil extends Fragment implements Observer, View.OnClickListener, AdapterView.OnItemClickListener {
+public class FragmentProfil extends Fragment implements Observer {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-
-    private FragmentKategorieList fragmentBedarfNeu;
 
     /**
      * Label showing the user name
@@ -76,8 +71,6 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
      * Label showing the accommodation the user stays in
      */
     private TextView tvEinrichtung;
-
-    private ListView listView;
 
     private AdapterBedarf adapter;
 
@@ -113,7 +106,6 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
       ////////////////////////////////////////////////////////////////////////////////
      // View creation ///////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -152,12 +144,10 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
 
         adapter = new AdapterBedarf(getActivity(), android.R.layout.simple_list_item_1, liste);
 
+        ListView listView;
         listView = (ListView) view.findViewById(android.R.id.list);
         listView.setAdapter(adapter);
         registerForContextMenu(listView);
-
-        FloatingActionButton btPlus = (FloatingActionButton) view.findViewById(R.id.fab_plus);
-        btPlus.setOnClickListener(this);
     }
 
     /**
@@ -176,11 +166,6 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_profile_menu, menu);
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-        getActivity().getMenuInflater().inflate(R.menu.fragment_profil_context, menu);
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -212,9 +197,13 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.itNeu:
+                FragmentKategorieList.newInstance(nutzer, model.getKategorien().asVector())
+                .show(getFragmentManager(), "Kategorien");
+                return true;
             case R.id.itBearbeiten:
                 // Not implemented here
-                return false;
+                return true;
             case R.id.itAbmelden:
                 model.abmelden();
 
@@ -229,41 +218,6 @@ public class FragmentProfil extends Fragment implements Observer, View.OnClickLi
         }
 
         return false;
-    }
-
-    /**
-     * This Method is called, if any of the Buttons  is clicked
-     * @param view the View pressed
-     */
-    @Override
-    public void onClick(View view) {
-        int id = view.getId();
-        // Click on the FloatingAction Plus button calls fragment for adding a need
-        if(id == R.id.fab_plus) {
-            fragmentBedarfNeu = FragmentKategorieList.newInstance(
-                    nutzer, model.getKategorien().asVector());
-            fragmentBedarfNeu.show(getFragmentManager(), "Kategorien");
-        }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> arg0, View view, int pos, long id) {
-        getActivity().openContextMenu(listView);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.itLoeschen:
-
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
-                new BedarfDelete(getActivity(), R.string.meldung_entfernen).execute(
-                        "id", "" + liste.get(info.position).getId());
-
-                return true;
-            default: return super.onOptionsItemSelected(item);
-        }
     }
 
     private class BedarfDelete extends BackgroundTask<String, Integer, Integer> {

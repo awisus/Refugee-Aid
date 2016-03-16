@@ -35,7 +35,7 @@ public class AdapterKategorie extends ArrayAdapter<Kategorie> {
 
         TextView tvName;
         tvName = (TextView) view.findViewById(R.id.tvName);
-        tvName.setText(liste.get(position).getName());
+        tvName.setText(liste.get(position).toString());
 
         return view;
     }

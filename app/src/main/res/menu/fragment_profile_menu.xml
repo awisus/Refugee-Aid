@@ -3,10 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/itBearbeiten"
-        android:title="Daten bearbeiten"
-        android:icon="@drawable/ic_create_white_48dp"
+        android:id="@+id/itNeu"
+        android:title="Neuer Bedarf"
+        android:icon="@drawable/ic_add_white_48dp"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/itBearbeiten"
+        android:title="Bearbeiten"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/itAbmelden"

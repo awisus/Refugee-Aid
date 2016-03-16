@@ -31,7 +31,7 @@ public class AdapterBedarf extends ArrayAdapter<Bedarf> {
 
         Context ctx = parent.getContext();
         LayoutInflater inflator = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflator.inflate(R.layout.entry_kategorie, parent, false);
+        View view = inflator.inflate(R.layout.entry_bedarf, parent, false);
 
         TextView tvName;
         tvName = (TextView) view.findViewById(R.id.tvName);

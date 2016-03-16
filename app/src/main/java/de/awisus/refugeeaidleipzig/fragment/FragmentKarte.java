@@ -24,6 +24,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -95,6 +98,12 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
      // View creation ///////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     /**
      * Automatically called method inflating the xml-layout
      * Sets actovoty title to Map
@@ -126,6 +135,12 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         SupportMapFragment mapFragment;
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_map_menu, menu);
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -205,6 +220,19 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
                 unterkunft.toString(),
                 detail
         ).show(getActivity().getSupportFragmentManager(), unterkunft.toString());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itUpdate:
+                new Updater(context, R.string.meldung_aktualisieren).execute();
+                return true;
+            default:
+                break;
+        }
+
+        return false;
     }
 
     @Override
