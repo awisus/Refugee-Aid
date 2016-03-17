@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.R;
@@ -89,7 +91,10 @@ public class FragmentKategorieList extends DialogFragment implements AdapterView
         @Override
         protected Bedarf doInBackground(String... params) {
             try {
-                return WebFlirt.getInstance().postBedarf(params);
+                String antwort = WebFlirt.getInstance().create("needs_remote", params);
+                Bedarf bedarf = Bedarf.fromJSON(new JSONObject(antwort));
+
+                return bedarf;
             } catch (Exception e) {
                 return null;
             }

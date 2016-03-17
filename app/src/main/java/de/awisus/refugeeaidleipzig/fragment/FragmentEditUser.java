@@ -247,36 +247,32 @@ public class FragmentEditUser extends FragmentAnmelden {
         new NutzerDelete(getActivity(), R.string.meldung_entfernen).execute("id", "" + id);
     }
 
-    private class NutzerDelete extends BackgroundTask<String, Integer, Nutzer> {
+    private class NutzerDelete extends BackgroundTask<String, Integer, String> {
 
         public NutzerDelete(Activity context, int textID) {
             super(context, textID);
         }
 
         @Override
-        protected Nutzer doInBackground(String... params) {
-            try {
-                return WebFlirt.getInstance().deleteNutzer(model.getUnterkuenfte(), params);
-            } catch (Exception e){
-                return null;
-            }
+        protected String doInBackground(String... params) {
+            String antwort = WebFlirt.getInstance().delete("users_remote", params);
+            return antwort.equals("OK") ? antwort : null;
         }
 
         @Override
-        protected void doPostExecute(Nutzer result) {
+        protected void doPostExecute(String result) {
             if(result == null) {
                 Toast.makeText(context, R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
             } else {
-
-                dismiss();
-
-                model.abmelden();
-
                 try {
                     Datei.getInstance().loeschen(getActivity(), "login.json");
                 } catch (IOException e) {
                     Log.e("Abmelden", "Fehler beim Löschen der Nutzerdaten");
                 }
+
+                dismiss();
+
+                model.abmelden();
             }
         }
     }

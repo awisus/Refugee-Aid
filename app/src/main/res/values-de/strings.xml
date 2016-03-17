@@ -77,4 +77,7 @@
     <string name="meldung_entfernen">Entferne...</string>
     <string name="meldung_hinzufuegen">Füge hinzu...</string>
     <string name="button_bearbeiten">Bearbeiten</string>
+    <string name="button_bearbeiten_fertig">Absenden</string>
+    <string name="button_konto_loeschen">Konto löschen</string>
+    <string name="titel_bearbeite_nutzer">Nutzerdaten bearbeiten</string>
 </resources>

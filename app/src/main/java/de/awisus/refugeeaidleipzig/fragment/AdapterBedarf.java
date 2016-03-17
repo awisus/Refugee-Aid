@@ -54,7 +54,8 @@ public class AdapterBedarf extends Adapter<Bedarf> {
         @Override
         protected Integer doInBackground(String... params) {
             try {
-                return WebFlirt.getInstance().deleteBedarf(params);
+                String antwort = WebFlirt.getInstance().delete("needs_remote", params);
+                return Integer.parseInt(antwort);
             } catch (Exception e){
                 return null;
             }

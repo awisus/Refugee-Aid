@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import de.awisus.refugeeaidleipzig.model.Bedarf;
 import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Kategorie;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
@@ -75,36 +74,13 @@ public class WebFlirt {
         return makeNutzer(unterkuenfte, httpGet.perform("getUser/" + params[0] + "/" + params[1]));
     }
 
-    public Nutzer postNutzer(DataMap<Unterkunft> unterkuenfte, String... parameter) throws JSONException, InterruptedException, ExecutionException {
-        HTTPPost httpPost;
-        httpPost = new HTTPPost(SERVER_URL);
-
-        for(int i = 0; i < parameter.length; i += 2) {
-            httpPost.addParameter(parameter[i], parameter[i+1]);
-        }
-
-        return makeNutzer(unterkuenfte, httpPost.perform("users_remote"));
-    }
-
-    public Nutzer deleteNutzer(DataMap<Unterkunft> unterkuenfte, String... parameter) throws Exception {
-        HTTPDelete httpDelete;
-        httpDelete = new HTTPDelete(SERVER_URL);
-
-        for(int i = 0; i < parameter.length; i += 2) {
-            httpDelete.addParameter(parameter[i], parameter[i+1]);
-        }
-
-        String antwort = httpDelete.perform("users_remote");
-
-        return makeNutzer(unterkuenfte, antwort);
-    }
-
     private Nutzer makeNutzer(DataMap<Unterkunft> unterkuenfte, String inhalt) throws JSONException {
         return Nutzer.fromJSON(unterkuenfte, new JSONObject(inhalt));
     }
 
 
-    public Bedarf postBedarf(String... parameter) throws Exception {
+
+    public String create(String path, String... parameter) {
         HTTPPost httpPost;
         httpPost = new HTTPPost(SERVER_URL);
 
@@ -112,10 +88,10 @@ public class WebFlirt {
             httpPost.addParameter(parameter[i], parameter[i+1]);
         }
 
-        return Bedarf.fromJSON(new JSONObject(httpPost.perform("needs_remote")));
+        return httpPost.perform(path);
     }
 
-    public Integer deleteBedarf(String... parameter) throws Exception {
+    public String delete(String path, String... parameter) {
         HTTPDelete httpDelete;
         httpDelete = new HTTPDelete(SERVER_URL);
 
@@ -123,8 +99,6 @@ public class WebFlirt {
             httpDelete.addParameter(parameter[i], parameter[i+1]);
         }
 
-        String antwort = httpDelete.perform("needs_remote");
-
-        return Integer.parseInt(antwort);
+        return httpDelete.perform(path);
     }
 }

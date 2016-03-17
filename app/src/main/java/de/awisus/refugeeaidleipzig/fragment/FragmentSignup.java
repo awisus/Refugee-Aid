@@ -31,10 +31,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.concurrent.ExecutionException;
 
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.LoginData;
@@ -236,8 +236,11 @@ public class FragmentSignup extends FragmentAnmelden {
         @Override
         protected Nutzer doInBackground(String... params) {
             try {
-                return WebFlirt.getInstance().postNutzer(model.getUnterkuenfte(), params);
-            } catch (JSONException | InterruptedException | ExecutionException e){
+                String antwort = WebFlirt.getInstance().create("users_remote", params);
+                Nutzer nutzer = Nutzer.fromJSON(model.getUnterkuenfte(), new JSONObject(antwort));
+
+                return nutzer;
+            } catch (JSONException e){
                 return null;
             }
         }
