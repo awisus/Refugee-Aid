@@ -318,7 +318,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected void doPostExecute(Nutzer result) {
-            if(result != null) {
+            if(result == null) {
+                FragmentAnmelden fragAnmelden;
+                fragAnmelden = FragmentAnmelden.newInstance(model);
+                fragAnmelden.show(getSupportFragmentManager(), "Anmelden");
+            } else {
                 model.anmelden(result);
             }
         }
