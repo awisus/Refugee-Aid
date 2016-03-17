@@ -123,4 +123,8 @@ public class Nutzer extends IDObject {
     public DataMap<Bedarf> getBedarf() {
         return bedarf;
     }
+
+    public boolean hatBedarf() {
+        return bedarf.size() > 0;
+    }
 }

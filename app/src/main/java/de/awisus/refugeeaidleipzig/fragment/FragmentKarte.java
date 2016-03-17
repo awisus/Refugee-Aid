@@ -215,7 +215,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         detail += unterkunft.hatBedarf()
                 ? getResources().getString(R.string.string_bedarfe) + "\n"
                 + unterkunft.getBedarfeAlsString()
-                : getResources().getString(R.string.string_keine_bedarfe);
+                : getResources().getString(R.string.string_kein_bedarfe);
 
         // Call a new info fragment with name and details about the accommodation
         FragmentInfo.newInstance(
@@ -260,7 +260,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         protected void doPostExecute(DataMap<Unterkunft> result) {
 
             if(result == null) {
-                Toast.makeText(context, "Download gescheitert", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.warnung_download, Toast.LENGTH_SHORT).show();
             } else {
                 model.setUnterkuenfte(result);
                 karte.clear();

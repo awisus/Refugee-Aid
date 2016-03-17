@@ -68,6 +68,8 @@ public class FragmentProfil extends Fragment implements Observer {
      */
     private TextView tvEinrichtung;
 
+    private TextView tvLeer;
+
     private AdapterBedarf adapter;
 
     private Vector<Bedarf> liste;
@@ -135,8 +137,9 @@ public class FragmentProfil extends Fragment implements Observer {
      * @param view inflated View
      */
     private void initUI(View view) {
-        tvName = (TextView) view.findViewById(R.id.tvUnterkunft);
-        tvEinrichtung = (TextView) view.findViewById(R.id.tvEinrichtung);
+        tvName = (TextView) view.findViewById(R.id.tvName);
+        tvEinrichtung = (TextView) view.findViewById(R.id.tvUnterkunft);
+        tvLeer = (TextView) view.findViewById(R.id.tvLeer);
 
         adapter = new AdapterBedarf(getActivity(), android.R.layout.simple_list_item_1, liste, nutzer);
 
@@ -176,14 +179,9 @@ public class FragmentProfil extends Fragment implements Observer {
      */
     @Override
     public void update(Observable observable, Object data) {
-        updateBedarf();
-    }
-
-    /**
-     * Private method called to set the needs label for the current user's needs
-     */
-    private void updateBedarf() {
         adapter.notifyDataSetChanged();
+        if(nutzer.hatBedarf()) tvLeer.setText("");
+        else tvLeer.setText(R.string.string_kein_bedarfe);
     }
 
       ////////////////////////////////////////////////////////////////////////////////

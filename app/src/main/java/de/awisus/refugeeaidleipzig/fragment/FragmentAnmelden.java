@@ -128,11 +128,11 @@ public class FragmentAnmelden extends FragmentLogin implements View.OnClickListe
             login();
         }
         if (view.getId() == R.id.btNeu) {
+            dismiss();
+
             FragmentSignup fragmentSignup;
             fragmentSignup = FragmentSignup.newInstance(model);
             fragmentSignup.show(getActivity().getSupportFragmentManager(), "Neues Konto");
-
-            dismiss();
         }
     }
 

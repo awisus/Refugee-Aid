@@ -64,6 +64,7 @@ public abstract class FragmentLogin extends DialogFragment {
                 Toast.makeText(context, warnungID, Toast.LENGTH_SHORT).show();
             } else {
                 model.anmelden(result);
+                dismiss();
 
                 // save login data
                 try {
@@ -72,7 +73,6 @@ public abstract class FragmentLogin extends DialogFragment {
                     Log.e("Anmelden", "Fehler beim Speichern der Logindatei");
                 }
             }
-            dismiss();
         }
     }
 }

@@ -21,12 +21,12 @@ package de.awisus.refugeeaidleipzig.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -52,7 +52,7 @@ import de.awisus.refugeeaidleipzig.util.TextValidator;
  * choose.
  * @author Jens Awisus
  */
-public class FragmentSignup extends FragmentAnmelden implements DialogInterface.OnClickListener {
+public class FragmentSignup extends FragmentAnmelden {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
@@ -114,12 +114,18 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
         etPasswort = (EditText) view.findViewById(R.id.etPassword);
         etConformation = (EditText) view.findViewById(R.id.etConfirmation);
 
+        Button btSignup = (Button) view.findViewById(R.id.btSignup);
+        btSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signup();
+            }
+        });
+
         addListeners();
         initSpinnerAdapter();
 
         builder.setView(view);
-        builder.setPositiveButton(R.string.dialog_signup, this);
-        builder.setNegativeButton(R.string.dialog_abbrechen, this);
 
         Dialog dialog = builder.create();
         dialog.setTitle(R.string.titel_signup);
@@ -134,7 +140,7 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
                 String name = etName.getText().toString();
 
                 if (name.length() > 47) {
-                    etName.setError("Nutzername zu lang");
+                    etName.setError(findString(R.string.warnung_name));
                 }
             }
         });
@@ -143,13 +149,8 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
             public void afterTextChanged(Editable s) {
                 String mail = etMail.getText().toString();
 
-                if (mail.length() > 255) {
-                    etMail.setError("E-Mail-Adresse zu lang");
-                    return;
-                }
                 if (!MailValidator.getInstance().isValid(mail)) {
-                    etMail.setError("E-Mail-Adresse ungültig");
-                    return;
+                    etMail.setError(findString(R.string.warnung_mail));
                 }
             }
         });
@@ -157,9 +158,18 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
             @Override
             public void afterTextChanged(Editable s) {
                 String passwort = etPasswort.getText().toString();
+                String confirmation = etConformation.getText().toString();
 
                 if (passwort.length() < 6) {
-                    etPasswort.setError("Passwort zu kurz");
+                    etPasswort.setError(findString(R.string.warnung_passwort));
+                    return;
+                }
+                if(!confirmation.isEmpty()) {
+                    if(confirmation.equals(passwort)) {
+                        etConformation.setError(null);
+                    } else {
+                        etConformation.setError(findString(R.string.warnung_confirmation));
+                    }
                 }
             }
         });
@@ -170,10 +180,14 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
                 String confirmation = etConformation.getText().toString();
 
                 if (!password.equals(confirmation)) {
-                    etConformation.setError("Passwörter stimmen nicht überein");
+                    etConformation.setError(findString(R.string.warnung_confirmation));
                 }
             }
         });
+    }
+
+    private String findString(int index) {
+        return getResources().getString(index);
     }
 
     /**
@@ -196,25 +210,6 @@ public class FragmentSignup extends FragmentAnmelden implements DialogInterface.
 
         // Apply the adapter to the spinner
         spUnterkunft.setAdapter(adapter);
-    }
-
-      ////////////////////////////////////////////////////////////////////////////////
-     // Listeners ///////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * This is called when one of the dialogue buttons is clicked.
-     * If positive button, the string from the text field and the accommodation chosen in the
-     * spinner are passed to the login method of the model. This causes the model to either find an
-     * existing resident by name or to create a new user, if the sears is not successful.
-     * @param dialog Dialog Interface
-     * @param which number indicating the button pressed
-     */
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        if(which == DialogInterface.BUTTON_POSITIVE) {
-            signup();
-        }
     }
 
     private void signup() {

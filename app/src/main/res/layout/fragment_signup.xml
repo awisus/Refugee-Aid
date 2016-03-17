@@ -18,6 +18,7 @@
         android:id="@+id/etName"
         android:maxLines="1"
         android:singleLine="true"
+        android:inputType="text"
         android:layout_below="@+id/tvName"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -59,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Unterkunft"
+        android:text="@string/label_unterkunft"
         android:id="@+id/tvUnterkunft"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -68,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Nutzername"
+        android:text="@string/label_name"
         android:id="@+id/tvName"
         android:layout_below="@+id/spUnterkunft"
         android:layout_alignParentLeft="true"
@@ -79,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="E-Mail"
+        android:text="@string/label_mail"
         android:id="@+id/tvMail"
         android:layout_below="@+id/etName"
         android:layout_alignParentLeft="true"
@@ -90,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Passwort"
+        android:text="@string/label_passwort"
         android:id="@+id/tvPasswort"
         android:layout_below="@+id/etMail"
         android:layout_alignParentLeft="true"
@@ -101,11 +102,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Passwort wiederholen"
+        android:text="@string/label_confirmation"
         android:id="@+id/tvConfirmation"
         android:layout_below="@+id/etPassword"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
+    <Button
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_signup"
+        android:id="@+id/btSignup"
+        android:layout_below="@+id/etConfirmation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/frag_margin" />
 
 </RelativeLayout>

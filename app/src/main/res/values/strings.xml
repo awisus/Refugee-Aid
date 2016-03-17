@@ -37,6 +37,7 @@
     <string name="titel_bedarf_entfernen">Bedarf entfernen</string>
     <string name="titel_bedarf_neu">Kategorie wählen</string>
 
+    <string name="button_abmelden">Abmelden</string>
     <string name="dialog_anmelden">Anmelden</string>
     <string name="dialog_loeschen">Löschen</string>
     <string name="dialog_hinzufuegen">Hinzufügen</string>
@@ -46,12 +47,10 @@
 
     <string name="button_konto_neu">Neu? Hier Konto erstellen</string>
 
-    <string name="string_keine_bedarfe">Kein Bedarf</string>
+    <string name="string_kein_bedarfe">Kein Bedarf</string>
     <string name="string_bedarfe">Bedarf: </string>
     <string name="string_plaetze">Plätze: </string>
     <string name="string_bewohner">Bewohner: </string>
-    <string name="string_name">Name</string>
-    <string name="string_bezeichnung">Bezeichnung</string>
 
     <string name="label_unterkunft">Unterkunft</string>
     <string name="label_name">Nutzername</string>
@@ -59,14 +58,18 @@
     <string name="label_passwort">Passwort</string>
     <string name="label_confirmation">Passwort wiederholen</string>
 
-    <string name="button_abmelden">Abmelden</string>
+    <string name="warnung_name">Nutzername zu lang</string>
+    <string name="warnung_mail">E-Mail-Adresse ungültig</string>
+    <string name="warnung_passwort">Passwort zu kurz</string>
+    <string name="warnung_confirmation">Passwörter stimmen nicht überein</string>
 
     <string name="warnung_netz">Netzwerk aktivieren und neu starten</string>
     <string name="warnung_laden">Kann Informationen nicht laden</string>
-    <string name="warnung_signup">Benutzer konnte nicht erstellt werden</string>
+    <string name="warnung_signup">Überprüfen Sie Ihre Eingaben</string>
     <string name="warnung_anmelden">Nutzername oder Passwort falsch</string>
     <string name="warnung_fehler">Es ist ein Fehler aufgetreten</string>
     <string name="warnung_bedarf_vorhanden">Bereits vorhanden</string>
+    <string name="warnung_download">Download gescheitert</string>
 
     <string name="meldung_abmelden">Abgemeldet</string>
     <string name="meldung_anmelden">Anmelden...</string>

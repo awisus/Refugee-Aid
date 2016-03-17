@@ -55,21 +55,21 @@ public class FragmentInfo extends DialogFragment {
 
     /**
      * Static factory Method initialising with title and content
-     * @param titel desired title string
-     * @param inhalt desired content
+     * @param titelID desired title string
+     * @param inhaltID desired content
      * @return Fragment making up information window
      */
-    public static FragmentInfo newInstance(int titel, int inhalt) {
+    public static FragmentInfo newInstance(int inhaltID, int titelID) {
         FragmentInfo frag = new FragmentInfo();
-        frag.inhaltID = inhalt;
-        frag.titelID = titel;
+        frag.titelID = titelID;
+        frag.inhaltID = inhaltID;
         return frag;
     }
 
     public static FragmentInfo newInstance(String titel, String inhalt) {
         FragmentInfo frag = new FragmentInfo();
-        frag.inhalt = inhalt;
         frag.titel = titel;
+        frag.inhalt = inhalt;
         return frag;
     }
 
