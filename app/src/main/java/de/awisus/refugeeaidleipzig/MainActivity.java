@@ -39,6 +39,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -310,7 +311,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String name = params[0].getName();
                 String passwort = params[0].getPasswort();
 
-                return WebFlirt.getInstance().getNutzer(model.getUnterkuenfte(), name, passwort);
+                String antwort = WebFlirt.getInstance().get("getUser/" + name + "/" + passwort);
+                Nutzer nutzer = Nutzer.fromJSON(model.getUnterkuenfte(), new JSONObject(antwort));
+
+                return nutzer;
             } catch (JSONException | InterruptedException | ExecutionException e) {
                 return null;
             }

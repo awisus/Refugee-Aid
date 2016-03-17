@@ -9,7 +9,6 @@ import java.util.concurrent.ExecutionException;
 
 import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Kategorie;
-import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 
 /**
@@ -67,18 +66,12 @@ public class WebFlirt {
     }
 
 
-    public Nutzer getNutzer(DataMap<Unterkunft> unterkuenfte, String... params) throws JSONException, InterruptedException, ExecutionException {
+    public String get(String path) throws JSONException, InterruptedException, ExecutionException {
         HTTPGet httpGet;
         httpGet = new HTTPGet(SERVER_URL);
 
-        return makeNutzer(unterkuenfte, httpGet.perform("getUser/" + params[0] + "/" + params[1]));
+        return httpGet.perform(path);
     }
-
-    private Nutzer makeNutzer(DataMap<Unterkunft> unterkuenfte, String inhalt) throws JSONException {
-        return Nutzer.fromJSON(unterkuenfte, new JSONObject(inhalt));
-    }
-
-
 
     public String create(String path, String... parameter) {
         HTTPPost httpPost;

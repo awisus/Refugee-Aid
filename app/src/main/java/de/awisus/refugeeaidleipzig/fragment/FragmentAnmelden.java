@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
@@ -154,7 +155,10 @@ public class FragmentAnmelden extends FragmentLogin implements View.OnClickListe
         @Override
         protected Nutzer doInBackground(String... params) {
             try {
-                return WebFlirt.getInstance().getNutzer(model.getUnterkuenfte(), params);
+                String antwort = WebFlirt.getInstance().get("getUser/" + params[0] + "/" + params[1]);
+                Nutzer nutzer = Nutzer.fromJSON(model.getUnterkuenfte(), new JSONObject(antwort));
+
+                return nutzer;
             } catch (JSONException | InterruptedException | ExecutionException e) {
                 return null;
             }
