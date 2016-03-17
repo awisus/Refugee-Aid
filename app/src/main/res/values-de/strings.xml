@@ -47,7 +47,7 @@
 
     <string name="button_konto_neu">Neu? Hier Konto erstellen</string>
 
-    <string name="string_kein_bedarfe">Kein Bedarf</string>
+    <string name="string_kein_bedarf">KEIN BEDARF</string>
     <string name="string_bedarfe">Bedarf: </string>
     <string name="string_plaetze">Plätze: </string>
     <string name="string_bewohner">Bewohner: </string>

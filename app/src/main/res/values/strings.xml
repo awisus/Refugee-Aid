@@ -48,7 +48,7 @@
 
     <string name="button_konto_neu">New? Create account here</string>
 
-    <string name="string_kein_bedarfe">No needs</string>
+    <string name="string_kein_bedarf">NO NEEDS</string>
     <string name="string_bedarfe">Needs:</string>
     <string name="string_plaetze">Space:</string>
     <string name="string_bewohner">Residents:</string>
