@@ -73,7 +73,19 @@ public class WebFlirt {
         return httpGet.perform(path);
     }
 
-    public String create(String path, String... parameter) {
+
+    public String patch(String path, String... parameter) {
+        HTTPPatch httpPatch;
+        httpPatch = new HTTPPatch(SERVER_URL);
+
+        for(int i = 0; i < parameter.length; i += 2) {
+            httpPatch.addParameter(parameter[i], parameter[i+1]);
+        }
+
+        return httpPatch.perform(path);
+    }
+
+    public String post(String path, String... parameter) {
         HTTPPost httpPost;
         httpPost = new HTTPPost(SERVER_URL);
 

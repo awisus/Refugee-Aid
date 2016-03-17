@@ -12,7 +12,7 @@ import cz.msebera.android.httpclient.util.EntityUtils;
 /**
  * Created on 13.03.16.
  *
- * @author jens
+ * @author Jens Awisus
  */
 public abstract class HTTPAction {
 

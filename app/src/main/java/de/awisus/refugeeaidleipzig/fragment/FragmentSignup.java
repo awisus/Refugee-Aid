@@ -236,7 +236,7 @@ public class FragmentSignup extends FragmentAnmelden {
         @Override
         protected Nutzer doInBackground(String... params) {
             try {
-                String antwort = WebFlirt.getInstance().create("users_remote", params);
+                String antwort = WebFlirt.getInstance().post("users_remote", params);
                 Nutzer nutzer = Nutzer.fromJSON(model.getUnterkuenfte(), new JSONObject(antwort));
 
                 return nutzer;

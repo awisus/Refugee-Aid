@@ -38,7 +38,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 import de.awisus.refugeeaidleipzig.R;
-import de.awisus.refugeeaidleipzig.model.LoginData;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
@@ -213,31 +212,37 @@ public class FragmentEditUser extends FragmentAnmelden {
         String name = etName.getText().toString();
         String mail = etMail.getText().toString();
 
-        int unterkunftID = unterkunft.getId();
+        String id = String.valueOf(nutzer.getId());
+        String unterkunftID = String.valueOf(unterkunft.getId());
 
-//        new NutzerPost(getActivity(), R.string.meldung_anmelden, new LoginData(name, passwort)).execute(
-//                "name",                     name,
-//                "mail",                     etMail.getText().toString(),
-//                "password",                 passwort,
-//                "password_confirmation",    etConformation.getText().toString(),
-//                "accommodation_id",         String.valueOf(unterkunft.getId()));
+        new NutzerPatch(getActivity(), R.string.meldung_anmelden).execute(
+                "id",                       id,
+                "name",                     name,
+                "mail",                     mail,
+                "accommodation_id",         unterkunftID);
     }
 
-    private class NutzerPatch extends FragmentLogin.NutzerGet {
+    private class NutzerPatch extends BackgroundTask<String, String, String> {
 
-        public NutzerPatch(Activity context, int textID, LoginData login) {
-            super(context, textID, login);
+        public NutzerPatch(Activity context, int textID) {
+            super(context, textID);
         }
 
         @Override
-        protected de.awisus.refugeeaidleipzig.model.Nutzer doInBackground(String... params) {
-//            try {
-//                return WebFlirt.getInstance().postNutzer(model.getUnterkuenfte(), params);
-//            } catch (JSONException | InterruptedException | ExecutionException e){
-//                return null;
-//            }
+        protected String doInBackground(String... params) {
+            String antwort = WebFlirt.getInstance().patch("users_remote", params);
 
-            return null;
+            return antwort.equals("OK") ? antwort : null;
+        }
+
+        @Override
+        protected void doPostExecute(String result) {
+            if(result == null) {
+                Toast.makeText(context, R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
+            } else {
+                // IMPLEMENT LOGIC
+                dismiss();
+            }
         }
     }
 
