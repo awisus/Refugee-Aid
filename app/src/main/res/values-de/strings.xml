@@ -1,0 +1,80 @@
+<resources>
+    <string name="google_app_id">477637456018</string>
+    <string name="app_name">Refugee Aid</string>
+
+    <string name="info">
+        <b>Refugee Aid</b> ist die Plattform, die geflüchtete Menschen und hilfsbereite Bürger
+        zusammenbringt.
+        \n
+        \n
+
+        <b>Registrieren</b> Sie sich als Geflüchteter und erstellen Sie übersichtlich eine Liste
+        ihrer Bedürfnisse.
+        \n
+        \n
+
+        <b>Sehen</b> Sie auf der Karte, wo sich Unterkünfte für Geflüchtete in ihrer Umgebung
+        befinden. Nutzen Sie die kurze Entfernung oder den täglichen Arbeitsweg, um <b>Spenden</b>
+        zu leisten. Zu Jeder Unterkunft können Sie den genauen Bedarf der Menschen einsehen.
+        \n
+        \n
+
+        Hergestellt von J. Awisus, 2016
+    </string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="nav_profil">Profil</string>
+    <string name="nav_karte">Karte</string>
+
+    <string name="nav_titel_nav">Navigation</string>
+    <string name="nav_titel_ueber">Information</string>
+
+    <string name="titel_profil">Bedarf verwalten</string>
+    <string name="titel_login">Anmelden</string>
+    <string name="titel_signup">Neuer Benutzer</string>
+    <string name="titel_bedarf_entfernen">Bedarf entfernen</string>
+    <string name="titel_bedarf_neu">Kategorie wählen</string>
+
+    <string name="button_abmelden">Abmelden</string>
+    <string name="dialog_anmelden">Anmelden</string>
+    <string name="dialog_loeschen">Löschen</string>
+    <string name="dialog_hinzufuegen">Hinzufügen</string>
+    <string name="dialog_abbrechen">Abbrechen</string>
+    <string name="dialog_ok">In Ordnung</string>
+    <string name="dialog_signup">Konto erstellen</string>
+
+    <string name="button_konto_neu">Neu? Hier Konto erstellen</string>
+
+    <string name="string_kein_bedarfe">Kein Bedarf</string>
+    <string name="string_bedarfe">Bedarf: </string>
+    <string name="string_plaetze">Plätze: </string>
+    <string name="string_bewohner">Bewohner: </string>
+
+    <string name="label_unterkunft">Unterkunft</string>
+    <string name="label_name">Nutzername</string>
+    <string name="label_mail">E-Mail</string>
+    <string name="label_passwort">Passwort</string>
+    <string name="label_confirmation">Passwort wiederholen</string>
+
+    <string name="warnung_name">Nutzername zu lang</string>
+    <string name="warnung_mail">E-Mail-Adresse ungültig</string>
+    <string name="warnung_passwort">Passwort zu kurz</string>
+    <string name="warnung_confirmation">Passwörter stimmen nicht überein</string>
+
+    <string name="warnung_netz">Netzwerk aktivieren und neu starten</string>
+    <string name="warnung_laden">Kann Informationen nicht laden</string>
+    <string name="warnung_signup">Überprüfen Sie Ihre Eingaben</string>
+    <string name="warnung_anmelden">Nutzername oder Passwort falsch</string>
+    <string name="warnung_fehler">Es ist ein Fehler aufgetreten</string>
+    <string name="warnung_bedarf_vorhanden">Bereits vorhanden</string>
+    <string name="warnung_download">Download gescheitert</string>
+
+    <string name="meldung_abmelden">Abgemeldet</string>
+    <string name="meldung_anmelden">Anmelden...</string>
+    <string name="meldung_aktualisieren">Aktualisieren...</string>
+    <string name="meldung_entfernen">Entferne...</string>
+    <string name="meldung_hinzufuegen">Füge hinzu...</string>
+    <string name="button_bearbeiten">Bearbeiten</string>
+</resources>

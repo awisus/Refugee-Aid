@@ -4,17 +4,17 @@
 
     <item
         android:id="@+id/itNeu"
-        android:title="Neuer Bedarf"
+        android:title="@string/dialog_hinzufuegen"
         android:icon="@drawable/ic_add_white_48dp"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/itBearbeiten"
-        android:title="Bearbeiten"
+        android:title="@string/button_bearbeiten"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/itAbmelden"
-        android:title="Abmelden"
+        android:title="@string/button_abmelden"
         app:showAsAction="never" />
 </menu>

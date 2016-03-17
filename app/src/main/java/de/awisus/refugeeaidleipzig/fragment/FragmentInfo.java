@@ -41,13 +41,13 @@ public class FragmentInfo extends DialogFragment {
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    private int inhaltID;
-
     private int titelID;
 
-    private String inhalt;
+    private int inhaltID;
 
     private String titel;
+
+    private String inhalt;
 
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
@@ -59,7 +59,7 @@ public class FragmentInfo extends DialogFragment {
      * @param inhaltID desired content
      * @return Fragment making up information window
      */
-    public static FragmentInfo newInstance(int inhaltID, int titelID) {
+    public static FragmentInfo newInstance(int titelID, int inhaltID) {
         FragmentInfo frag = new FragmentInfo();
         frag.titelID = titelID;
         frag.inhaltID = inhaltID;

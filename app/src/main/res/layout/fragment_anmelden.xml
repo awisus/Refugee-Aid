@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Nutzername"
+        android:text="@string/label_name"
         android:id="@+id/tvName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Passwort"
+        android:text="@string/label_passwort"
         android:id="@+id/tvPasswort"
         android:layout_below="@+id/etName"
         android:layout_alignParentLeft="true"
