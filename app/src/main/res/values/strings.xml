@@ -36,17 +36,20 @@
     <string name="titel_signup">New user</string>
     <string name="titel_bedarf_entfernen">Delete need</string>
     <string name="titel_bedarf_neu">Choose category</string>
+    <string name="titel_bearbeite_nutzer">Edit your data</string>
 
+    <string name="button_konto_neu">New? Create account here</string>
     <string name="button_bearbeiten">Edit</string>
+    <string name="button_bearbeiten_fertig">Send</string>
+    <string name="button_konto_loeschen">Delete account</string>
     <string name="button_abmelden">Log out</string>
+
     <string name="dialog_anmelden">Log in</string>
     <string name="dialog_loeschen">Delete</string>
     <string name="dialog_hinzufuegen">Add</string>
     <string name="dialog_abbrechen">Abort</string>
     <string name="dialog_ok">Okay</string>
     <string name="dialog_signup">Create account</string>
-
-    <string name="button_konto_neu">New? Create account here</string>
 
     <string name="string_kein_bedarf">NO NEEDS</string>
     <string name="string_bedarfe">Needs:</string>

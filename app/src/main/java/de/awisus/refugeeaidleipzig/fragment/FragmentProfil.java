@@ -199,7 +199,7 @@ public class FragmentProfil extends Fragment implements Observer {
                 .show(getFragmentManager(), "Kategorien");
                 return true;
             case R.id.itBearbeiten:
-                // Not implemented here
+                FragmentEditUser.newInstance(model).show(getFragmentManager(), "Bearbeite Nutzerdaten");
                 return true;
             case R.id.itAbmelden:
                 model.abmelden();
