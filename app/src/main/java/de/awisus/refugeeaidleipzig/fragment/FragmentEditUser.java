@@ -25,12 +25,15 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -39,6 +42,9 @@ import de.awisus.refugeeaidleipzig.model.LoginData;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
+import de.awisus.refugeeaidleipzig.net.WebFlirt;
+import de.awisus.refugeeaidleipzig.util.BackgroundTask;
+import de.awisus.refugeeaidleipzig.util.Datei;
 import de.awisus.refugeeaidleipzig.util.MailValidator;
 import de.awisus.refugeeaidleipzig.util.TextValidator;
 
@@ -52,8 +58,8 @@ import de.awisus.refugeeaidleipzig.util.TextValidator;
  */
 public class FragmentEditUser extends FragmentAnmelden {
 
-    ////////////////////////////////////////////////////////////////////////////////
-    // Attributes //////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////
+     // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -69,8 +75,8 @@ public class FragmentEditUser extends FragmentAnmelden {
     private EditText etMail;
 
 
-    ////////////////////////////////////////////////////////////////////////////////
-    // Constructor /////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////
+     // Constructor /////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -85,8 +91,8 @@ public class FragmentEditUser extends FragmentAnmelden {
         return frag;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    // View creation ///////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////
+     // View creation ///////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -124,7 +130,7 @@ public class FragmentEditUser extends FragmentAnmelden {
         btSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                send();
+                patch();
             }
         });
 
@@ -137,7 +143,7 @@ public class FragmentEditUser extends FragmentAnmelden {
                 builder.setCancelable(false);
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //
+                        delete();
                     }
                 });
                 builder.setNegativeButton("No", null);
@@ -194,7 +200,7 @@ public class FragmentEditUser extends FragmentAnmelden {
         spUnterkunft.setAdapter(adapter);
     }
 
-    private void send() {
+    private void patch() {
         // Get inserted name and selected accommodation from views
         Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();
         String name = etName.getText().toString();
@@ -215,7 +221,7 @@ public class FragmentEditUser extends FragmentAnmelden {
         }
 
         @Override
-        protected Nutzer doInBackground(String... params) {
+        protected de.awisus.refugeeaidleipzig.model.Nutzer doInBackground(String... params) {
 //            try {
 //                return WebFlirt.getInstance().postNutzer(model.getUnterkuenfte(), params);
 //            } catch (JSONException | InterruptedException | ExecutionException e){
@@ -223,6 +229,46 @@ public class FragmentEditUser extends FragmentAnmelden {
 //            }
 
             return null;
+        }
+    }
+
+    private void delete() {
+        // Get inserted name and selected accommodation from views
+        int id = model.getNutzerAktuell().getId();
+        new NutzerDelete(getActivity(), R.string.meldung_entfernen).execute("id", "" + id);
+    }
+
+    private class NutzerDelete extends BackgroundTask<String, Integer, Nutzer> {
+
+        public NutzerDelete(Activity context, int textID) {
+            super(context, textID);
+        }
+
+        @Override
+        protected Nutzer doInBackground(String... params) {
+            try {
+                return WebFlirt.getInstance().deleteNutzer(model.getUnterkuenfte(), params);
+            } catch (Exception e){
+                return null;
+            }
+        }
+
+        @Override
+        protected void doPostExecute(Nutzer result) {
+            if(result == null) {
+                Toast.makeText(context, R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
+            } else {
+
+                dismiss();
+
+                model.abmelden();
+
+                try {
+                    Datei.getInstance().loeschen(getActivity(), "login.json");
+                } catch (IOException e) {
+                    Log.e("Abmelden", "Fehler beim Löschen der Nutzerdaten");
+                }
+            }
         }
     }
 }

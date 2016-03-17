@@ -83,7 +83,20 @@ public class WebFlirt {
             httpPost.addParameter(parameter[i], parameter[i+1]);
         }
 
-        return makeNutzer(unterkuenfte, httpPost.perform("users/remote"));
+        return makeNutzer(unterkuenfte, httpPost.perform("users_remote"));
+    }
+
+    public Nutzer deleteNutzer(DataMap<Unterkunft> unterkuenfte, String... parameter) throws Exception {
+        HTTPDelete httpDelete;
+        httpDelete = new HTTPDelete(SERVER_URL);
+
+        for(int i = 0; i < parameter.length; i += 2) {
+            httpDelete.addParameter(parameter[i], parameter[i+1]);
+        }
+
+        String antwort = httpDelete.perform("users_remote");
+
+        return makeNutzer(unterkuenfte, antwort);
     }
 
     private Nutzer makeNutzer(DataMap<Unterkunft> unterkuenfte, String inhalt) throws JSONException {
@@ -99,7 +112,7 @@ public class WebFlirt {
             httpPost.addParameter(parameter[i], parameter[i+1]);
         }
 
-        return Bedarf.fromJSON(new JSONObject(httpPost.perform("needs/remote")));
+        return Bedarf.fromJSON(new JSONObject(httpPost.perform("needs_remote")));
     }
 
     public Integer deleteBedarf(String... parameter) throws Exception {
@@ -110,7 +123,7 @@ public class WebFlirt {
             httpDelete.addParameter(parameter[i], parameter[i+1]);
         }
 
-        String antwort = httpDelete.perform("needs/remote");
+        String antwort = httpDelete.perform("needs_remote");
 
         return Integer.parseInt(antwort);
     }
