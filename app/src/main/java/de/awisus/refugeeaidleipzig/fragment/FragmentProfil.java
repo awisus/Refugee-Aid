@@ -96,7 +96,7 @@ public class FragmentProfil extends Fragment implements Observer {
     public static FragmentProfil newInstance(Model model) {
         FragmentProfil frag = new FragmentProfil();
         frag.model = model;
-        frag.nutzer = model.getNutzerAktuell();
+        frag.nutzer = model.getNutzer();
         frag.liste = frag.nutzer.getBedarf().asVector();
         return frag;
     }

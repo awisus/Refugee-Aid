@@ -74,6 +74,8 @@ public class FragmentEditUser extends FragmentAnmelden {
 
     private EditText etMail;
 
+    private Nutzer nutzer;
+
 
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
@@ -88,6 +90,7 @@ public class FragmentEditUser extends FragmentAnmelden {
     public static FragmentEditUser newInstance(Model model) {
         FragmentEditUser frag = new FragmentEditUser();
         frag.model = model;
+        frag.nutzer = model.getNutzer();
         return frag;
     }
 
@@ -113,6 +116,9 @@ public class FragmentEditUser extends FragmentAnmelden {
         spUnterkunft = (Spinner) view.findViewById(R.id.spUnterkunft);
         etName = (EditText) view.findViewById(R.id.etName);
         etMail = (EditText) view.findViewById(R.id.etMail);
+
+        etName.setText(nutzer.getName());
+        etMail.setText(nutzer.getMail());
 
         addListeners(view);
         initSpinnerAdapter();
@@ -198,6 +204,7 @@ public class FragmentEditUser extends FragmentAnmelden {
 
         // Apply the adapter to the spinner
         spUnterkunft.setAdapter(adapter);
+        spUnterkunft.setSelection(adapter.getPosition(nutzer.getUnterkunft()));
     }
 
     private void patch() {
@@ -205,6 +212,8 @@ public class FragmentEditUser extends FragmentAnmelden {
         Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();
         String name = etName.getText().toString();
         String mail = etMail.getText().toString();
+
+        int unterkunftID = unterkunft.getId();
 
 //        new NutzerPost(getActivity(), R.string.meldung_anmelden, new LoginData(name, passwort)).execute(
 //                "name",                     name,
@@ -214,9 +223,9 @@ public class FragmentEditUser extends FragmentAnmelden {
 //                "accommodation_id",         String.valueOf(unterkunft.getId()));
     }
 
-    private class NutzerPost extends FragmentLogin.NutzerGet {
+    private class NutzerPatch extends FragmentLogin.NutzerGet {
 
-        public NutzerPost(Activity context, int textID, LoginData login) {
+        public NutzerPatch(Activity context, int textID, LoginData login) {
             super(context, textID, login);
         }
 
@@ -234,7 +243,7 @@ public class FragmentEditUser extends FragmentAnmelden {
 
     private void delete() {
         // Get inserted name and selected accommodation from views
-        int id = model.getNutzerAktuell().getId();
+        int id = model.getNutzer().getId();
         new NutzerDelete(getActivity(), R.string.meldung_entfernen).execute("id", "" + id);
     }
 

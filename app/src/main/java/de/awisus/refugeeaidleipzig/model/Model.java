@@ -58,7 +58,7 @@ public class Model extends Observable {
     /**
      * Current user (may be null, if not logged in)
      */
-    private Nutzer nutzerAktuell;
+    private Nutzer nutzer;
 
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ public class Model extends Observable {
      * @param nutzer user
      */
     public void anmelden(Nutzer nutzer) {
-        nutzerAktuell = nutzer;
+        this.nutzer = nutzer;
 
         // report change to Observer
         setChanged();
@@ -94,7 +94,7 @@ public class Model extends Observable {
      * Notifies with FALSE, to inform Observer about logout
      */
     public void abmelden() {
-        nutzerAktuell = null;
+        nutzer = null;
         setChanged();
         notifyObservers(Boolean.FALSE);
     }
@@ -104,7 +104,7 @@ public class Model extends Observable {
      * @return true, if user is logged on; false else
      */
     public boolean angemeldet() {
-        return nutzerAktuell != null;
+        return nutzer != null;
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -196,7 +196,7 @@ public class Model extends Observable {
      * Get user logged on
      * @return user logged on
      */
-    public Nutzer getNutzerAktuell() {
-        return nutzerAktuell;
+    public Nutzer getNutzer() {
+        return nutzer;
     }
 }
