@@ -161,7 +161,7 @@ public class FragmentEditUser extends SuperFragmentEditUser {
         @Override
         protected void doPostExecute(Nutzer result) {
             if(result == null) {
-                Toast.makeText(context, R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.warnung_signup, Toast.LENGTH_SHORT).show();
             } else {
                 try {
                     Datei.getInstance().schreiben(context, "login.json", new Gson().toJson(login));
@@ -196,7 +196,7 @@ public class FragmentEditUser extends SuperFragmentEditUser {
         @Override
         protected void doPostExecute(String result) {
             if(result == null) {
-                Toast.makeText(context, R.string.warnung_signup, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
             } else {
                 try {
                     Datei.getInstance().loeschen(getActivity(), "login.json");
