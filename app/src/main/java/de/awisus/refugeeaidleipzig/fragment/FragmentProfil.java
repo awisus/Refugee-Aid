@@ -185,6 +185,8 @@ public class FragmentProfil extends Fragment implements Observer {
         adapter.notifyDataSetChanged();
         if(nutzer.hatBedarf()) tvLeer.setText("");
         else tvLeer.setText(R.string.string_kein_bedarf);
+
+        tvName.setText(nutzer.getName());
     }
 
       ////////////////////////////////////////////////////////////////////////////////

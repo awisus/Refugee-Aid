@@ -27,9 +27,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 
 import de.awisus.refugeeaidleipzig.R;
+import de.awisus.refugeeaidleipzig.model.LoginData;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
@@ -78,8 +81,18 @@ public class FragmentEditUser extends SuperFragmentEditUser {
     }
 
     private void setTexts() {
-        etName.setText(nutzer.getName());
-        etMail.setText(nutzer.getMail());
+        try {
+            etName.setText(nutzer.getName());
+            etMail.setText(nutzer.getMail());
+
+            String datei = Datei.getInstance().lesen(getActivity(), "login.json");
+            LoginData login = new Gson().fromJson(datei, LoginData.class);
+
+            etPasswort.setText(login.getPasswort());
+            etConfirmation.setText(login.getPasswort());
+        } catch (IOException e) {
+            Log.e("Laden", "Fehler beim Lesen der Logindatei");
+        }
     }
 
     @Override
@@ -112,46 +125,60 @@ public class FragmentEditUser extends SuperFragmentEditUser {
 
 
     private void patch() {
-        // Get inserted name and selected accommodation from views
-        String name = etName.getText().toString();
-        String mail = etMail.getText().toString();
 
         String id = String.valueOf(nutzer.getId());
+        String name = etName.getText().toString();
+        String mail = etMail.getText().toString();
+        String passwort = etPasswort.getText().toString();
+        String confirmation = etConfirmation.getText().toString();
+        String idUnterkunft = String.valueOf(nutzer.getUnterkunft().getId());
 
-        new NutzerPatch(getActivity(), R.string.meldung_anmelden).execute(
-                "id",                       id,
-                "name",                     name,
-                "mail",                     mail);
+        new NutzerPatch(getActivity(), R.string.meldung_anmelden, new LoginData(name, mail, passwort))
+                .execute(
+                        "id",                       id,
+                        "name",                     name,
+                        "mail",                     mail,
+                        "accommodation_id",         idUnterkunft,
+                        "password",                 passwort,
+                        "password_confirmation",    confirmation);
     }
 
-    private class NutzerPatch extends BackgroundTask<String, String, String> {
+    private class NutzerPatch extends BackgroundTask<String, String, Nutzer> {
 
-        public NutzerPatch(Activity context, int textID) {
+        private LoginData login;
+
+        public NutzerPatch(Activity context, int textID, LoginData login) {
             super(context, textID);
+            this.login = login;
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected Nutzer doInBackground(String... params) {
             String antwort = WebFlirt.getInstance().patch("users_remote", params);
-
-            return antwort.equals("OK") ? antwort : null;
+            return antwort.equals("OK") ? nutzer : null;
         }
 
         @Override
-        protected void doPostExecute(String result) {
+        protected void doPostExecute(Nutzer result) {
             if(result == null) {
                 Toast.makeText(context, R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
             } else {
-                // IMPLEMENT LOGIC
+                try {
+                    Datei.getInstance().schreiben(context, "login.json", new Gson().toJson(login));
+
+                    nutzer.setName(login.getName());
+                    nutzer.setMail(login.getMail());
+                } catch (IOException e) {
+                    Log.e("Anmelden", "Fehler beim Speichern der Logindatei");
+                }
                 dismiss();
             }
         }
     }
 
     private void delete() {
-        // Get inserted name and selected accommodation from views
-        int id = model.getNutzer().getId();
-        new NutzerDelete(getActivity(), R.string.meldung_entfernen).execute("id", "" + id);
+        String id = String.valueOf(nutzer.getId());
+        new NutzerDelete(getActivity(), R.string.meldung_entfernen).execute("id", id);
     }
 
     private class NutzerDelete extends BackgroundTask<String, Integer, String> {

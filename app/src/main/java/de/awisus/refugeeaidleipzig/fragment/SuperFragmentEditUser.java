@@ -44,7 +44,7 @@ public abstract class SuperFragmentEditUser extends SuperFragmentGetUser {
     protected EditText etName;
     protected EditText etMail;
     protected EditText etPasswort;
-    protected EditText etConformation;
+    protected EditText etConfirmation;
 
     protected int layoutID;
     protected int titelID;
@@ -82,7 +82,7 @@ public abstract class SuperFragmentEditUser extends SuperFragmentGetUser {
         etName = (EditText) view.findViewById(R.id.etName);
         etMail = (EditText) view.findViewById(R.id.etMail);
         etPasswort = (EditText) view.findViewById(R.id.etPassword);
-        etConformation = (EditText) view.findViewById(R.id.etConfirmation);
+        etConfirmation = (EditText) view.findViewById(R.id.etConfirmation);
     }
 
     protected abstract void setButtonListeners(View view);
@@ -113,7 +113,7 @@ public abstract class SuperFragmentEditUser extends SuperFragmentGetUser {
             @Override
             public void afterTextChanged(Editable s) {
                 String passwort = etPasswort.getText().toString();
-                String confirmation = etConformation.getText().toString();
+                String confirmation = etConfirmation.getText().toString();
 
                 if (passwort.length() < 6) {
                     etPasswort.setError(findString(R.string.warnung_passwort));
@@ -121,21 +121,21 @@ public abstract class SuperFragmentEditUser extends SuperFragmentGetUser {
                 }
                 if(!confirmation.isEmpty()) {
                     if(confirmation.equals(passwort)) {
-                        etConformation.setError(null);
+                        etConfirmation.setError(null);
                     } else {
-                        etConformation.setError(findString(R.string.warnung_confirmation));
+                        etConfirmation.setError(findString(R.string.warnung_confirmation));
                     }
                 }
             }
         });
-        etConformation.addTextChangedListener(new TextValidator(etConformation) {
+        etConfirmation.addTextChangedListener(new TextValidator(etConfirmation) {
             @Override
             public void afterTextChanged(Editable s) {
                 String password = etPasswort.getText().toString();
-                String confirmation = etConformation.getText().toString();
+                String confirmation = etConfirmation.getText().toString();
 
                 if (!password.equals(confirmation)) {
-                    etConformation.setError(findString(R.string.warnung_confirmation));
+                    etConfirmation.setError(findString(R.string.warnung_confirmation));
                 }
             }
         });

@@ -125,7 +125,7 @@ public class FragmentSignup extends SuperFragmentEditUser {
         String name = etName.getText().toString();
         String mail = etMail.getText().toString();
         String passwort = etPasswort.getText().toString();
-        String conformation = etConformation.getText().toString();
+        String confirmation = etConfirmation.getText().toString();
         String idUnterkunft = String.valueOf(unterkunft.getId());
 
         new NutzerPost(getActivity(), R.string.meldung_anmelden, new LoginData(name, passwort))
@@ -133,7 +133,7 @@ public class FragmentSignup extends SuperFragmentEditUser {
                         "name",                     name,
                         "mail",                     mail,
                         "password",                 passwort,
-                        "password_confirmation",    conformation,
+                        "password_confirmation",    confirmation,
                         "accommodation_id",         idUnterkunft);
     }
 
