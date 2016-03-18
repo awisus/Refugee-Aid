@@ -16,7 +16,7 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabUpdate"
-        android:src="@drawable/ic_refresh_white_48dp"
+        android:src="@drawable/ic_refresh_white_24dp"
 
         app:fabSize="normal"
         app:backgroundTint="@color/colorAccent"

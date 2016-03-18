@@ -25,6 +25,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -53,6 +54,8 @@ public class FragmentEditUser extends SuperFragmentEditUser {
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    private TextView deleteName, deleteMail, deletePasswort, deleteConfirmation;
+
     private Nutzer nutzer;
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -77,6 +80,12 @@ public class FragmentEditUser extends SuperFragmentEditUser {
     @Override
     protected void initElements(View view) {
         super.initElements(view);
+
+        deleteName = (TextView) view.findViewById(R.id.btDeleteName);
+        deleteMail = (TextView) view.findViewById(R.id.btDeleteMail);
+        deletePasswort = (TextView) view.findViewById(R.id.btDeletePasswort);
+        deleteConfirmation = (TextView) view.findViewById(R.id.btDeleteConfirmation);
+
         setTexts();
     }
 
@@ -97,6 +106,32 @@ public class FragmentEditUser extends SuperFragmentEditUser {
 
     @Override
     protected void setButtonListeners(View view) {
+        deleteName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etName.setText(null);
+            }
+        });
+        deleteMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etMail.setText(null);
+            }
+        });
+        deletePasswort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etPasswort.setText(null);
+                etConfirmation.setText(null);
+            }
+        });
+        deleteConfirmation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etConfirmation.setText(null);
+            }
+        });
+
         Button btExecute = (Button) view.findViewById(R.id.btExecute);
         btExecute.setOnClickListener(new View.OnClickListener() {
             @Override
