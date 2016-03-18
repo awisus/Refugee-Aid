@@ -80,4 +80,7 @@
     <string name="button_bearbeiten_fertig">Absenden</string>
     <string name="button_konto_loeschen">Konto löschen</string>
     <string name="titel_bearbeite_nutzer">Nutzerdaten bearbeiten</string>
+    <string name="dialog_ja">Ja</string>
+    <string name="dialog_nein">Nein</string>
+    <string name="dialog_sicher">Sind Sie sicher?</string>
 </resources>

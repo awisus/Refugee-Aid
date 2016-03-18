@@ -47,6 +47,9 @@
     <string name="dialog_anmelden">Log in</string>
     <string name="dialog_loeschen">Delete</string>
     <string name="dialog_hinzufuegen">Add</string>
+    <string name="dialog_sicher">Are you sure?</string>
+    <string name="dialog_ja">Yes</string>
+    <string name="dialog_nein">No</string>
     <string name="dialog_abbrechen">Abort</string>
     <string name="dialog_ok">Okay</string>
     <string name="dialog_signup">Create account</string>

@@ -19,7 +19,7 @@ import de.awisus.refugeeaidleipzig.util.BackgroundTask;
  *
  * @author Jens Awisus
  */
-public class AdapterBedarf extends Adapter<Bedarf> {
+public class AdapterBedarf extends SuperAdapter<Bedarf> {
 
     private Nutzer nutzer;
 

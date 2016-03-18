@@ -39,7 +39,7 @@ import de.awisus.refugeeaidleipzig.util.Datei;
  *
  * @author Jens Awisus
  */
-public abstract class FragmentLogin extends DialogFragment {
+public abstract class SuperFragmentGetUser extends DialogFragment {
 
     /**
      * Reference to the model to log in the new user (or to be found in the chosen accommodation)

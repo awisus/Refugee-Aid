@@ -199,7 +199,8 @@ public class FragmentProfil extends Fragment implements Observer {
                 .show(getFragmentManager(), "Kategorien");
                 return true;
             case R.id.itBearbeiten:
-                FragmentEditUser.newInstance(model).show(getFragmentManager(), "Bearbeite Nutzerdaten");
+                FragmentEditUser.newInstance(model, R.string.titel_bearbeite_nutzer, R.layout.fragment_edit_user)
+                .show(getFragmentManager(), "Bearbeite Nutzerdaten");
                 return true;
             case R.id.itAbmelden:
                 model.abmelden();

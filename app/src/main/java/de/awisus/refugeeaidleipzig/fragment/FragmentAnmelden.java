@@ -46,7 +46,7 @@ import de.awisus.refugeeaidleipzig.net.WebFlirt;
  *
  * @author Jens Awisus
  */
-public class FragmentAnmelden extends FragmentLogin implements View.OnClickListener {
+public class FragmentAnmelden extends SuperFragmentGetUser implements View.OnClickListener {
 
     ////////////////////////////////////////////////////////////////////////////////
     // Attributes //////////////////////////////////////////////////////////////////
@@ -132,7 +132,7 @@ public class FragmentAnmelden extends FragmentLogin implements View.OnClickListe
             dismiss();
 
             FragmentSignup fragmentSignup;
-            fragmentSignup = FragmentSignup.newInstance(model);
+            fragmentSignup = FragmentSignup.newInstance(model, R.string.warnung_signup, R.layout.fragment_signup);
             fragmentSignup.show(getActivity().getSupportFragmentManager(), "Neues Konto");
         }
     }
@@ -146,7 +146,7 @@ public class FragmentAnmelden extends FragmentLogin implements View.OnClickListe
         .execute(name, passwort);
     }
 
-    private class NutzerGet extends FragmentLogin.NutzerGet {
+    private class NutzerGet extends SuperFragmentGetUser.NutzerGet {
 
         protected NutzerGet(Activity context, int textID, LoginData login) {
             super(context, textID, login);

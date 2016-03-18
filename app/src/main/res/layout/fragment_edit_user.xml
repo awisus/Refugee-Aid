@@ -3,15 +3,6 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:padding="@dimen/frag_margin">
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spUnterkunft"
-        android:layout_below="@+id/tvUnterkunft"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="8dp" />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,12 +25,25 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/label_unterkunft"
-        android:id="@+id/tvUnterkunft"
+        android:id="@+id/etPassword"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:inputType="textPassword"
+        android:layout_below="@+id/tvPasswort"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etConfirmation"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:inputType="textPassword"
+        android:layout_below="@+id/tvConfirmation"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -51,8 +55,7 @@
         android:id="@+id/tvName"
         android:layout_below="@+id/spUnterkunft"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -65,16 +68,38 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="@dimen/activity_horizontal_margin" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/label_passwort"
+        android:id="@+id/tvPasswort"
+        android:layout_below="@+id/etMail"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/label_confirmation"
+        android:id="@+id/tvConfirmation"
+        android:layout_below="@+id/etPassword"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
     <Button
         android:backgroundTint="@color/colorPrimary"
         android:textColor="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_bearbeiten_fertig"
-        android:id="@+id/btSend"
+        android:id="@+id/btExecute"
+        android:layout_below="@+id/etConfirmation"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/frag_margin"
-        android:layout_below="@+id/etMail" />
+        android:layout_marginTop="@dimen/frag_margin" />
 
     <Button
         style="?android:attr/borderlessButtonStyle"
@@ -82,8 +107,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_konto_loeschen"
+        android:textColor="@android:color/holo_red_dark"
         android:id="@+id/btDeleteAccount"
-        android:layout_below="@+id/btSend"
+        android:layout_below="@+id/btExecute"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="@dimen/activity_horizontal_margin" />

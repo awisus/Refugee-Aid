@@ -20,14 +20,9 @@
 package de.awisus.refugeeaidleipzig.fragment;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.text.Editable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import org.json.JSONException;
@@ -42,17 +37,16 @@ import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
-import de.awisus.refugeeaidleipzig.util.MailValidator;
-import de.awisus.refugeeaidleipzig.util.TextValidator;
 
 /**
  * Created on 15.01.16.
- *
+ * <p/>
  * A login fragment with a text field for the user name and a spinner with all accommodations to
  * choose.
+ *
  * @author Jens Awisus
  */
-public class FragmentSignup extends FragmentAnmelden {
+public class FragmentSignup extends SuperFragmentEditUser {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
@@ -63,131 +57,43 @@ public class FragmentSignup extends FragmentAnmelden {
      */
     private Spinner spUnterkunft;
 
-    /**
-     * Text field for the user name
-     */
-    private EditText etName;
-
-    private EditText etMail;
-
-    private EditText etPasswort;
-
-    private EditText etConformation;
-
-
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Public factory method giving the model's reference
+     *
      * @param model Model to log in user
      * @return new Login Fragment
      */
-    public static FragmentSignup newInstance(Model model) {
+    public static FragmentSignup newInstance(Model model, int titelID, int layoutID) {
         FragmentSignup frag = new FragmentSignup();
         frag.model = model;
+        frag.layoutID = layoutID;
+        frag.titelID = titelID;
         return frag;
     }
 
-      ////////////////////////////////////////////////////////////////////////////////
-     // View creation ///////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Called when this dialogue is created; Android-specific
-     * Inflates the layout, initialises text field and spinner, initialises the spinner adapter to
-     * show up accommodations and sets the dialogue buttons
-     * @param savedInstanceState Bundle of saved instance state
-     * @return dialogue created by the AlertDialog.Builder
-     */
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_signup, null);
-
-        warnungID = R.string.warnung_signup;
+    protected void initElements(View view) {
+        super.initElements(view);
 
         spUnterkunft = (Spinner) view.findViewById(R.id.spUnterkunft);
-        etName = (EditText) view.findViewById(R.id.etName);
-        etMail = (EditText) view.findViewById(R.id.etMail);
-        etPasswort = (EditText) view.findViewById(R.id.etPassword);
-        etConformation = (EditText) view.findViewById(R.id.etConfirmation);
+        warnungID = R.string.warnung_signup;
 
-        Button btSignup = (Button) view.findViewById(R.id.btSignup);
-        btSignup.setOnClickListener(new View.OnClickListener() {
+        initSpinnerAdapter();
+    }
+
+    @Override
+    protected void setButtonListeners(View view) {
+        Button btExecute = (Button) view.findViewById(R.id.btExecute);
+        btExecute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signup();
             }
         });
-
-        addListeners();
-        initSpinnerAdapter();
-
-        builder.setView(view);
-
-        Dialog dialog = builder.create();
-        dialog.setTitle(R.string.titel_signup);
-
-        return dialog;
-    }
-
-    private void addListeners() {
-        etName.addTextChangedListener(new TextValidator(etName) {
-            @Override
-            public void afterTextChanged(Editable s) {
-                String name = etName.getText().toString();
-
-                if (name.length() > 47) {
-                    etName.setError(findString(R.string.warnung_name));
-                }
-            }
-        });
-        etMail.addTextChangedListener(new TextValidator(etMail) {
-            @Override
-            public void afterTextChanged(Editable s) {
-                String mail = etMail.getText().toString();
-
-                if (!MailValidator.getInstance().isValid(mail)) {
-                    etMail.setError(findString(R.string.warnung_mail));
-                }
-            }
-        });
-        etPasswort.addTextChangedListener(new TextValidator(etPasswort) {
-            @Override
-            public void afterTextChanged(Editable s) {
-                String passwort = etPasswort.getText().toString();
-                String confirmation = etConformation.getText().toString();
-
-                if (passwort.length() < 6) {
-                    etPasswort.setError(findString(R.string.warnung_passwort));
-                    return;
-                }
-                if(!confirmation.isEmpty()) {
-                    if(confirmation.equals(passwort)) {
-                        etConformation.setError(null);
-                    } else {
-                        etConformation.setError(findString(R.string.warnung_confirmation));
-                    }
-                }
-            }
-        });
-        etConformation.addTextChangedListener(new TextValidator(etConformation) {
-            @Override
-            public void afterTextChanged(Editable s) {
-                String password = etPasswort.getText().toString();
-                String confirmation = etConformation.getText().toString();
-
-                if (!password.equals(confirmation)) {
-                    etConformation.setError(findString(R.string.warnung_confirmation));
-                }
-            }
-        });
-    }
-
-    private String findString(int index) {
-        return getResources().getString(index);
     }
 
     /**
@@ -217,17 +123,21 @@ public class FragmentSignup extends FragmentAnmelden {
         Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();
 
         String name = etName.getText().toString();
+        String mail = etMail.getText().toString();
         String passwort = etPasswort.getText().toString();
+        String conformation = etConformation.getText().toString();
+        String idUnterkunft = String.valueOf(unterkunft.getId());
 
-        new NutzerPost(getActivity(), R.string.meldung_anmelden, new LoginData(name, passwort)).execute(
-                "name",                     name,
-                "mail",                     etMail.getText().toString(),
-                "password",                 passwort,
-                "password_confirmation",    etConformation.getText().toString(),
-                "accommodation_id",         String.valueOf(unterkunft.getId()));
+        new NutzerPost(getActivity(), R.string.meldung_anmelden, new LoginData(name, passwort))
+                .execute(
+                        "name",                     name,
+                        "mail",                     mail,
+                        "password",                 passwort,
+                        "password_confirmation",    conformation,
+                        "accommodation_id",         idUnterkunft);
     }
 
-    private class NutzerPost extends FragmentLogin.NutzerGet {
+    private class NutzerPost extends SuperFragmentGetUser.NutzerGet {
 
         public NutzerPost(Activity context, int textID, LoginData login) {
             super(context, textID, login);
@@ -240,7 +150,7 @@ public class FragmentSignup extends FragmentAnmelden {
                 Nutzer nutzer = Nutzer.fromJSON(model.getUnterkuenfte(), new JSONObject(antwort));
 
                 return nutzer;
-            } catch (JSONException e){
+            } catch (JSONException e) {
                 return null;
             }
         }

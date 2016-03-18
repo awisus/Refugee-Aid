@@ -115,7 +115,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/dialog_signup"
-        android:id="@+id/btSignup"
+        android:id="@+id/btExecute"
         android:layout_below="@+id/etConfirmation"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/frag_margin" />

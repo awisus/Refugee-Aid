@@ -17,12 +17,12 @@ import de.awisus.refugeeaidleipzig.model.IDObject;
  *
  * @author Jens Awisus
  */
-public class Adapter<T extends IDObject> extends ArrayAdapter<T> {
+public class SuperAdapter<T extends IDObject> extends ArrayAdapter<T> {
 
     protected Vector<T> liste;
     protected int layoutID;
 
-    public Adapter(Context context, int resource, Vector<T> objects, int layoutID) {
+    public SuperAdapter(Context context, int resource, Vector<T> objects, int layoutID) {
         super(context, resource, objects);
         this.liste = objects;
         this.layoutID = layoutID;

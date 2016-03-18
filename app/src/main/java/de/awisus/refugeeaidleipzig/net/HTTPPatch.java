@@ -5,7 +5,7 @@ import java.io.IOException;
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
-import cz.msebera.android.httpclient.client.methods.HttpPatch;
+import cz.msebera.android.httpclient.client.methods.HttpPut;
 
 /**
  * Created on 11.03.16.
@@ -20,7 +20,7 @@ public class HTTPPatch extends HTTPParameterAction {
 
     @Override
     protected HttpResponse onPerform(HttpClient client, String... str) throws IOException {
-        HttpPatch httpPatch = new HttpPatch(serverUrl +str[0]);
+        HttpPut httpPatch = new HttpPut(serverUrl +str[0]);
         httpPatch.setHeader("accept", "application/json");
 
         httpPatch.setEntity(new UrlEncodedFormEntity(parameter, "UTF-8"));
