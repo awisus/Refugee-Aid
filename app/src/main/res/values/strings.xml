@@ -20,6 +20,8 @@
         \n
 
         Hergestellt von J. Awisus, 2016
+        \n
+        <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a>
     </string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -29,8 +31,9 @@
     <string name="nav_karte">Map</string>
 
     <string name="nav_titel_nav">Navigation</string>
-    <string name="nav_titel_ueber">Information</string>
+    <string name="nav_titel_info">Information</string>
 
+    <string name="titel_ueber">About</string>
     <string name="titel_profil">Manage needs</string>
     <string name="titel_login">Log in</string>
     <string name="titel_signup">New user</string>

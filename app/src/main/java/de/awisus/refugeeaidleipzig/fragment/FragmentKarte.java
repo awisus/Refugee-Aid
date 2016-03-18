@@ -43,12 +43,12 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
+import de.awisus.refugeeaidleipzig.Loader;
 import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
-import de.awisus.refugeeaidleipzig.net.WebFlirt;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 
 /**
@@ -271,7 +271,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         @Override
         protected DataMap<Unterkunft> doInBackground(String... params) {
             try {
-                return WebFlirt.getInstance().getUnterkuenfte();
+                return Loader.getInstance().getUnterkuenfte();
             } catch (IOException | JSONException | InterruptedException | ExecutionException e) {
                 return null;
             }

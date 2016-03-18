@@ -14,12 +14,12 @@
         </menu>
     </item>
 
-    <item android:title="@string/nav_titel_ueber">
+    <item android:title="@string/nav_titel_info">
         <menu>
             <item
                 android:id="@+id/nav_ueber"
                 android:icon="@android:drawable/ic_menu_info_details"
-                android:title="@string/nav_titel_ueber" />
+                android:title="@string/nav_titel_info" />
         </menu>
     </item>
 

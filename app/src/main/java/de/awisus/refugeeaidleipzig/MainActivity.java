@@ -148,8 +148,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         protected Model doInBackground(String... params) {
             try {
                 // initialise the model
-                DataMap<Kategorie> kategorien = WebFlirt.getInstance().getKategorien();
-                DataMap<Unterkunft> unterkuenfte = WebFlirt.getInstance().getUnterkuenfte();
+                DataMap<Kategorie> kategorien = Loader.getInstance().getKategorien();
+                DataMap<Unterkunft> unterkuenfte = Loader.getInstance().getUnterkuenfte();
 
                 Model model;
                 model = new Model();
@@ -289,9 +289,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Show About Dialogue
         if(id == R.id.nav_ueber) {
+
+            String titel;
+            titel = getResources().getString(R.string.titel_ueber);
+            titel += " ";
+            titel += getResources().getString(R.string.app_name);
+            titel += " v" + BuildConfig.VERSION_NAME;
+
             FragmentInfo fragUeber =
-            FragmentInfo.newInstance(R.string.nav_titel_ueber, R.string.info);
-            fragUeber.show(getSupportFragmentManager(), "Info");
+            FragmentInfo.newInstance(titel, R.string.info);
+            fragUeber.show(getSupportFragmentManager(), titel);
         }
 
         // Close drawer
@@ -312,9 +319,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String passwort = params[0].getPasswort();
 
                 String antwort = WebFlirt.getInstance().get("getUser/" + name + "/" + passwort);
-                Nutzer nutzer = Nutzer.fromJSON(model.getUnterkuenfte(), new JSONObject(antwort));
 
-                return nutzer;
+                return Nutzer.fromJSON(model.getUnterkuenfte(), new JSONObject(antwort));
             } catch (JSONException | InterruptedException | ExecutionException e) {
                 return null;
             }

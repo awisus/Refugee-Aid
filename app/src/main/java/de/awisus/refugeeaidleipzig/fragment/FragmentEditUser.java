@@ -133,7 +133,7 @@ public class FragmentEditUser extends SuperFragmentEditUser {
         String confirmation = etConfirmation.getText().toString();
         String idUnterkunft = String.valueOf(nutzer.getUnterkunft().getId());
 
-        new NutzerPatch(getActivity(), R.string.meldung_anmelden, new LoginData(name, mail, passwort))
+        new NutzerPatch(getActivity(), R.string.meldung_aktualisieren, new LoginData(name, mail, passwort))
                 .execute(
                         "id",                       id,
                         "name",                     name,
@@ -196,7 +196,7 @@ public class FragmentEditUser extends SuperFragmentEditUser {
         @Override
         protected void doPostExecute(String result) {
             if(result == null) {
-                Toast.makeText(context, R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.warnung_signup, Toast.LENGTH_SHORT).show();
             } else {
                 try {
                     Datei.getInstance().loeschen(getActivity(), "login.json");
