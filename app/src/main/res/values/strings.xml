@@ -3,25 +3,25 @@
     <string name="app_name">Refugee Aid</string>
 
     <string name="info">
-        <b>Refugee Aid</b> ist die Plattform, die geflüchtete Menschen und hilfsbereite Bürger
-        zusammenbringt.
+        <b>Refugee Aid</b> the platform for bringing together refugee people and helpful citizens.
         \n
         \n
 
-        <b>Registrieren</b> Sie sich als Geflüchteter und erstellen Sie übersichtlich eine Liste
-        ihrer Bedürfnisse.
+        <b>Register</b> as refugee with an user account and create your clearly structured list of
+        needs.
         \n
         \n
 
-        <b>Sehen</b> Sie auf der Karte, wo sich Unterkünfte für Geflüchtete in ihrer Umgebung
-        befinden. Nutzen Sie die kurze Entfernung oder den täglichen Arbeitsweg, um <b>Spenden</b>
-        zu leisten. Zu Jeder Unterkunft können Sie den genauen Bedarf der Menschen einsehen.
+        You like to help? <b>Consult</b> the map to find refugee accommodations in your
+        neighborhood. Use the short distance or your daily commuting to <b>donate</b>. You can see
+        the exact needs of the residents of any accommodation.
         \n
         \n
 
-        Hergestellt von J. Awisus, 2016
+        Made by J. Awisus, 2016
         \n
-        <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a>
+
+        Contact: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a>
     </string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
