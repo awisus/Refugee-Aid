@@ -3,7 +3,7 @@ Project intended to give refugees a chance to utter their needs themselves.
 General public may see those needs collected by accommodations on a map.
 So they become aware of help facilities in their area and what is really urgent.
 
-This is the Android frontend created by awisus for the upcoming platform done by tokix.
+This is the Android frontend.
 We use the Google Maps platform to make accmommodations visible to the user.
 By clicking a mark on the map he/she gets further information, most importantly about required needs.
 
