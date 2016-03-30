@@ -132,7 +132,7 @@ public class FragmentAnmelden extends SuperFragmentGetUser implements View.OnCli
             dismiss();
 
             FragmentSignup fragmentSignup;
-            fragmentSignup = FragmentSignup.newInstance(model, R.string.warnung_signup, R.layout.fragment_signup);
+            fragmentSignup = FragmentSignup.newInstance(model, R.string.titel_signup, R.layout.fragment_signup);
             fragmentSignup.show(getActivity().getSupportFragmentManager(), "Neues Konto");
         }
     }
