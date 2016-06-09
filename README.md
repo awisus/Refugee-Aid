@@ -17,8 +17,7 @@ See the LICENSE file for detailed information.
 ## Hey, you there!
 Please, feel free and welcome to collaborate to improve user experience and maintain the project.
 
-## Contact us
-- awisus: awisus.gdev@gmail.com
-- tokix: -
+## Contact
+awisus.gdev@gmail.com
 
 Made with pleasure in Leipzig
