@@ -8,7 +8,7 @@ We use the Google Maps platform to make accmommodations visible to the user.
 By clicking a mark on the map he/she gets further information, most importantly about required needs.
 
 ## If you like to use the app...
-Download and transfer the APK file to your phone. Find it here: https://github.com/awisus/Refugee-Aid/releases
+Download and transfer the APK file to your phone. Get it [here]
 
 ## If you like to use the code...
 These files make up an Android Studio project. Simply download and open in your IDE or check out from Version Control.
@@ -24,3 +24,5 @@ Please, feel free and welcome to collaborate to improve user experience and main
 awisus.gdev@gmail.com
 
 Made with pleasure in Leipzig
+
+[here]: https://github.com/awisus/Refugee-Aid/releases
