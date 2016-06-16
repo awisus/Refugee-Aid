@@ -7,14 +7,17 @@ This is the Android frontend.
 We use the Google Maps platform to make accmommodations visible to the user.
 By clicking a mark on the map he/she gets further information, most importantly about required needs.
 
-## Usage
+## If you like to use the app...
+Download and transfer the APK file to your phone. Find it here: https://github.com/awisus/Refugee-Aid/releases
+
+## If you like to use the code...
 These files make up an Android Studio project. Simply download and open in your IDE or check out from Version Control.
 
-## License
+## There is copyleft...
 This software is published under the GNU General Public License.
 See the LICENSE file for detailed information.
 
-## Hey, you there!
+## Now you...
 Please, feel free and welcome to collaborate to improve user experience and maintain the project.
 
 ## Contact
