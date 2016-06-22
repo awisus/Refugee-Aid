@@ -64,10 +64,10 @@ import de.awisus.refugeeaidleipzig.util.Datei;
  * Created on 11.01.16.
  *
  * Class defining the Main Activity of the Android App as entry point.
- * Describes behaviour for the Navigation Drawer and takes notice about login and logout behaviour
- * of the user stored in the model.
- * Two windows may be called: One shows general information about the app. The second is a
- * login mask, that pops up, if no user is signed in.
+ * Describes behaviour for the Navigation Drawer and takes notice about login
+ * and logout behaviour of the user stored in the model.
+ * Two windows may be called: One shows general information about the app. The
+ * second is a login mask, that pops up, if no user is signed in.
  * @author Jens Awisus
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Observer {
@@ -92,8 +92,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /**
      * Called when this activity is created; Android-specific
-     * Inflates the layout, initialises the model, tool bar, navigation drawer and the container
-     * layout for fragments (Google Map or profile fragment)
+     * Inflates the layout, initialises the model, tool bar, navigation drawer
+     * and the container layout for fragments (Google Map or profile fragment)
      * Prepares instances of the About dialogue and the login mask
      * @param savedInstanceState Bundle of saved instance state
      */
