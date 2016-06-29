@@ -23,6 +23,6 @@ Please, feel free and welcome to collaborate to improve user experience and main
 ## Contact
 awisus.gdev@gmail.com
 
-Made with pleasure in Leipzig
+With &hearts; from Leipzig
 
 [here]: https://github.com/awisus/Refugee-Aid/releases
