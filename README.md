@@ -26,4 +26,4 @@ With &hearts; from Leipzig - [Jens Awisus] (2016) - [Webpage]
 
 [here]: https://github.com/awisus/Refugee-Aid/releases
 [Webpage]: http://refugee-aid.de/
-[Jens Awisus]: awisus.gdev@gmail.com
+[Jens Awisus]: mailto:awisus.gdev@gmail.com
