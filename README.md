@@ -20,12 +20,10 @@ See the LICENSE file for detailed information.
 ## Now you...
 Please, feel free and welcome to collaborate to improve user experience and maintain the project.
 
-## Web
-http://refugee-aid.de/
+## Footer
 
-## Contact
-awisus.gdev@gmail.com
-
-With &hearts; from Leipzig
+With &hearts; from Leipzig - [Jens Awisus] (2016) - [Webpage]
 
 [here]: https://github.com/awisus/Refugee-Aid/releases
+[Webpage]: http://refugee-aid.de/
+[Jens Awisus]: awisus.gdev@gmail.com
