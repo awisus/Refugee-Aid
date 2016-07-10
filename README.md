@@ -24,7 +24,8 @@ Please, feel free and welcome to collaborate to improve user experience and main
 
 awisus.gdev@gmail.com
 
-With &hearts; from Leipzig - Jens Awisus (2016) - [Webpage]
+With &hearts; from Leipzig by [Jens Awisus] - 2016 - [Web]
 
 [here]: https://github.com/awisus/Refugee-Aid/releases
-[Webpage]: http://refugee-aid.de/
+[Web]: http://refugee-aid.de/
+[Jens Awisus]: http://jens.awisus.me/
