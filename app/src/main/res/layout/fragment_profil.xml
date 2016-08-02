@@ -36,17 +36,17 @@
             android:textColor="@color/colorPrimary"
             android:layout_alignParentLeft="false"
             android:layout_alignParentTop="false"
-            android:layout_above="@+id/tvUnterkunft"
+            android:layout_above="@+id/tvNutzerInfo"
             android:layout_alignParentStart="false"
             android:layout_marginBottom="4dp"
             android:layout_toRightOf="@+id/ivBild" />
 
         <TextView
-            android:id="@+id/tvUnterkunft"
+            android:id="@+id/tvNutzerInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="[Einrichtung]"
+            android:text="[Information]"
             android:textColor="@android:color/black"
             android:layout_alignParentLeft="false"
             android:layout_alignParentTop="false"

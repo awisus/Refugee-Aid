@@ -35,7 +35,6 @@
     <string name="nav_titel_nav">Navigation</string>
     <string name="nav_titel_info">Information</string>
 
-    <string name="titel_profil">Bedarf verwalten</string>
     <string name="titel_login">Anmelden</string>
     <string name="titel_signup">Neuer Benutzer</string>
     <string name="titel_bedarf_entfernen">Bedarf entfernen</string>
@@ -51,7 +50,7 @@
 
     <string name="button_konto_neu">Neu? Hier Konto erstellen</string>
 
-    <string name="string_kein_bedarf">KEIN BEDARF</string>
+    <string name="string_keine_eintraege">KEINE EINTRÄGE</string>
     <string name="string_bedarfe">Bedarf: </string>
     <string name="string_plaetze">Plätze: </string>
     <string name="string_bewohner">Bewohner: </string>
@@ -88,4 +87,7 @@
     <string name="dialog_nein">Nein</string>
     <string name="dialog_sicher">Sind Sie sicher?</string>
     <string name="titel_ueber">Über</string>
+    <string name="titel_profil_helper">Angebote verwalten</string>
+    <string name="titel_profil_refugee">Bedarf verwalten</string>
+    <string name="titel_info_helper">Unterstützer</string>
 </resources>

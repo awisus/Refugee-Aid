@@ -66,7 +66,7 @@ public class FragmentProfil extends Fragment implements Observer {
     /**
      * Label showing the accommodation the user stays in
      */
-    private TextView tvEinrichtung;
+    private TextView tvInfo;
 
     private TextView tvLeer;
 
@@ -127,7 +127,11 @@ public class FragmentProfil extends Fragment implements Observer {
         initUI(view);
         initNutzerInfo();
 
-        getActivity().setTitle(R.string.titel_profil);
+        if(nutzer.getRolle() == 0) {
+            getActivity().setTitle(R.string.titel_profil_refugee);
+        } else {
+            getActivity().setTitle(R.string.titel_profil_helper);
+        }
 
         return view;
     }
@@ -138,7 +142,7 @@ public class FragmentProfil extends Fragment implements Observer {
      */
     private void initUI(View view) {
         tvName = (TextView) view.findViewById(R.id.tvName);
-        tvEinrichtung = (TextView) view.findViewById(R.id.tvUnterkunft);
+        tvInfo = (TextView) view.findViewById(R.id.tvNutzerInfo);
         tvLeer = (TextView) view.findViewById(R.id.tvLeer);
 
         adapter = new AdapterBedarf(getActivity(), android.R.layout.simple_list_item_1, liste, nutzer);
@@ -155,10 +159,15 @@ public class FragmentProfil extends Fragment implements Observer {
     private void initNutzerInfo() {
         if(nutzer != null) {
             tvName.setText(nutzer.getName());
-            tvEinrichtung.setText(nutzer.getUnterkunft().toString());
+
+            if(nutzer.getRolle() == 0) {
+                tvInfo.setText(nutzer.getUnterkunft().toString());
+            } else {
+                tvInfo.setText(R.string.titel_info_helper);
+            }
 
             if(nutzer.hatBedarf()) tvLeer.setText("");
-            else tvLeer.setText(R.string.string_kein_bedarf);
+            else tvLeer.setText(R.string.string_keine_eintraege);
 
             nutzer.addObserver(this);
         }
@@ -184,7 +193,7 @@ public class FragmentProfil extends Fragment implements Observer {
     public void update(Observable observable, Object data) {
         adapter.notifyDataSetChanged();
         if(nutzer.hatBedarf()) tvLeer.setText("");
-        else tvLeer.setText(R.string.string_kein_bedarf);
+        else tvLeer.setText(R.string.string_keine_eintraege);
 
         tvName.setText(nutzer.getName());
     }

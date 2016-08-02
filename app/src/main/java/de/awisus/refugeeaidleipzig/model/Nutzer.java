@@ -77,18 +77,18 @@ public class Nutzer extends IDObject {
         if(nutzer.rolle == 0) {
             nutzer.unterkunft = unterkuenfte.getFromID(json.getInt("accommodation_id"));
 
-            JSONArray jsonBedarf = json.getJSONArray("needs");
-            for (int i = 0; i < jsonBedarf.length(); i++) {
-                nutzer.data.add(Bedarf.fromJSON(jsonBedarf.getJSONObject(i)));
+            JSONArray array = json.getJSONArray("needs");
+            for (int i = 0; i < array.length(); i++) {
+                nutzer.data.add(Bedarf.fromJSON(array.getJSONObject(i)));
             }
         } else {
-            JSONArray jsonBedarf = json.getJSONArray("offers");
-            for (int i = 0; i < jsonBedarf.length(); i++) {
-                nutzer.data.add(Angebot.fromJSON(jsonBedarf.getJSONObject(i)));
+            JSONArray array = json.getJSONArray("offers");
+            for (int i = 0; i < array.length(); i++) {
+                nutzer.data.add(Angebot.fromJSON(array.getJSONObject(i)));
             }
         }
 
-        // Better trim Strings, perform rid of white spaces
+        // Better trim Strings, get rid of white spaces
         nutzer.name = nutzer.name.trim();
         nutzer.mail = nutzer.mail.trim();
 
@@ -131,6 +131,11 @@ public class Nutzer extends IDObject {
     ////////////////////////////////////////////////////////////////////////////////
      // Getters /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
+
+
+    public int getRolle() {
+        return rolle;
+    }
 
     public String getMail() {
         return mail;

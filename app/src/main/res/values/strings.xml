@@ -34,7 +34,9 @@ Contact: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a>
 <string name="nav_titel_info">Information</string>
 
 <string name="titel_ueber">About</string>
-<string name="titel_profil">Manage needs</string>
+<string name="titel_profil_refugee">Manage needs</string>
+<string name="titel_profil_helper">Manage offers</string>
+<string name="titel_info_helper">Supporter</string>
 <string name="titel_login">Log in</string>
 <string name="titel_signup">New user</string>
 <string name="titel_bedarf_entfernen">Delete need</string>
@@ -57,7 +59,7 @@ Contact: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a>
 <string name="dialog_ok">Okay</string>
 <string name="dialog_signup">Create account</string>
 
-<string name="string_kein_bedarf">NO NEEDS</string>
+<string name="string_keine_eintraege">NO ENTRIES</string>
 <string name="string_bedarfe">Needs:</string>
 <string name="string_plaetze">Space:</string>
 <string name="string_bewohner">Residents:</string>
