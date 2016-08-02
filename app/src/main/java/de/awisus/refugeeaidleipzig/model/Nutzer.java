@@ -47,7 +47,9 @@ public class Nutzer extends IDObject {
     /**
      * List of needs being uttered to the public
      */
-    private DataMap<Bedarf> bedarf;
+    private DataMap<IDObject> data;
+
+    private int rolle;
 
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
@@ -58,7 +60,7 @@ public class Nutzer extends IDObject {
      * instantiates list of needs, processes login into given accommodation
      */
     private Nutzer() {
-        bedarf = new DataMap<>();
+        data = new DataMap<>();
     }
 
     public static Nutzer fromJSON(DataMap<Unterkunft> unterkuenfte, JSONObject json) throws JSONException {
@@ -70,11 +72,20 @@ public class Nutzer extends IDObject {
         nutzer.id              = json.getInt("id");
         nutzer.name            = json.getString("name");
         nutzer.mail            = json.getString("mail");
-        nutzer.unterkunft      = unterkuenfte.getFromID(json.getInt("accommodation_id"));
+        nutzer.rolle           = json.getInt("role");
 
-        JSONArray jsonBedarf   = json.getJSONArray("needs");
-        for(int i = 0; i < jsonBedarf.length(); i++) {
-            nutzer.bedarf.add(Bedarf.fromJSON(jsonBedarf.getJSONObject(i)));
+        if(nutzer.rolle == 0) {
+            nutzer.unterkunft = unterkuenfte.getFromID(json.getInt("accommodation_id"));
+
+            JSONArray jsonBedarf = json.getJSONArray("needs");
+            for (int i = 0; i < jsonBedarf.length(); i++) {
+                nutzer.data.add(Bedarf.fromJSON(jsonBedarf.getJSONObject(i)));
+            }
+        } else {
+            JSONArray jsonBedarf = json.getJSONArray("offers");
+            for (int i = 0; i < jsonBedarf.length(); i++) {
+                nutzer.data.add(Angebot.fromJSON(jsonBedarf.getJSONObject(i)));
+            }
         }
 
         // Better trim Strings, perform rid of white spaces
@@ -89,13 +100,13 @@ public class Nutzer extends IDObject {
     ////////////////////////////////////////////////////////////////////////////////
 
     public void addBedarf(Bedarf bedarf) {
-        this.bedarf.add(bedarf);
+        this.data.add(bedarf);
         setChanged();
         notifyObservers();
     }
 
     public void loescheBedarf(int id) {
-        bedarf.remove(id);
+        data.remove(id);
         setChanged();
         notifyObservers();
     }
@@ -137,11 +148,11 @@ public class Nutzer extends IDObject {
      * Getter for personal needs
      * @return list of this user's needs
      */
-    public DataMap<Bedarf> getBedarf() {
-        return bedarf;
+    public DataMap<IDObject> getData() {
+        return data;
     }
 
     public boolean hatBedarf() {
-        return bedarf.size() > 0;
+        return data.size() > 0;
     }
 }

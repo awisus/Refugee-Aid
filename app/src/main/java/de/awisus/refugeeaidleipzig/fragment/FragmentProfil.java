@@ -37,7 +37,7 @@ import java.util.Observer;
 import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.R;
-import de.awisus.refugeeaidleipzig.model.Bedarf;
+import de.awisus.refugeeaidleipzig.model.IDObject;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.util.Datei;
@@ -72,7 +72,7 @@ public class FragmentProfil extends Fragment implements Observer {
 
     private AdapterBedarf adapter;
 
-    private Vector<Bedarf> liste;
+    private Vector<IDObject> liste;
 
     /**
      * Reference to the model for logging the user out
@@ -97,7 +97,7 @@ public class FragmentProfil extends Fragment implements Observer {
         FragmentProfil frag = new FragmentProfil();
         frag.model = model;
         frag.nutzer = model.getNutzer();
-        frag.liste = frag.nutzer.getBedarf().asVector();
+        frag.liste = frag.nutzer.getData().asVector();
         return frag;
     }
 
