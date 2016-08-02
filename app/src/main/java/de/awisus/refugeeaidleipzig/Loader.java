@@ -19,7 +19,8 @@ import de.awisus.refugeeaidleipzig.net.HTTPGet;
  */
 public class Loader {
 
-    public static final String SERVER_URL = "https://refugee-aid.herokuapp.com/";
+    // public static final String SERVER_URL = "https://refugee-aid.herokuapp.com/";
+    public static final String SERVER_URL = "http://192.168.0.24:3000/";
     public static final Loader INSTANCE = new Loader();
 
 
@@ -37,7 +38,7 @@ public class Loader {
         HTTPGet httpGet;
         httpGet = new HTTPGet(SERVER_URL);
 
-        JSONArray feld = new JSONArray(httpGet.perform("accommodations/json"));
+        JSONArray feld = new JSONArray(httpGet.perform("accommodations/format/json"));
         for (int i = 0; i < feld.length(); i++) {
 
             JSONObject json = feld.getJSONObject(i);
@@ -55,7 +56,7 @@ public class Loader {
         HTTPGet httpGet;
         httpGet = new HTTPGet(SERVER_URL);
 
-        JSONArray feld = new JSONArray(httpGet.perform("categories/json"));
+        JSONArray feld = new JSONArray(httpGet.perform("categories/format/json"));
         for (int i = 0; i < feld.length(); i++) {
 
             JSONObject json = feld.getJSONObject(i);

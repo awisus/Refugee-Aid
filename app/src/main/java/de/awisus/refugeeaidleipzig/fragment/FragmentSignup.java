@@ -134,6 +134,7 @@ public class FragmentSignup extends SuperFragmentEditUser {
                         "mail",                     mail,
                         "password",                 passwort,
                         "password_confirmation",    confirmation,
+                        "role",                     "0",
                         "accommodation_id",         idUnterkunft);
     }
 
