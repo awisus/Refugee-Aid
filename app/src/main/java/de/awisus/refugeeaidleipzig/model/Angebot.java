@@ -27,10 +27,9 @@ import org.json.JSONObject;
  *
  * @author Jens Awisus
  */
-public class Angebot extends IDObject {
+public class Angebot extends UserDataObject {
 
     private String content;
-    private String imageData;
     private double latitude;
     private double longitude;
 
@@ -57,10 +56,6 @@ public class Angebot extends IDObject {
 
     public String getContent() {
         return content;
-    }
-
-    public String getImageData() {
-        return imageData;
     }
 
     public double getLatitude() {

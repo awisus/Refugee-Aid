@@ -27,7 +27,7 @@ import org.json.JSONObject;
  *
  * @author Jens Awisus
  */
-public class Bedarf extends IDObject {
+public class Bedarf extends UserDataObject {
 
     private Bedarf() {}
 
@@ -38,6 +38,7 @@ public class Bedarf extends IDObject {
         // put data to it from json object
         bedarf.id              = json.getInt("id");
         bedarf.name            = json.getString("name");
+        bedarf.imageData       = json.getString("imagedata");
 
         // Better trim Strings, perform rid of white spaces
         bedarf.name = bedarf.name.trim();
