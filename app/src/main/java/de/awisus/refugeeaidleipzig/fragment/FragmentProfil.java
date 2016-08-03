@@ -70,7 +70,7 @@ public class FragmentProfil extends Fragment implements Observer {
 
     private TextView tvLeer;
 
-    private AdapterBedarf adapter;
+    private AdapterUserData adapter;
 
     private Vector<UserDataObject> liste;
 
@@ -145,7 +145,7 @@ public class FragmentProfil extends Fragment implements Observer {
         tvInfo = (TextView) view.findViewById(R.id.tvNutzerInfo);
         tvLeer = (TextView) view.findViewById(R.id.tvLeer);
 
-        adapter = new AdapterBedarf(getActivity(), android.R.layout.simple_list_item_1, liste, nutzer);
+        adapter = new AdapterUserData(getActivity(), android.R.layout.simple_list_item_1, liste, nutzer);
 
         ListView listView;
         listView = (ListView) view.findViewById(android.R.id.list);

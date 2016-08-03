@@ -72,5 +72,5 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/rlOben"
-        tools:listitem="@layout/entry_bedarf" />
+        tools:listitem="@layout/entry_userdata" />
 </RelativeLayout>

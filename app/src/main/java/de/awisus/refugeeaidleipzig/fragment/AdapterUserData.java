@@ -23,12 +23,12 @@ import de.awisus.refugeeaidleipzig.util.BackgroundTask;
  *
  * @author Jens Awisus
  */
-public class AdapterBedarf extends SuperAdapter<UserDataObject> {
+public class AdapterUserData extends SuperAdapter<UserDataObject> {
 
     private Nutzer nutzer;
 
-    public AdapterBedarf(Context context, int resource, Vector<UserDataObject> objects, Nutzer nutzer) {
-        super(context, resource, objects, R.layout.entry_bedarf);
+    public AdapterUserData(Context context, int resource, Vector<UserDataObject> objects, Nutzer nutzer) {
+        super(context, resource, objects, R.layout.entry_userdata);
         this.nutzer = nutzer;
     }
 
