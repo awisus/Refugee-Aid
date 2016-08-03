@@ -47,7 +47,7 @@ public class Nutzer extends IDObject {
     /**
      * List of needs being uttered to the public
      */
-    private DataMap<IDObject> data;
+    private DataMap<UserDataObject> data;
 
     private int rolle;
 
@@ -153,7 +153,7 @@ public class Nutzer extends IDObject {
      * Getter for personal needs
      * @return list of this user's needs
      */
-    public DataMap<IDObject> getData() {
+    public DataMap<UserDataObject> getData() {
         return data;
     }
 

@@ -9,8 +9,8 @@ import android.widget.Toast;
 import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.R;
-import de.awisus.refugeeaidleipzig.model.IDObject;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
+import de.awisus.refugeeaidleipzig.model.UserDataObject;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 
@@ -19,11 +19,11 @@ import de.awisus.refugeeaidleipzig.util.BackgroundTask;
  *
  * @author Jens Awisus
  */
-public class AdapterBedarf extends SuperAdapter<IDObject> {
+public class AdapterBedarf extends SuperAdapter<UserDataObject> {
 
     private Nutzer nutzer;
 
-    public AdapterBedarf(Context context, int resource, Vector<IDObject> objects, Nutzer nutzer) {
+    public AdapterBedarf(Context context, int resource, Vector<UserDataObject> objects, Nutzer nutzer) {
         super(context, resource, objects, R.layout.entry_bedarf);
         this.nutzer = nutzer;
     }
