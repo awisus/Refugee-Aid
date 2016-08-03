@@ -1,4 +1,4 @@
-package de.awisus.refugeeaidleipzig.model;
+package de.awisus.refugeeaidleipzig;
 
 /**
  * Created on 15.03.16.

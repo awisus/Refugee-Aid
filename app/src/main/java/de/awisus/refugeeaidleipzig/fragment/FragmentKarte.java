@@ -48,6 +48,7 @@ import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Model;
+import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 
@@ -162,8 +163,14 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
 
         // Zoom on users accommodation, if logged in
         if(model.angemeldet()) {
-            karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                            model.getNutzer().getUnterkunft().getLatLng(), 11f));
+            Nutzer nutzer = model.getNutzer();
+            if(nutzer.getRolle() == 0) {
+                karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                        nutzer.getUnterkunft().getLatLng(), 11f));
+            } else {
+                // Zoom to arbitrary accommodation
+                karte.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.5, 10.5), 5.8f));
+            }
         } else {
             // Zoom to arbitrary accommodation
             karte.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.5, 10.5), 5.8f));

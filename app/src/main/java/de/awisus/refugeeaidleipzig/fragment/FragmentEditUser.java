@@ -33,7 +33,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 
 import de.awisus.refugeeaidleipzig.R;
-import de.awisus.refugeeaidleipzig.model.LoginData;
+import de.awisus.refugeeaidleipzig.LoginData;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
