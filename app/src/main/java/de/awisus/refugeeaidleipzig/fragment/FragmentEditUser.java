@@ -166,14 +166,12 @@ public class FragmentEditUser extends SuperFragmentEditUser {
         String mail = etMail.getText().toString();
         String passwort = etPasswort.getText().toString();
         String confirmation = etConfirmation.getText().toString();
-        String idUnterkunft = String.valueOf(nutzer.getUnterkunft().getId());
 
         new NutzerPatch(getActivity(), R.string.meldung_aktualisieren, new LoginData(name, mail, passwort))
                 .execute(
                         "id",                       id,
                         "name",                     name,
                         "mail",                     mail,
-                        "accommodation_id",         idUnterkunft,
                         "password",                 passwort,
                         "password_confirmation",    confirmation);
     }
