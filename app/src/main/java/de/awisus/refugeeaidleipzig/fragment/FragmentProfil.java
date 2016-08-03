@@ -206,6 +206,9 @@ public class FragmentProfil extends Fragment implements Observer {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.itNeu:
+
+                // TODO: different behavior wether user is refugee or supporter
+
                 FragmentKategorieList.newInstance(nutzer, model.getKategorien().asVector())
                 .show(getFragmentManager(), "Kategorien");
                 return true;
