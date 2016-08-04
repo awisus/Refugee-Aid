@@ -206,11 +206,14 @@ public class FragmentProfil extends Fragment implements Observer {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.itNeu:
+                if(nutzer.getRolle() == 0) {
+                    FragmentKategorieList.newInstance(
+                            nutzer, model.getKategorien().asVector())
+                            .show(getFragmentManager(), "Kategorien");
+                } else {
+                    // TODO: different behavior wether user is supporter
 
-                // TODO: different behavior wether user is refugee or supporter
-
-                FragmentKategorieList.newInstance(nutzer, model.getKategorien().asVector())
-                .show(getFragmentManager(), "Kategorien");
+                }
                 return true;
             case R.id.itBearbeiten:
                 FragmentEditUser.newInstance(model, R.string.titel_bearbeite_nutzer, R.layout.fragment_edit_user)
