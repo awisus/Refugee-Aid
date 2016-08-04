@@ -34,8 +34,12 @@ public class Utility {
     }
 
     public Bitmap stringToImage(String imageData) throws IllegalArgumentException {
-        byte[] decodedString = Base64.decode(imageData, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        if(imageData != null) {
+            byte[] decodedString = Base64.decode(imageData, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        } else {
+            return null;
+        }
     }
 
     public String latlngToAdress(LatLng latLng, Context context) throws IOException {

@@ -10,14 +10,14 @@ import android.widget.TextView;
 import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.R;
-import de.awisus.refugeeaidleipzig.models.ImageDataObject;
+import de.awisus.refugeeaidleipzig.models.IDObject;
 
 /**
  * Created on 13.03.16.
  *
  * @author Jens Awisus
  */
-public class SuperAdapter<T extends ImageDataObject> extends ArrayAdapter<T> {
+public class SuperAdapter<T extends IDObject> extends ArrayAdapter<T> {
 
     protected Vector<T> liste;
     protected int layoutID;

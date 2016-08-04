@@ -34,7 +34,6 @@ public class Kategorie extends ImageDataObject {
 
     private Vector<Kategorie> subkategorien;
 
-
     private Kategorie() {
         this.subkategorien = new Vector<>();
     }
@@ -42,8 +41,9 @@ public class Kategorie extends ImageDataObject {
     public static Kategorie fromJSON(JSONObject json) throws JSONException {
         Kategorie kategorie = new Kategorie();
 
-        kategorie.id =      json.getInt("id");
-        kategorie.name =    json.getString("name");
+        kategorie.id =        json.getInt("id");
+        kategorie.name =      json.getString("name");
+        kategorie.imageData = json.getString("imagedata");
 
         JSONArray subkategorien = json.getJSONArray("subcategories");
         if(subkategorien.length() > 0) {
