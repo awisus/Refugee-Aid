@@ -32,7 +32,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -47,6 +46,7 @@ import java.util.concurrent.ExecutionException;
 import de.awisus.refugeeaidleipzig.Loader;
 import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
+import de.awisus.refugeeaidleipzig.model.Angebot;
 import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
@@ -263,13 +263,17 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.fabUpdate) {
-            new Updater(context, R.string.meldung_aktualisieren).execute();
+            new UnterkunftUpdater(context, R.string.meldung_aktualisieren).execute();
+            new AngebotUpdater(context, R.string.meldung_aktualisieren).execute();
+
+            karte.clear();
+            setMarkers();
         }
     }
 
-    private class Updater extends BackgroundTask<String, Integer, DataMap<Unterkunft>> {
+    private class UnterkunftUpdater extends BackgroundTask<String, Integer, DataMap<Unterkunft>> {
 
-        protected Updater(Activity context, int textID) {
+        protected UnterkunftUpdater(Activity context, int textID) {
             super(context, textID);
         }
 
@@ -280,8 +284,6 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
                 Toast.makeText(context, R.string.warnung_download, Toast.LENGTH_SHORT).show();
             } else {
                 model.setUnterkuenfte(result);
-                karte.clear();
-                setMarkers();
             }
         }
 
@@ -289,6 +291,32 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         protected DataMap<Unterkunft> doInBackground(String... params) {
             try {
                 return Loader.getInstance().getUnterkuenfte();
+            } catch (IOException | JSONException | InterruptedException | ExecutionException e) {
+                return null;
+            }
+        }
+    }
+
+    private class AngebotUpdater extends BackgroundTask<String, Integer, DataMap<Angebot>> {
+
+        protected AngebotUpdater(Activity context, int textID) {
+            super(context, textID);
+        }
+
+        @Override
+        protected void doPostExecute(DataMap<Angebot> result) {
+
+            if(result == null) {
+                Toast.makeText(context, R.string.warnung_download, Toast.LENGTH_SHORT).show();
+            } else {
+                model.setAngebote(result);
+            }
+        }
+
+        @Override
+        protected DataMap<Angebot> doInBackground(String... params) {
+            try {
+                return Loader.getInstance().getAngebote();
             } catch (IOException | JSONException | InterruptedException | ExecutionException e) {
                 return null;
             }
