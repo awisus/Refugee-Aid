@@ -5,9 +5,8 @@ package de.awisus.refugeeaidleipzig.model;
  *
  * @author jens
  */
-public abstract class UserDataObject extends IDObject {
+public abstract class ImageDataObject extends IDObject {
     protected String imageData;
-
 
     public String getImageData() {
         return imageData;

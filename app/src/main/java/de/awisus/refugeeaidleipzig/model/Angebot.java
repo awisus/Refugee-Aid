@@ -29,7 +29,7 @@ import org.json.JSONObject;
  *
  * @author Jens Awisus
  */
-public class Angebot extends UserDataObject {
+public class Angebot extends ImageDataObject implements ILocationDataObject {
 
     private String content;
     private LatLng latLng;
@@ -61,6 +61,7 @@ public class Angebot extends UserDataObject {
         return content;
     }
 
+    @Override
     public LatLng getLatLng() {
         return latLng;
     }

@@ -30,7 +30,7 @@ import java.util.Vector;
  *
  * @author Jens Awisus
  */
-public class Kategorie extends UserDataObject {
+public class Kategorie extends ImageDataObject {
 
     private Vector<Kategorie> subkategorien;
 

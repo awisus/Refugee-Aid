@@ -14,7 +14,7 @@ import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
-import de.awisus.refugeeaidleipzig.model.UserDataObject;
+import de.awisus.refugeeaidleipzig.model.ImageDataObject;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 
@@ -23,18 +23,18 @@ import de.awisus.refugeeaidleipzig.util.BackgroundTask;
  *
  * @author Jens Awisus
  */
-public class AdapterUserData extends SuperAdapter<UserDataObject> {
+public class AdapterUserData extends SuperAdapter<ImageDataObject> {
 
     private Nutzer nutzer;
 
-    public AdapterUserData(Context context, int resource, Vector<UserDataObject> objects, Nutzer nutzer) {
+    public AdapterUserData(Context context, int resource, Vector<ImageDataObject> objects, Nutzer nutzer) {
         super(context, resource, objects, R.layout.entry_userdata);
         this.nutzer = nutzer;
     }
 
     @Override
     protected void doExtraBits(int position, View view) {
-        final UserDataObject data = liste.get(position);
+        final ImageDataObject data = liste.get(position);
 
         ImageView ivBild  = (ImageView) view.findViewById(R.id.ivBild);
         ivBild.setImageBitmap(decodeString(data.getImageData()));

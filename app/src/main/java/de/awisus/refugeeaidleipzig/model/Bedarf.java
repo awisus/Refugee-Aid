@@ -27,7 +27,7 @@ import org.json.JSONObject;
  *
  * @author Jens Awisus
  */
-public class Bedarf extends UserDataObject {
+public class Bedarf extends ImageDataObject {
 
     private Bedarf() {}
 

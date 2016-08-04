@@ -58,6 +58,12 @@ public class Model extends Observable {
     private DataMap<Kategorie> kategorien;
 
     /**
+     * Mapping of Map Markers and accommodations or offers for easy information
+     * retrieval
+     */
+    private HashMap<Marker, ILocationDataObject> mapLocationData;
+
+    /**
      * Mapping of Map Markers and accommodations for easy information retrieval
      */
     private HashMap<Marker, Unterkunft> mapUnterkuenfte;

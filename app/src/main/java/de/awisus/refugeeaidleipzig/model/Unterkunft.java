@@ -31,7 +31,7 @@ import org.json.JSONObject;
  * Class modelling an accommodation by storing its name, langitude, longitude, size and residents
  * @author Jens Awisus
  */
-public class Unterkunft extends IDObject {
+public class Unterkunft extends IDObject implements ILocationDataObject {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
@@ -145,6 +145,7 @@ public class Unterkunft extends IDObject {
      * Getter for coordinates
      * @return latitude and longitude for map interpretation
      */
+    @Override
     public LatLng getLatLng() {
         return latLng;
     }
