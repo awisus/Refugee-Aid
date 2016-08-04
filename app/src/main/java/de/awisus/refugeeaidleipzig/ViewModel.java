@@ -19,8 +19,6 @@
 
 package de.awisus.refugeeaidleipzig;
 
-import android.util.Log;
-
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -194,10 +192,7 @@ public class ViewModel extends Observable {
      */
     public void addMarke(Marker marke, MarkerOptions markerOption) {
         ILocationDataObject data = mapLocationDataOptions.get(markerOption);
-
         mapLocationData.put(marke, data);
-        Log.w("MARKER OPTIONS SIZE:", "" +mapLocationDataOptions.size());
-        Log.w("MARKER SIZE:", "" +mapLocationData.size());
     }
 
       ////////////////////////////////////////////////////////////////////////////////

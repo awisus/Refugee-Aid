@@ -23,7 +23,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,9 +46,9 @@ import java.util.concurrent.ExecutionException;
 import de.awisus.refugeeaidleipzig.Loader;
 import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
+import de.awisus.refugeeaidleipzig.ViewModel;
 import de.awisus.refugeeaidleipzig.models.Angebot;
 import de.awisus.refugeeaidleipzig.models.ILocationDataObject;
-import de.awisus.refugeeaidleipzig.ViewModel;
 import de.awisus.refugeeaidleipzig.models.Nutzer;
 import de.awisus.refugeeaidleipzig.models.Unterkunft;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
@@ -213,7 +212,6 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         }
         if(data instanceof Angebot) {
             // TODO: show info window of offer
-            Log.d("show offer", "implement info window for offer");
         }
     }
 
