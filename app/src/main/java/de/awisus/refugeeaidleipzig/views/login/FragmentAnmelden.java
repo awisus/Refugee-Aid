@@ -160,9 +160,7 @@ public class FragmentAnmelden extends SuperFragmentGetUser implements View.OnCli
         protected Nutzer doInBackground(String... params) {
             try {
                 String antwort = WebFlirt.getInstance().get("getUser/" + params[0] + "/" + params[1]);
-                Nutzer nutzer = Nutzer.fromJSON(model.getUnterkuenfte(), new JSONObject(antwort));
-
-                return nutzer;
+                return Nutzer.fromJSON(model.getUnterkuenfte(), new JSONObject(antwort));
             } catch (JSONException | InterruptedException | ExecutionException e) {
                 return null;
             }
