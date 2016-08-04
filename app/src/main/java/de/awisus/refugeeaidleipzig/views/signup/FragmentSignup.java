@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,6 +59,8 @@ public class FragmentSignup extends SuperFragmentEditUser {
      */
     private Spinner spUnterkunft;
 
+    private boolean isRefugee;
+
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
@@ -68,11 +71,12 @@ public class FragmentSignup extends SuperFragmentEditUser {
      * @param model ViewModel to log in user
      * @return new Login Fragment
      */
-    public static FragmentSignup newInstance(ViewModel model, int titelID, int layoutID) {
+    public static FragmentSignup newInstance(ViewModel model, int titelID, int layoutID, boolean isRefugee) {
         FragmentSignup frag = new FragmentSignup();
         frag.model = model;
         frag.layoutID = layoutID;
         frag.titelID = titelID;
+        frag.isRefugee = isRefugee;
         return frag;
     }
 
@@ -80,10 +84,18 @@ public class FragmentSignup extends SuperFragmentEditUser {
     protected void initElements(View view) {
         super.initElements(view);
 
-        spUnterkunft = (Spinner) view.findViewById(R.id.spUnterkunft);
         warnungID = R.string.warnung_signup;
 
-        initSpinnerAdapter();
+        TextView tvUnterkunft;
+        tvUnterkunft = (TextView) view.findViewById(R.id.tvUnterkunft);
+        spUnterkunft = (Spinner) view.findViewById(R.id.spUnterkunft);
+
+        if(isRefugee) {
+            initSpinnerAdapter();
+        } else {
+            tvUnterkunft.setVisibility(View.GONE);
+            spUnterkunft.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -121,22 +133,25 @@ public class FragmentSignup extends SuperFragmentEditUser {
 
     private void signup() {
         // Get inserted name and selected accommodation from views
-        Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();
+        String idUnterkunft = null;
+        if(isRefugee) {
+            Unterkunft unterkunft = (Unterkunft) spUnterkunft.getSelectedItem();
+            idUnterkunft = String.valueOf(unterkunft.getId());
+        }
 
         String name = etName.getText().toString();
         String mail = etMail.getText().toString();
         String passwort = etPasswort.getText().toString();
         String confirmation = etConfirmation.getText().toString();
-        String idUnterkunft = String.valueOf(unterkunft.getId());
 
-        new NutzerPost(getActivity(), R.string.meldung_anmelden, new LoginData(name, passwort))
-                .execute(
-                        "name",                     name,
-                        "mail",                     mail,
-                        "password",                 passwort,
-                        "password_confirmation",    confirmation,
-                        "role",                     "0",
-                        "accommodation_id",         idUnterkunft);
+        new NutzerPost(getActivity(), R.string.meldung_anmelden,
+                new LoginData(name, passwort)).execute(
+                "name",                     name,
+                "mail",                     mail,
+                "password",                 passwort,
+                "password_confirmation",    confirmation,
+                "role",                     isRefugee ? "0" : "1",
+                "accommodation_id",         idUnterkunft);
     }
 
     private class NutzerPost extends NutzerGet {
@@ -149,9 +164,7 @@ public class FragmentSignup extends SuperFragmentEditUser {
         protected Nutzer doInBackground(String... params) {
             try {
                 String antwort = WebFlirt.getInstance().post("users_remote", params);
-                Nutzer nutzer = Nutzer.fromJSON(model.getUnterkuenfte(), new JSONObject(antwort));
-
-                return nutzer;
+                return Nutzer.fromJSON(model.getUnterkuenfte(), new JSONObject(antwort));
             } catch (JSONException e) {
                 return null;
             }
