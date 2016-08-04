@@ -45,17 +45,16 @@ public class Utility {
     public String latlngToAdress(LatLng latLng, Context context) throws IOException {
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
 
-        double latitude = latLng.latitude;
-        double longitude = latLng.longitude;
-
-        List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+        List<Address> addresses = geocoder.getFromLocation(
+                latLng.latitude, latLng.longitude, 1
+        );
 
         if (addresses != null && addresses.size() > 0) {
             String address = addresses.get(0).getAddressLine(0);
             String city = addresses.get(0).getLocality();
             String postalCode = addresses.get(0).getPostalCode();
 
-            return address + ", " + postalCode + " " + city;
+            return address + "\n" + postalCode + " " + city;
         }
 
         return null;
