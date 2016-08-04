@@ -211,7 +211,8 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
             return;
         }
         if(data instanceof Angebot) {
-            // TODO: show info window of offer
+            FragmentOfferInfo.newInstance((Angebot) data)
+                    .show(getActivity().getSupportFragmentManager(), data.toString());
         }
     }
 

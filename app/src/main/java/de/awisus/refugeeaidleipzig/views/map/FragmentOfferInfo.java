@@ -17,16 +17,21 @@
  * MA 02110-1301, USA.
  */
 
-package de.awisus.refugeeaidleipzig.views;
+package de.awisus.refugeeaidleipzig.views.map;
 
 import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.awisus.refugeeaidleipzig.R;
+import de.awisus.refugeeaidleipzig.models.Angebot;
 
 /**
  * Created on 12.01.16.
@@ -35,33 +40,21 @@ import de.awisus.refugeeaidleipzig.R;
  * string
  * @author Jens Awisus
  */
-public class FragmentInfo extends DialogFragment {
+public class FragmentOfferInfo extends DialogFragment {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    private int inhaltID;
-
-    private String titel;
-
-    private String inhalt;
+    private Angebot angebot;
 
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    public static FragmentInfo newInstance(String titel, int inhaltID) {
-        FragmentInfo frag = new FragmentInfo();
-        frag.titel = titel;
-        frag.inhaltID = inhaltID;
-        return frag;
-    }
-
-    public static FragmentInfo newInstance(String titel, String inhalt) {
-        FragmentInfo frag = new FragmentInfo();
-        frag.titel = titel;
-        frag.inhalt = inhalt;
+    public static FragmentOfferInfo newInstance(Angebot angebot) {
+        FragmentOfferInfo frag = new FragmentOfferInfo();
+        frag.angebot = angebot;
         return frag;
     }
 
@@ -69,33 +62,33 @@ public class FragmentInfo extends DialogFragment {
      // View creation ///////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Called when this dialogue is created; Android-specific
-     * Inflates the layout, initialises text fields and sets their texts as well as the positive
-     * button
-     * @param savedInstanceState Bundle of saved instance state
-     * @return dialogue created by the AlertDialog.Builder
-     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_info, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_show_offer, null);
 
-        TextView tvInfo = (TextView) view.findViewById(R.id.tvContent);
+        ImageView ivImage = (ImageView) view.findViewById(R.id.ivImage);
+        TextView tvContent = (TextView) view.findViewById(R.id.tvContent);
+        TextView tvAddress = (TextView) view.findViewById(R.id.tvAddress);
 
-        if(inhalt == null) {
-            tvInfo.setText(inhaltID);
-        } else {
-            tvInfo.setText(inhalt);
-        }
+        try {
+            ivImage.setImageBitmap(decodeString(angebot.getImageData()));
+        } catch (IllegalArgumentException ex) {}
+
+        tvContent.setText(angebot.getContent());
 
         builder.setView(view);
 
         Dialog dialog;
         dialog = builder.create();
 
-        dialog.setTitle(titel);
+        dialog.setTitle(angebot.toString());
 
         return dialog;
+    }
+
+    private Bitmap decodeString(String imageData) throws IllegalArgumentException {
+        byte[] decodedString = Base64.decode(imageData, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 }

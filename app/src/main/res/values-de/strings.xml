@@ -90,6 +90,6 @@
     <string name="titel_profil_helper">Angebote verwalten</string>
     <string name="titel_profil_refugee">Bedarf verwalten</string>
     <string name="titel_info_helper">Unterstützer</string>
-    <string name="label_address">Adresse:</string>
+    <string name="label_address">Adresse</string>
     <string name="label_description">Beschreibung</string>
 </resources>

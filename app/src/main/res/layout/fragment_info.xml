@@ -9,6 +9,6 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:autoLink="email"
         android:text="[INHALT]"
-        android:id="@+id/tvHeaderContent" />
+        android:id="@+id/tvContent" />
 
 </RelativeLayout>

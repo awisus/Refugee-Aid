@@ -69,8 +69,8 @@ Contact: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a>
 <string name="label_mail">E mail</string>
 <string name="label_passwort">Password</string>
 <string name="label_confirmation">Confirm password</string>
-<string name="label_description">Description:</string>
-<string name="label_address">Address:</string>
+<string name="label_description">Description</string>
+<string name="label_address">Address</string>
 
 <string name="warnung_name">User name too long</string>
 <string name="warnung_mail">E mail adresse invalid</string>
