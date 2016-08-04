@@ -2,10 +2,7 @@ package de.awisus.refugeeaidleipzig.views.profile;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -13,10 +10,11 @@ import android.widget.Toast;
 import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.R;
-import de.awisus.refugeeaidleipzig.models.Nutzer;
 import de.awisus.refugeeaidleipzig.models.ImageDataObject;
+import de.awisus.refugeeaidleipzig.models.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
+import de.awisus.refugeeaidleipzig.util.Utility;
 import de.awisus.refugeeaidleipzig.views.SuperAdapter;
 
 /**
@@ -38,7 +36,9 @@ public class AdapterUserData extends SuperAdapter<ImageDataObject> {
         final ImageDataObject data = liste.get(position);
 
         ImageView ivBild  = (ImageView) view.findViewById(R.id.ivBild);
-        ivBild.setImageBitmap(decodeString(data.getImageData()));
+        ivBild.setImageBitmap(
+                Utility.getInstance().stringToImage(data.getImageData())
+        );
 
         FloatingActionButton fabMinus;
         fabMinus = (FloatingActionButton) view.findViewById(R.id.fab_minus);
@@ -53,11 +53,6 @@ public class AdapterUserData extends SuperAdapter<ImageDataObject> {
                 }
             }
         });
-    }
-
-    private Bitmap decodeString(String imageData) {
-        byte[] decodedString = Base64.decode(imageData, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
     private class BedarfDelete extends BackgroundTask<String, Integer, Integer> {
