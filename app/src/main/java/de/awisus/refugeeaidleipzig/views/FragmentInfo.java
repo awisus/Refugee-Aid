@@ -81,7 +81,7 @@ public class FragmentInfo extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_info, null);
 
-        TextView tvInfo = (TextView) view.findViewById(R.id.tvInfo);
+        TextView tvInfo = (TextView) view.findViewById(R.id.tvHeaderContent);
 
         if(inhalt == null) {
             tvInfo.setText(inhaltID);
