@@ -183,7 +183,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     private void setMarkers() {
         for(MarkerOptions markerOption : model.getMarkerOptionen()) {
             Marker marke = karte.addMarker(markerOption);
-            model.addMarke(marke, markerOption);
+            model.addUnterkunftMarke(marke, markerOption);
         }
     }
 

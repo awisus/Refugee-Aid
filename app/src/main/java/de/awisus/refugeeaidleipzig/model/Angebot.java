@@ -19,6 +19,8 @@
 
 package de.awisus.refugeeaidleipzig.model;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,8 +32,7 @@ import org.json.JSONObject;
 public class Angebot extends UserDataObject {
 
     private String content;
-    private double latitude;
-    private double longitude;
+    private LatLng latLng;
 
     private Angebot() {}
 
@@ -44,8 +45,10 @@ public class Angebot extends UserDataObject {
         angebot.name            = json.getString("title");
         angebot.content         = json.getString("text");
         angebot.imageData       = json.getString("image");
-        angebot.latitude        = json.getDouble("latitude");
-        angebot.longitude       = json.getDouble("longitude");
+        angebot.latLng = new LatLng(
+                json.getDouble("longitude"),
+                json.getDouble("latitude")
+        );
 
         // Better trim Strings, perform rid of white spaces
         angebot.name = angebot.name.trim();
@@ -58,11 +61,7 @@ public class Angebot extends UserDataObject {
         return content;
     }
 
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
+    public LatLng getLatLng() {
+        return latLng;
     }
 }

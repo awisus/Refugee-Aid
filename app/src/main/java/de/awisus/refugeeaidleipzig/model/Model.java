@@ -45,15 +45,17 @@ public class Model extends Observable {
      * List of all pre-given accommodations
      */
     private DataMap<Unterkunft> unterkuenfte;
-
+    private DataMap<Angebot> angebote;
     private DataMap<Kategorie> kategorien;
 
     /**
      * Mapping of Map Markers and accommodations for easy information retrieval
      */
     private HashMap<Marker, Unterkunft> mapUnterkuenfte;
-
     private HashMap<MarkerOptions, Unterkunft> mapMarkerOptionenUnterkuenfte;
+
+    private HashMap<Marker, Angebot> mapAngebote;
+    private HashMap<MarkerOptions, Angebot> mapMarkerOptionenAngebote;
 
     /**
      * Current user (may be null, if not logged in)
@@ -70,6 +72,8 @@ public class Model extends Observable {
     public Model() {
         mapUnterkuenfte = new HashMap<>();
         mapMarkerOptionenUnterkuenfte = new HashMap<>();
+        mapAngebote = new HashMap<>();
+        mapMarkerOptionenAngebote = new HashMap<>();
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -128,6 +132,15 @@ public class Model extends Observable {
         }
     }
 
+    public void setAngebote(DataMap<Angebot> angebote) {
+        this.angebote = angebote;
+
+        mapMarkerOptionenAngebote.clear();
+        for(Angebot angebot : angebote) {
+            addMarkerOption(angebot);
+        }
+    }
+
     /**
      * Private Method helping to add MarkerOptins to their list based upon an accommodation's data
      * @param unterkunft accommodation data with data to be got
@@ -141,6 +154,15 @@ public class Model extends Observable {
         mapMarkerOptionenUnterkuenfte.put(markerOption, unterkunft);
     }
 
+    private void addMarkerOption(Angebot angebote) {
+        MarkerOptions markerOption;
+        markerOption = new MarkerOptions();
+        markerOption.title(angebote.toString());
+        markerOption.position(angebote.getLatLng());
+
+        mapMarkerOptionenAngebote.put(markerOption, angebote);
+    }
+
     /**
      * Method for adding MapMarkers to the HashMap for easy information retrieval.
      * Clears HashMap, if a very new set of Markers is to be stores (happens, if MapFragment is
@@ -148,7 +170,7 @@ public class Model extends Observable {
      * @param marke Marker for Map
      * @param markerOption
      */
-    public void addMarke(Marker marke, MarkerOptions markerOption) {
+    public void addUnterkunftMarke(Marker marke, MarkerOptions markerOption) {
         if(unterkuenfte.size() == mapUnterkuenfte.size()) {
             mapUnterkuenfte.clear();
         }
@@ -157,6 +179,17 @@ public class Model extends Observable {
         unterkunft = mapMarkerOptionenUnterkuenfte.get(markerOption);
 
         mapUnterkuenfte.put(marke, unterkunft);
+    }
+
+    public void addAngebotMarke(Marker marke, MarkerOptions markerOption) {
+        if(angebote.size() == mapAngebote.size()) {
+            mapAngebote.clear();
+        }
+
+        Angebot angebot;
+        angebot = mapMarkerOptionenAngebote.get(markerOption);
+
+        mapAngebote.put(marke, angebot);
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -176,12 +209,20 @@ public class Model extends Observable {
         return mapUnterkuenfte.get(marke);
     }
 
+    public Angebot getAngebot(Marker marke) {
+        return mapAngebote.get(marke);
+    }
+
     /**
      * Get accommodation list
      * @return accommodation list
      */
     public DataMap<Unterkunft> getUnterkuenfte() {
         return unterkuenfte;
+    }
+
+    public DataMap<Angebot> getAngebote() {
+        return angebote;
     }
 
     /**

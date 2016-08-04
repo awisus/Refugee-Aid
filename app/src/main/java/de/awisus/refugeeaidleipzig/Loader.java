@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
+import de.awisus.refugeeaidleipzig.model.Angebot;
 import de.awisus.refugeeaidleipzig.model.DataMap;
 import de.awisus.refugeeaidleipzig.model.Kategorie;
 import de.awisus.refugeeaidleipzig.model.Unterkunft;
@@ -40,13 +41,27 @@ public class Loader {
 
         JSONArray feld = new JSONArray(httpGet.perform("accommodations/format/json"));
         for (int i = 0; i < feld.length(); i++) {
-
             JSONObject json = feld.getJSONObject(i);
-
             unterkunftMap.add(Unterkunft.fromJSON(json));
         }
 
         return unterkunftMap;
+    }
+
+    public DataMap<Angebot> getAngebote() throws IOException, JSONException, InterruptedException, ExecutionException {
+
+        DataMap<Angebot> angebotMap = new DataMap<>();
+
+        HTTPGet httpGet;
+        httpGet = new HTTPGet(SERVER_URL);
+
+        JSONArray feld = new JSONArray(httpGet.perform("offers/format/json"));
+        for (int i = 0; i < feld.length(); i++) {
+            JSONObject json = feld.getJSONObject(i);
+            angebotMap.add(Angebot.fromJSON(json));
+        }
+
+        return angebotMap;
     }
 
     public DataMap<Kategorie> getKategorien() throws IOException, JSONException, InterruptedException, ExecutionException {

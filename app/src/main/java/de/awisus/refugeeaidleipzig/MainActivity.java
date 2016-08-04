@@ -50,11 +50,8 @@ import de.awisus.refugeeaidleipzig.fragment.FragmentAnmelden;
 import de.awisus.refugeeaidleipzig.fragment.FragmentInfo;
 import de.awisus.refugeeaidleipzig.fragment.FragmentKarte;
 import de.awisus.refugeeaidleipzig.fragment.FragmentProfil;
-import de.awisus.refugeeaidleipzig.model.DataMap;
-import de.awisus.refugeeaidleipzig.model.Kategorie;
 import de.awisus.refugeeaidleipzig.model.Model;
 import de.awisus.refugeeaidleipzig.model.Nutzer;
-import de.awisus.refugeeaidleipzig.model.Unterkunft;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 import de.awisus.refugeeaidleipzig.util.Datei;
@@ -147,13 +144,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         protected Model doInBackground(String... params) {
             try {
                 // initialise the model
-                DataMap<Kategorie> kategorien = Loader.getInstance().getKategorien();
-                DataMap<Unterkunft> unterkuenfte = Loader.getInstance().getUnterkuenfte();
 
-                Model model;
-                model = new Model();
-                model.setKategorien(kategorien);
-                model.setUnterkuenfte(unterkuenfte);
+                Model model = new Model();
+
+                model.setKategorien(
+                        Loader.getInstance().getKategorien()
+                );
+                model.setAngebote(
+                        Loader.getInstance().getAngebote()
+                );
+                model.setUnterkuenfte(
+                        Loader.getInstance().getUnterkuenfte()
+                );
 
                 return model;
             } catch (IOException | JSONException | InterruptedException | ExecutionException e) {
