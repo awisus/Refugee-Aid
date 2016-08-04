@@ -1,4 +1,4 @@
-package de.awisus.refugeeaidleipzig.fragment;
+package de.awisus.refugeeaidleipzig.views;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.R;
-import de.awisus.refugeeaidleipzig.model.ImageDataObject;
+import de.awisus.refugeeaidleipzig.models.ImageDataObject;
 
 /**
  * Created on 13.03.16.

@@ -7,10 +7,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import de.awisus.refugeeaidleipzig.model.Angebot;
-import de.awisus.refugeeaidleipzig.model.DataMap;
-import de.awisus.refugeeaidleipzig.model.Kategorie;
-import de.awisus.refugeeaidleipzig.model.Unterkunft;
+import de.awisus.refugeeaidleipzig.models.Angebot;
+import de.awisus.refugeeaidleipzig.models.DataMap;
+import de.awisus.refugeeaidleipzig.models.Kategorie;
+import de.awisus.refugeeaidleipzig.models.Unterkunft;
 import de.awisus.refugeeaidleipzig.net.HTTPGet;
 
 /**

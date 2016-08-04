@@ -17,7 +17,7 @@
  * MA 02110-1301, USA.
  */
 
-package de.awisus.refugeeaidleipzig.model;
+package de.awisus.refugeeaidleipzig.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;

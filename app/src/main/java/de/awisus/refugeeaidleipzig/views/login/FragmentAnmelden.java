@@ -17,7 +17,7 @@
  * MA 02110-1301, USA.
  */
 
-package de.awisus.refugeeaidleipzig.fragment;
+package de.awisus.refugeeaidleipzig.views.login;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -34,9 +34,11 @@ import java.util.concurrent.ExecutionException;
 
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.LoginData;
-import de.awisus.refugeeaidleipzig.model.Model;
-import de.awisus.refugeeaidleipzig.model.Nutzer;
+import de.awisus.refugeeaidleipzig.ViewModel;
+import de.awisus.refugeeaidleipzig.models.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
+import de.awisus.refugeeaidleipzig.views.signup.FragmentSignup;
+import de.awisus.refugeeaidleipzig.views.SuperFragmentGetUser;
 
 /**
  * Created on 15.01.16.
@@ -72,10 +74,10 @@ public class FragmentAnmelden extends SuperFragmentGetUser implements View.OnCli
     /**
      * Public factory method giving the model's reference
      *
-     * @param model Model to log in user
+     * @param model ViewModel to log in user
      * @return new Login Fragment
      */
-    public static FragmentAnmelden newInstance(Model model) {
+    public static FragmentAnmelden newInstance(ViewModel model) {
         FragmentAnmelden frag = new FragmentAnmelden();
         frag.model = model;
         return frag;

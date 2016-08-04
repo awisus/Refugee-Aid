@@ -17,7 +17,7 @@
  * MA 02110-1301, USA.
  */
 
-package de.awisus.refugeeaidleipzig.fragment;
+package de.awisus.refugeeaidleipzig.views.profile;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -37,9 +37,9 @@ import java.util.Observer;
 import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.R;
-import de.awisus.refugeeaidleipzig.model.Model;
-import de.awisus.refugeeaidleipzig.model.Nutzer;
-import de.awisus.refugeeaidleipzig.model.ImageDataObject;
+import de.awisus.refugeeaidleipzig.ViewModel;
+import de.awisus.refugeeaidleipzig.models.Nutzer;
+import de.awisus.refugeeaidleipzig.models.ImageDataObject;
 import de.awisus.refugeeaidleipzig.util.Datei;
 
 /**
@@ -77,7 +77,7 @@ public class FragmentProfil extends Fragment implements Observer {
     /**
      * Reference to the model for logging the user out
      */
-    private Model model;
+    private ViewModel model;
 
     /**
      * The user reference
@@ -90,10 +90,10 @@ public class FragmentProfil extends Fragment implements Observer {
 
     /**
      * Public factory method setting the model and the user reference in it
-     * @param model Model to be set
+     * @param model ViewModel to be set
      * @return new Profile Fragment
      */
-    public static FragmentProfil newInstance(Model model) {
+    public static FragmentProfil newInstance(ViewModel model) {
         FragmentProfil frag = new FragmentProfil();
         frag.model = model;
         frag.nutzer = model.getNutzer();

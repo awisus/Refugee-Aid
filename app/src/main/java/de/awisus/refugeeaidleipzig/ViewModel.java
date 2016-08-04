@@ -17,7 +17,9 @@
  * MA 02110-1301, USA.
  */
 
-package de.awisus.refugeeaidleipzig.model;
+package de.awisus.refugeeaidleipzig;
+
+import android.util.Log;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
@@ -26,6 +28,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Set;
+
+import de.awisus.refugeeaidleipzig.models.Angebot;
+import de.awisus.refugeeaidleipzig.models.DataMap;
+import de.awisus.refugeeaidleipzig.models.ILocationDataObject;
+import de.awisus.refugeeaidleipzig.models.Kategorie;
+import de.awisus.refugeeaidleipzig.models.Nutzer;
+import de.awisus.refugeeaidleipzig.models.Unterkunft;
 
 /**
  * Created on 12.01.16.
@@ -36,7 +45,7 @@ import java.util.Set;
  * This class extends Observable to provide Observers with information about user login und logout
  * @author Jens Awisus
  */
-public class Model extends Observable {
+public class ViewModel extends Observable {
 
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
@@ -62,18 +71,7 @@ public class Model extends Observable {
      * retrieval
      */
     private HashMap<Marker, ILocationDataObject> mapLocationData;
-
-    /**
-     * Mapping of Map Markers and accommodations for easy information retrieval
-     */
-    private HashMap<Marker, Unterkunft> mapUnterkuenfte;
-    private HashMap<MarkerOptions, Unterkunft> mapMarkerOptionenUnterkuenfte;
-
-    /**
-     * Mapping of Map Markers and offers for easy information retrieval
-     */
-    private HashMap<Marker, Angebot> mapAngebote;
-    private HashMap<MarkerOptions, Angebot> mapMarkerOptionenAngebote;
+    private HashMap<MarkerOptions, ILocationDataObject> mapLocationDataOptions;
 
     /**
      * Current user (may be null, if not logged in)
@@ -87,11 +85,9 @@ public class Model extends Observable {
     /**
      * public constructor initialising lists and the HashMap
      */
-    public Model() {
-        mapUnterkuenfte = new HashMap<>();
-        mapMarkerOptionenUnterkuenfte = new HashMap<>();
-        mapAngebote = new HashMap<>();
-        mapMarkerOptionenAngebote = new HashMap<>();
+    public ViewModel() {
+        mapLocationData = new HashMap<>();
+        mapLocationDataOptions = new HashMap<>();
     }
 
       ////////////////////////////////////////////////////////////////////////////////
@@ -144,7 +140,6 @@ public class Model extends Observable {
     public void setUnterkuenfte(DataMap<Unterkunft> unterkuenfte) {
         this.unterkuenfte = unterkuenfte;
 
-        mapMarkerOptionenUnterkuenfte.clear();
         for(Unterkunft unterkunft : unterkuenfte) {
             addMarkerOption(unterkunft);
         }
@@ -153,10 +148,14 @@ public class Model extends Observable {
     public void setAngebote(DataMap<Angebot> angebote) {
         this.angebote = angebote;
 
-        mapMarkerOptionenAngebote.clear();
         for(Angebot angebot : angebote) {
             addMarkerOption(angebot);
         }
+    }
+
+    public void clearLocationData() {
+        mapLocationDataOptions.clear();
+        mapLocationData.clear();
     }
 
     /**
@@ -172,7 +171,7 @@ public class Model extends Observable {
                     BitmapDescriptorFactory.defaultMarker(
                             BitmapDescriptorFactory.HUE_ORANGE));
 
-        mapMarkerOptionenUnterkuenfte.put(markerOption, unterkunft);
+        mapLocationDataOptions.put(markerOption, unterkunft);
     }
 
     private void addMarkerOption(Angebot angebote) {
@@ -184,61 +183,38 @@ public class Model extends Observable {
                     BitmapDescriptorFactory.defaultMarker(
                             BitmapDescriptorFactory.HUE_VIOLET));
 
-        mapMarkerOptionenAngebote.put(markerOption, angebote);
+        mapLocationDataOptions.put(markerOption, angebote);
     }
 
     /**
-     * Method for adding MapMarkers to the HashMap for easy information retrieval.
-     * Clears HashMap, if a very new set of Markers is to be stores (happens, if MapFragment is
-     * newly created in Android view code)
+     * Method for adding MapMarkers to the HashMap for easy information
+     * retrieval.
      * @param marke Marker for Map
-     * @param markerOption
+     * @param markerOption DataSet of a marker
      */
-    public void addUnterkunftMarke(Marker marke, MarkerOptions markerOption) {
-        if(unterkuenfte.size() == mapUnterkuenfte.size()) {
-            mapUnterkuenfte.clear();
-        }
+    public void addMarke(Marker marke, MarkerOptions markerOption) {
+        ILocationDataObject data = mapLocationDataOptions.get(markerOption);
 
-        Unterkunft unterkunft;
-        unterkunft = mapMarkerOptionenUnterkuenfte.get(markerOption);
-
-        mapUnterkuenfte.put(marke, unterkunft);
-    }
-
-    public void addAngebotMarke(Marker marke, MarkerOptions markerOption) {
-        if(angebote.size() == mapAngebote.size()) {
-            mapAngebote.clear();
-        }
-
-        Angebot angebot;
-        angebot = mapMarkerOptionenAngebote.get(markerOption);
-
-        mapAngebote.put(marke, angebot);
+        mapLocationData.put(marke, data);
+        Log.w("MARKER OPTIONS SIZE:", "" +mapLocationDataOptions.size());
+        Log.w("MARKER SIZE:", "" +mapLocationData.size());
     }
 
       ////////////////////////////////////////////////////////////////////////////////
      // Getters /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    public Set<MarkerOptions> getMarkerOptionenUnterkuenfte() {
-        return mapMarkerOptionenUnterkuenfte.keySet();
-    }
-
-    public Set<MarkerOptions> getMarkerOptionenAngebote() {
-        return mapMarkerOptionenAngebote.keySet();
+    public Set<MarkerOptions> getMarkerOptionen() {
+        return mapLocationDataOptions.keySet();
     }
 
     /**
-     * Method for getting an accommodation for a specific Map Marker
-     * @param marke Map Marker of an accommodation
-     * @return desired accommodation
+     * Method for getting an accommodation or offer for a specific Map Marker
+     * @param marke Map Marker of an accommodation/offer
+     * @return desired accommodation/offer
      */
-    public Unterkunft getUnterkunft(Marker marke) {
-        return mapUnterkuenfte.get(marke);
-    }
-
-    public Angebot getAngebot(Marker marke) {
-        return mapAngebote.get(marke);
+    public ILocationDataObject getData(Marker marke) {
+        return mapLocationData.get(marke);
     }
 
     /**

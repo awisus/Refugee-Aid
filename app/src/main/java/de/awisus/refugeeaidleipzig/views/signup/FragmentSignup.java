@@ -17,7 +17,7 @@
  * MA 02110-1301, USA.
  */
 
-package de.awisus.refugeeaidleipzig.fragment;
+package de.awisus.refugeeaidleipzig.views.signup;
 
 import android.app.Activity;
 import android.view.View;
@@ -33,10 +33,11 @@ import java.util.LinkedList;
 
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.LoginData;
-import de.awisus.refugeeaidleipzig.model.Model;
-import de.awisus.refugeeaidleipzig.model.Nutzer;
-import de.awisus.refugeeaidleipzig.model.Unterkunft;
+import de.awisus.refugeeaidleipzig.ViewModel;
+import de.awisus.refugeeaidleipzig.models.Nutzer;
+import de.awisus.refugeeaidleipzig.models.Unterkunft;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
+import de.awisus.refugeeaidleipzig.views.SuperFragmentEditUser;
 
 /**
  * Created on 15.01.16.
@@ -64,10 +65,10 @@ public class FragmentSignup extends SuperFragmentEditUser {
     /**
      * Public factory method giving the model's reference
      *
-     * @param model Model to log in user
+     * @param model ViewModel to log in user
      * @return new Login Fragment
      */
-    public static FragmentSignup newInstance(Model model, int titelID, int layoutID) {
+    public static FragmentSignup newInstance(ViewModel model, int titelID, int layoutID) {
         FragmentSignup frag = new FragmentSignup();
         frag.model = model;
         frag.layoutID = layoutID;
@@ -138,7 +139,7 @@ public class FragmentSignup extends SuperFragmentEditUser {
                         "accommodation_id",         idUnterkunft);
     }
 
-    private class NutzerPost extends SuperFragmentGetUser.NutzerGet {
+    private class NutzerPost extends NutzerGet {
 
         public NutzerPost(Activity context, int textID, LoginData login) {
             super(context, textID, login);

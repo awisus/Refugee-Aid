@@ -47,12 +47,11 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 
-import de.awisus.refugeeaidleipzig.fragment.FragmentAnmelden;
-import de.awisus.refugeeaidleipzig.fragment.FragmentInfo;
-import de.awisus.refugeeaidleipzig.fragment.FragmentKarte;
-import de.awisus.refugeeaidleipzig.fragment.FragmentProfil;
-import de.awisus.refugeeaidleipzig.model.Model;
-import de.awisus.refugeeaidleipzig.model.Nutzer;
+import de.awisus.refugeeaidleipzig.views.login.FragmentAnmelden;
+import de.awisus.refugeeaidleipzig.views.FragmentInfo;
+import de.awisus.refugeeaidleipzig.views.map.FragmentKarte;
+import de.awisus.refugeeaidleipzig.views.profile.FragmentProfil;
+import de.awisus.refugeeaidleipzig.models.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 import de.awisus.refugeeaidleipzig.util.Datei;
@@ -81,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * Instance of modelled problem
      */
-    private Model model;
+    private ViewModel model;
 
       ////////////////////////////////////////////////////////////////////////////////
      // View creation ///////////////////////////////////////////////////////////////
@@ -126,14 +125,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initContainer();
     }
 
-    private class Initialiser extends BackgroundTask<String, Integer, Model> {
+    private class Initialiser extends BackgroundTask<String, Integer, ViewModel> {
 
         public Initialiser(Activity context, int textID) {
             super(context, textID);
         }
 
         @Override
-        protected void doPostExecute(Model result) {
+        protected void doPostExecute(ViewModel result) {
 
             if(result == null) {
                 Toast.makeText(MainActivity.this, R.string.warnung_laden, Toast.LENGTH_SHORT).show();
@@ -144,12 +143,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         @Override
-        protected Model doInBackground(String... params) {
+        protected ViewModel doInBackground(String... params) {
             try {
                 // initialise the model
 
-                Model model = new Model();
+                ViewModel model = new ViewModel();
 
+                model.clearLocationData();
                 model.setKategorien(
                         Loader.getInstance().getKategorien()
                 );

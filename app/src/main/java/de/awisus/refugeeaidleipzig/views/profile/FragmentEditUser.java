@@ -17,7 +17,7 @@
  * MA 02110-1301, USA.
  */
 
-package de.awisus.refugeeaidleipzig.fragment;
+package de.awisus.refugeeaidleipzig.views.profile;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -34,11 +34,12 @@ import java.io.IOException;
 
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.LoginData;
-import de.awisus.refugeeaidleipzig.model.Model;
-import de.awisus.refugeeaidleipzig.model.Nutzer;
+import de.awisus.refugeeaidleipzig.ViewModel;
+import de.awisus.refugeeaidleipzig.models.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 import de.awisus.refugeeaidleipzig.util.Datei;
+import de.awisus.refugeeaidleipzig.views.SuperFragmentEditUser;
 
 /**
  * Created on 15.01.16.
@@ -65,10 +66,10 @@ public class FragmentEditUser extends SuperFragmentEditUser {
     /**
      * Public factory method giving the model's reference
      *
-     * @param model Model to log in user
+     * @param model ViewModel to log in user
      * @return new Login Fragment
      */
-    public static FragmentEditUser newInstance(Model model, int titelID, int layoutID) {
+    public static FragmentEditUser newInstance(ViewModel model, int titelID, int layoutID) {
         FragmentEditUser frag = new FragmentEditUser();
         frag.model = model;
         frag.nutzer = model.getNutzer();

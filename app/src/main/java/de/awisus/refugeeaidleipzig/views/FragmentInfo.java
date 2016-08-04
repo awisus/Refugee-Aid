@@ -17,7 +17,7 @@
  * MA 02110-1301, USA.
  */
 
-package de.awisus.refugeeaidleipzig.fragment;
+package de.awisus.refugeeaidleipzig.views;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -40,8 +40,6 @@ public class FragmentInfo extends DialogFragment {
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-
-    private int titelID;
 
     private int inhaltID;
 
@@ -96,11 +94,7 @@ public class FragmentInfo extends DialogFragment {
         Dialog dialog;
         dialog = builder.create();
 
-        if(titel == null) {
-            dialog.setTitle(titelID);
-        } else {
-            dialog.setTitle(titel);
-        }
+        dialog.setTitle(titel);
 
         return dialog;
     }

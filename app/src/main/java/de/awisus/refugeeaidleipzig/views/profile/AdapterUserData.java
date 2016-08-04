@@ -1,4 +1,4 @@
-package de.awisus.refugeeaidleipzig.fragment;
+package de.awisus.refugeeaidleipzig.views.profile;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,10 +13,11 @@ import android.widget.Toast;
 import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.R;
-import de.awisus.refugeeaidleipzig.model.Nutzer;
-import de.awisus.refugeeaidleipzig.model.ImageDataObject;
+import de.awisus.refugeeaidleipzig.models.Nutzer;
+import de.awisus.refugeeaidleipzig.models.ImageDataObject;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
+import de.awisus.refugeeaidleipzig.views.SuperAdapter;
 
 /**
  * Created on 13.03.16.

@@ -17,7 +17,7 @@
  * MA 02110-1301, USA.
  */
 
-package de.awisus.refugeeaidleipzig.fragment;
+package de.awisus.refugeeaidleipzig.views;
 
 import android.app.Activity;
 import android.support.v4.app.DialogFragment;
@@ -29,8 +29,8 @@ import com.google.gson.Gson;
 import java.io.IOException;
 
 import de.awisus.refugeeaidleipzig.LoginData;
-import de.awisus.refugeeaidleipzig.model.Model;
-import de.awisus.refugeeaidleipzig.model.Nutzer;
+import de.awisus.refugeeaidleipzig.ViewModel;
+import de.awisus.refugeeaidleipzig.models.Nutzer;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 import de.awisus.refugeeaidleipzig.util.Datei;
 
@@ -44,7 +44,7 @@ public abstract class SuperFragmentGetUser extends DialogFragment {
     /**
      * Reference to the model to log in the new user (or to be found in the chosen accommodation)
      */
-    protected Model model;
+    protected ViewModel model;
 
     protected int warnungID;
 

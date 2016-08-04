@@ -17,12 +17,13 @@
  * MA 02110-1301, USA.
  */
 
-package de.awisus.refugeeaidleipzig.fragment;
+package de.awisus.refugeeaidleipzig.views.map;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,12 +47,13 @@ import java.util.concurrent.ExecutionException;
 import de.awisus.refugeeaidleipzig.Loader;
 import de.awisus.refugeeaidleipzig.MainActivity;
 import de.awisus.refugeeaidleipzig.R;
-import de.awisus.refugeeaidleipzig.model.Angebot;
-import de.awisus.refugeeaidleipzig.model.DataMap;
-import de.awisus.refugeeaidleipzig.model.Model;
-import de.awisus.refugeeaidleipzig.model.Nutzer;
-import de.awisus.refugeeaidleipzig.model.Unterkunft;
+import de.awisus.refugeeaidleipzig.models.Angebot;
+import de.awisus.refugeeaidleipzig.models.ILocationDataObject;
+import de.awisus.refugeeaidleipzig.ViewModel;
+import de.awisus.refugeeaidleipzig.models.Nutzer;
+import de.awisus.refugeeaidleipzig.models.Unterkunft;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
+import de.awisus.refugeeaidleipzig.views.FragmentInfo;
 
 /**
  * Created on 11.01.16.
@@ -79,9 +81,9 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     private boolean hidden = false;
 
     /**
-     * Model to access information about the accommodations and their respective marker info
+     * ViewModel to access information about the accommodations and their respective marker info
      */
-    private Model model;
+    private ViewModel model;
 
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
@@ -92,7 +94,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
      * @param model
      * @return
      */
-    public static FragmentKarte newInstance(MainActivity context, Model model) {
+    public static FragmentKarte newInstance(MainActivity context, ViewModel model) {
         FragmentKarte frag = new FragmentKarte();
         frag.model = model;
         frag.context = context;
@@ -186,14 +188,9 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     }
 
     private void setMarkers() {
-        for(MarkerOptions markerOption : model.getMarkerOptionenUnterkuenfte()) {
+        for(MarkerOptions markerOption : model.getMarkerOptionen()) {
             Marker marke = karte.addMarker(markerOption);
-            model.addUnterkunftMarke(marke, markerOption);
-        }
-
-        for(MarkerOptions markerOption : model.getMarkerOptionenAngebote()) {
-            Marker marke = karte.addMarker(markerOption);
-            model.addAngebotMarke(marke, markerOption);
+            model.addMarke(marke, markerOption);
         }
     }
 
@@ -208,8 +205,19 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     public void onInfoWindowClick(Marker marke) {
 
         // Get the accommodation for the marker being tabbed
-        Unterkunft unterkunft = model.getUnterkunft(marke);
+        ILocationDataObject data = model.getData(marke);
 
+        if(data instanceof Unterkunft) {
+            showAccommodationInfo((Unterkunft) data);
+            return;
+        }
+        if(data instanceof Angebot) {
+            // TODO: show info window of offer
+            Log.d("show offer", "implement info window for offer");
+        }
+    }
+
+    private void showAccommodationInfo(Unterkunft unterkunft) {
         /*
          * Build up the details string to be shown in a separate window.
          * Example format:
@@ -263,60 +271,44 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.fabUpdate) {
-            new UnterkunftUpdater(context, R.string.meldung_aktualisieren).execute();
-            new AngebotUpdater(context, R.string.meldung_aktualisieren).execute();
-
-            karte.clear();
-            setMarkers();
+            new Updater(context, R.string.meldung_aktualisieren).execute();
         }
     }
 
-    private class UnterkunftUpdater extends BackgroundTask<String, Integer, DataMap<Unterkunft>> {
+    private class Updater extends BackgroundTask<String, Integer, ViewModel> {
 
-        protected UnterkunftUpdater(Activity context, int textID) {
+        public Updater(Activity context, int textID) {
             super(context, textID);
         }
 
         @Override
-        protected void doPostExecute(DataMap<Unterkunft> result) {
+        protected void doPostExecute(ViewModel result) {
 
             if(result == null) {
-                Toast.makeText(context, R.string.warnung_download, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.warnung_laden, Toast.LENGTH_SHORT).show();
             } else {
-                model.setUnterkuenfte(result);
+                karte.clear();
+                setMarkers();
             }
         }
 
         @Override
-        protected DataMap<Unterkunft> doInBackground(String... params) {
+        protected ViewModel doInBackground(String... params) {
             try {
-                return Loader.getInstance().getUnterkuenfte();
-            } catch (IOException | JSONException | InterruptedException | ExecutionException e) {
-                return null;
-            }
-        }
-    }
+                // initialise the model
 
-    private class AngebotUpdater extends BackgroundTask<String, Integer, DataMap<Angebot>> {
+                model.clearLocationData();
+                model.setKategorien(
+                        Loader.getInstance().getKategorien()
+                );
+                model.setAngebote(
+                        Loader.getInstance().getAngebote()
+                );
+                model.setUnterkuenfte(
+                        Loader.getInstance().getUnterkuenfte()
+                );
 
-        protected AngebotUpdater(Activity context, int textID) {
-            super(context, textID);
-        }
-
-        @Override
-        protected void doPostExecute(DataMap<Angebot> result) {
-
-            if(result == null) {
-                Toast.makeText(context, R.string.warnung_download, Toast.LENGTH_SHORT).show();
-            } else {
-                model.setAngebote(result);
-            }
-        }
-
-        @Override
-        protected DataMap<Angebot> doInBackground(String... params) {
-            try {
-                return Loader.getInstance().getAngebote();
+                return model;
             } catch (IOException | JSONException | InterruptedException | ExecutionException e) {
                 return null;
             }

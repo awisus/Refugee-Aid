@@ -1,4 +1,4 @@
-package de.awisus.refugeeaidleipzig.model;
+package de.awisus.refugeeaidleipzig.models;
 
 import java.util.Observable;
 
