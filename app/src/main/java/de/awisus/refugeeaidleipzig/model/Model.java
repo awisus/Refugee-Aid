@@ -19,6 +19,7 @@
 
 package de.awisus.refugeeaidleipzig.model;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -45,7 +46,15 @@ public class Model extends Observable {
      * List of all pre-given accommodations
      */
     private DataMap<Unterkunft> unterkuenfte;
+
+    /**
+     * List of all offers created by users
+     */
     private DataMap<Angebot> angebote;
+
+    /**
+     * List of all pre-given categories
+     */
     private DataMap<Kategorie> kategorien;
 
     /**
@@ -54,6 +63,9 @@ public class Model extends Observable {
     private HashMap<Marker, Unterkunft> mapUnterkuenfte;
     private HashMap<MarkerOptions, Unterkunft> mapMarkerOptionenUnterkuenfte;
 
+    /**
+     * Mapping of Map Markers and offers for easy information retrieval
+     */
     private HashMap<Marker, Angebot> mapAngebote;
     private HashMap<MarkerOptions, Angebot> mapMarkerOptionenAngebote;
 
@@ -156,9 +168,12 @@ public class Model extends Observable {
 
     private void addMarkerOption(Angebot angebote) {
         MarkerOptions markerOption;
-        markerOption = new MarkerOptions();
-        markerOption.title(angebote.toString());
-        markerOption.position(angebote.getLatLng());
+        markerOption = new MarkerOptions()
+            .title(angebote.toString())
+            .position(angebote.getLatLng())
+            .icon(
+                    BitmapDescriptorFactory
+                    .defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
 
         mapMarkerOptionenAngebote.put(markerOption, angebote);
     }
@@ -196,8 +211,12 @@ public class Model extends Observable {
      // Getters /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    public Set<MarkerOptions> getMarkerOptionen() {
+    public Set<MarkerOptions> getMarkerOptionenUnterkuenfte() {
         return mapMarkerOptionenUnterkuenfte.keySet();
+    }
+
+    public Set<MarkerOptions> getMarkerOptionenAngebote() {
+        return mapMarkerOptionenAngebote.keySet();
     }
 
     /**

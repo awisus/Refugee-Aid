@@ -36,6 +36,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -99,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if(connected()) {
             new Initialiser(this, R.string.meldung_aktualisieren).execute();
+
+            MapsInitializer.initialize(getApplicationContext());
         } else {
             setContentView(R.layout.activity_main_error);
         }

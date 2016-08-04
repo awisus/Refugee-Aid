@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -157,9 +158,10 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     @Override
     public void onMapReady(GoogleMap karte) {
         this.karte = karte;
-        this.karte.setOnMarkerClickListener(this);
-        this.karte.setOnMapClickListener(this);
-        this.setMarkers();
+
+        karte.setOnMarkerClickListener(this);
+        karte.setOnMapClickListener(this);
+        setMarkers();
 
         // Zoom on users accommodation, if logged in
         if(model.angemeldet()) {
@@ -168,22 +170,30 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
                 karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
                         nutzer.getUnterkunft().getLatLng(), 11f));
             } else {
-                // Zoom to arbitrary accommodation
-                karte.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.5, 10.5), 5.8f));
+                defaultZoom();
             }
         } else {
-            // Zoom to arbitrary accommodation
-            karte.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.5, 10.5), 5.8f));
+            defaultZoom();
         }
 
         // tap on marker info box shows accommodation detail
         karte.setOnInfoWindowClickListener(this);
     }
 
+    private void defaultZoom() {
+        // Zoom to arbitrary accommodation
+        karte.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.5, 10.5), 5.8f));
+    }
+
     private void setMarkers() {
-        for(MarkerOptions markerOption : model.getMarkerOptionen()) {
+        for(MarkerOptions markerOption : model.getMarkerOptionenUnterkuenfte()) {
             Marker marke = karte.addMarker(markerOption);
             model.addUnterkunftMarke(marke, markerOption);
+        }
+
+        for(MarkerOptions markerOption : model.getMarkerOptionenAngebote()) {
+            Marker marke = karte.addMarker(markerOption);
+            model.addAngebotMarke(marke, markerOption);
         }
     }
 
