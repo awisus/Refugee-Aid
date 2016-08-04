@@ -20,18 +20,19 @@
 package de.awisus.refugeeaidleipzig.views.map;
 
 import android.app.Dialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.models.Angebot;
+import de.awisus.refugeeaidleipzig.util.Utility;
 
 /**
  * Created on 12.01.16.
@@ -71,11 +72,9 @@ public class FragmentOfferInfo extends DialogFragment {
         TextView tvContent = (TextView) view.findViewById(R.id.tvContent);
         TextView tvAddress = (TextView) view.findViewById(R.id.tvAddress);
 
-        try {
-            ivImage.setImageBitmap(decodeString(angebot.getImageData()));
-        } catch (IllegalArgumentException ex) {}
-
         tvContent.setText(angebot.getContent());
+        setIvImage(ivImage, angebot.getImageData());
+        setTvAddress(tvAddress);
 
         builder.setView(view);
 
@@ -87,8 +86,23 @@ public class FragmentOfferInfo extends DialogFragment {
         return dialog;
     }
 
-    private Bitmap decodeString(String imageData) throws IllegalArgumentException {
-        byte[] decodedString = Base64.decode(imageData, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+    private void setIvImage(ImageView ivImage, String imageData) throws IllegalArgumentException {
+        try {
+            ivImage.setImageBitmap(
+                    Utility.getInstance().stringToImage(imageData)
+            );
+        } catch (IllegalArgumentException ex) {
+            Log.e("Set offer image", ex.getMessage());
+        }
+    }
+
+    private void setTvAddress(TextView tvAddress) {
+        try {
+            tvAddress.setText(
+                    Utility.getInstance().latlngToAdress(angebot.getLatLng(), getActivity())
+            );
+        } catch (IOException ex) {
+            Log.e("Set offer Adress", ex.getMessage());
+        }
     }
 }
