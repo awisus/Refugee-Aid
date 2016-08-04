@@ -159,9 +159,12 @@ public class Model extends Observable {
      */
     private void addMarkerOption(Unterkunft unterkunft) {
         MarkerOptions markerOption;
-        markerOption = new MarkerOptions();
-        markerOption.title(unterkunft.toString());
-        markerOption.position(unterkunft.getLatLng());
+        markerOption = new MarkerOptions()
+            .title(unterkunft.toString())
+            .position(unterkunft.getLatLng())
+            .icon(
+                    BitmapDescriptorFactory.defaultMarker(
+                            BitmapDescriptorFactory.HUE_ORANGE));
 
         mapMarkerOptionenUnterkuenfte.put(markerOption, unterkunft);
     }
@@ -172,8 +175,8 @@ public class Model extends Observable {
             .title(angebote.toString())
             .position(angebote.getLatLng())
             .icon(
-                    BitmapDescriptorFactory
-                    .defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                    BitmapDescriptorFactory.defaultMarker(
+                            BitmapDescriptorFactory.HUE_VIOLET));
 
         mapMarkerOptionenAngebote.put(markerOption, angebote);
     }
