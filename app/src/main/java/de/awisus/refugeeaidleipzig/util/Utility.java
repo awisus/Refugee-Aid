@@ -54,6 +54,21 @@ public class Utility {
         }
     }
 
+    public LatLng getLocationFromAddress(String strAddress, Context context) throws IOException {
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+
+        address = coder.getFromLocationName(strAddress, 5);
+        if (address == null || address.size() < 1) {
+            return null;
+        }
+        Address location = address.get(0);
+        location.getLatitude();
+        location.getLongitude();
+
+        return new LatLng(location.getLatitude(), location.getLongitude());
+    }
+
     public String latlngToAdress(LatLng latLng, Context context) throws IOException {
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
 

@@ -26,8 +26,11 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
 
@@ -41,6 +44,12 @@ import de.awisus.refugeeaidleipzig.util.Utility;
  * @author Jens Awisus
  */
 public class FragmentEditOffer extends DialogFragment {
+
+    private ImageView ivOffer;
+    private EditText etTitel;
+    private EditText etStreet;
+    private EditText etPostal;
+    private EditText etDescription;
 
     private Angebot angebot;
 
@@ -60,11 +69,35 @@ public class FragmentEditOffer extends DialogFragment {
 
         Dialog dialog = builder.create();
 
+        ivOffer = (ImageView) view.findViewById(R.id.ivOffer);
+        etTitel = (EditText) view.findViewById(R.id.etTitel);
+        etStreet = (EditText) view.findViewById(R.id.etStreet);
+        etPostal = (EditText) view.findViewById(R.id.etPostal);
+        etDescription = (EditText) view.findViewById(R.id.etDescription);
+        Button btSend = (Button) view.findViewById(R.id.btExecute);
+
         if(angebot == null) {
             forNewOffer(dialog);
         } else {
             forExistingOffer(view, dialog);
         }
+
+        btSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String address = etStreet.getText() +", " +etPostal.getText();
+                try {
+                    LatLng coordinates = Utility.getInstance().getLocationFromAddress(address, getContext());
+
+                    Log.w("Latitude", "" +coordinates.latitude);
+                    Log.w("Longitude", "" +coordinates.longitude);
+                } catch (IOException ex) {
+                    Log.e("Coords from address", "Wrong address format");
+                } catch (NullPointerException ex) {
+                    Log.e("Coords from address", "no address received");
+                }
+            }
+        });
 
         return dialog;
     }
@@ -78,12 +111,6 @@ public class FragmentEditOffer extends DialogFragment {
 
         dialog.setTitle("Edit offer");
 
-        ImageView ivOffer = (ImageView) view.findViewById(R.id.ivOffer);
-        EditText etTitel = (EditText) view.findViewById(R.id.etTitel);
-        EditText etStreet = (EditText) view.findViewById(R.id.etStreet);
-        EditText etPostal = (EditText) view.findViewById(R.id.etPostal);
-        EditText etDescription = (EditText) view.findViewById(R.id.etDescription);
-
         Utility.getInstance().setIvImage(ivOffer, angebot.getImageData());
 
         etTitel.setText(angebot.toString());
@@ -95,7 +122,7 @@ public class FragmentEditOffer extends DialogFragment {
                     Utility.getInstance().latlngToCity(angebot.getLatLng(), getActivity())
             );
         } catch (IOException ex) {
-            Log.e("Set offer Adress", ex.getMessage());
+            Log.e("Set offer Address", ex.getMessage());
         }
 
         etDescription.setText(angebot.getContent());
