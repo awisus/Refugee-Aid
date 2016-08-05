@@ -133,8 +133,8 @@ public class Nutzer extends IDObject {
     ////////////////////////////////////////////////////////////////////////////////
 
 
-    public int getRolle() {
-        return rolle;
+    public boolean isRefugee() {
+        return rolle == 0;
     }
 
     public String getMail() {

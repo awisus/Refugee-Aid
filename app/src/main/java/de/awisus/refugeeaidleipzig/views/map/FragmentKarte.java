@@ -167,7 +167,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         // Zoom on users accommodation, if logged in
         if(model.angemeldet()) {
             Nutzer nutzer = model.getNutzer();
-            if(nutzer.getRolle() == 0) {
+            if(nutzer.isRefugee()) {
                 karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
                         nutzer.getUnterkunft().getLatLng(), 11f));
             } else {

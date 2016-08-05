@@ -127,7 +127,7 @@ public class FragmentProfil extends Fragment implements Observer {
         initUI(view);
         initNutzerInfo();
 
-        if(nutzer.getRolle() == 0) {
+        if(nutzer.isRefugee()) {
             getActivity().setTitle(R.string.titel_profil_refugee);
         } else {
             getActivity().setTitle(R.string.titel_profil_helper);
@@ -160,7 +160,7 @@ public class FragmentProfil extends Fragment implements Observer {
         if(nutzer != null) {
             tvName.setText(nutzer.getName());
 
-            if(nutzer.getRolle() == 0) {
+            if(nutzer.isRefugee()) {
                 tvInfo.setText(nutzer.getUnterkunft().toString());
             } else {
                 tvInfo.setText(R.string.titel_info_helper);
@@ -206,13 +206,13 @@ public class FragmentProfil extends Fragment implements Observer {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.itNeu:
-                if(nutzer.getRolle() == 0) {
+                if(nutzer.isRefugee()) {
                     FragmentKategorieList.newInstance(
                             nutzer, model.getKategorien().asVector())
                             .show(getFragmentManager(), "Kategorien");
                 } else {
-                    // TODO: different behavior wether user is supporter
-
+                    FragmentEditOffer.newInstance(null)
+                            .show(getFragmentManager(), "Offer");
                 }
                 return true;
             case R.id.itBearbeiten:

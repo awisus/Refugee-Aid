@@ -73,7 +73,7 @@ public class FragmentOfferInfo extends DialogFragment {
         TextView tvAddress = (TextView) view.findViewById(R.id.tvAddress);
 
         tvContent.setText(angebot.getContent());
-        setIvImage(ivImage, angebot.getImageData());
+        Utility.getInstance().setIvImage(ivImage, angebot.getImageData());
         setTvAddress(tvAddress);
 
         builder.setView(view);
@@ -84,16 +84,6 @@ public class FragmentOfferInfo extends DialogFragment {
         dialog.setTitle(angebot.toString());
 
         return dialog;
-    }
-
-    private void setIvImage(ImageView ivImage, String imageData) throws IllegalArgumentException {
-        try {
-            ivImage.setImageBitmap(
-                    Utility.getInstance().stringToImage(imageData)
-            );
-        } catch (IllegalArgumentException ex) {
-            Log.e("Set offer image", ex.getMessage());
-        }
     }
 
     private void setTvAddress(TextView tvAddress) {
