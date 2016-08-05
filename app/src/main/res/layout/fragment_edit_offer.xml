@@ -1,44 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="@dimen/frag_margin">
-
-    <ImageView
-        android:layout_width="64dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/ivOffer"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/etTitel"
-        android:src="@drawable/add_image"
-        android:layout_marginRight="16dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Title"
-        android:id="@+id/tvTitle"
-        android:textStyle="bold"
-        android:textColor="@color/abc_primary_text_material_light"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/ivOffer"
-        android:layout_toEndOf="@+id/ivOffer"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/etTitel"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:inputType="text"
-        android:layout_below="@+id/tvTitle"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/ivOffer"
-        android:layout_toEndOf="@+id/ivOffer"/>
+                android:layout_width="match_parent" android:layout_height="match_parent">
 
     <android.support.design.widget.FloatingActionButton
         app:backgroundTint="@color/colorPrimary"
@@ -51,63 +14,105 @@
         android:layout_alignParentEnd="false"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="-16dp"
-        />
+        android:layout_marginRight="@dimen/frag_margin"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Address"
-        android:id="@+id/tvAddress"
-        android:textStyle="bold"
-        android:textColor="@color/abc_primary_text_material_light"
-        android:layout_below="@+id/etTitel"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"/>
+    <RelativeLayout
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:padding="@dimen/frag_margin">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/etStreet"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvAddress"
-        android:hint="Street"/>
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivOffer"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignBottom="@+id/etTitel"
+            android:src="@drawable/add_image"
+            android:layout_marginRight="16dp"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/etPostal"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/etStreet"
-        android:hint="Postal Code, City"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Title"
+            android:id="@+id/tvTitle"
+            android:textStyle="bold"
+            android:textColor="@color/abc_primary_text_material_light"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/ivOffer"
+            android:layout_toEndOf="@+id/ivOffer"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Description"
-        android:id="@+id/tvDescription"
-        android:layout_below="@+id/etPostal"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:textStyle="bold"
-        android:textColor="@color/abc_primary_text_material_light"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etTitel"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:inputType="text"
+            android:layout_below="@+id/tvTitle"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/ivOffer"
+            android:layout_toEndOf="@+id/ivOffer"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/etDescription"
-        android:layout_below="@+id/tvDescription"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Address"
+            android:id="@+id/tvAddress"
+            android:textStyle="bold"
+            android:textColor="@color/abc_primary_text_material_light"
+            android:layout_below="@+id/etTitel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etStreet"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tvAddress"
+            android:hint="Street"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etPostal"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/etStreet"
+            android:hint="Postal Code, City"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Description"
+            android:id="@+id/tvDescription"
+            android:layout_below="@+id/etPostal"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:textStyle="bold"
+            android:textColor="@color/abc_primary_text_material_light"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etDescription"
+            android:layout_below="@+id/tvDescription"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
