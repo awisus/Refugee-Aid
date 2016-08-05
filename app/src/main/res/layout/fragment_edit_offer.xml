@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:padding="@dimen/frag_margin">
 
@@ -38,6 +39,20 @@
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/ivOffer"
         android:layout_toEndOf="@+id/ivOffer"/>
+
+    <android.support.design.widget.FloatingActionButton
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="mini"
+        android:id="@+id/fab_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_file_upload_white_24dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-16dp"
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -94,16 +109,5 @@
         android:layout_below="@+id/tvDescription"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <Button
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/button_bearbeiten_fertig"
-        android:id="@+id/btExecute"
-        android:layout_below="@+id/etDescription"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/frag_margin" />
 
 </RelativeLayout>

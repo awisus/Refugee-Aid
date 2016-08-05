@@ -22,11 +22,11 @@ package de.awisus.refugeeaidleipzig.views.profile;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -74,7 +74,6 @@ public class FragmentEditOffer extends DialogFragment {
         etStreet = (EditText) view.findViewById(R.id.etStreet);
         etPostal = (EditText) view.findViewById(R.id.etPostal);
         etDescription = (EditText) view.findViewById(R.id.etDescription);
-        Button btSend = (Button) view.findViewById(R.id.btExecute);
 
         if(angebot == null) {
             forNewOffer(dialog);
@@ -82,7 +81,8 @@ public class FragmentEditOffer extends DialogFragment {
             forExistingOffer(view, dialog);
         }
 
-        btSend.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabSend = (FloatingActionButton) view.findViewById(R.id.fab_send);
+        fabSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String address = etStreet.getText() +", " +etPostal.getText();
