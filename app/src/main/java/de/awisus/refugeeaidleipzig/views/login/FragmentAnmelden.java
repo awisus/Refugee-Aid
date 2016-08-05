@@ -64,9 +64,6 @@ public class FragmentAnmelden extends SuperFragmentGetUser implements View.OnCli
      */
     private EditText etPasswort;
 
-    private Button btAnmelden;
-    private Button btNeu;
-
     ////////////////////////////////////////////////////////////////////////////////
     // Constructor /////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
@@ -97,6 +94,7 @@ public class FragmentAnmelden extends SuperFragmentGetUser implements View.OnCli
      */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Button btAnmelden, btNeu;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_anmelden, null);
 
@@ -134,9 +132,7 @@ public class FragmentAnmelden extends SuperFragmentGetUser implements View.OnCli
             dismiss();
 
             FragmentSignup fragmentSignup;
-            fragmentSignup = FragmentSignup.newInstance(
-                    model, R.string.titel_signup, R.layout.fragment_signup, false
-            );
+            fragmentSignup = FragmentSignup.newInstance(model, false);
             fragmentSignup.show(getActivity().getSupportFragmentManager(), "Neues Konto");
         }
     }

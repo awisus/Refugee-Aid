@@ -71,12 +71,12 @@ public class FragmentSignup extends SuperFragmentEditUser {
      * @param model ViewModel to log in user
      * @return new Login Fragment
      */
-    public static FragmentSignup newInstance(ViewModel model, int titelID, int layoutID, boolean isRefugee) {
+    public static FragmentSignup newInstance(ViewModel model, boolean isRefugee) {
         FragmentSignup frag = new FragmentSignup();
         frag.model = model;
-        frag.layoutID = layoutID;
-        frag.titelID = titelID;
         frag.isRefugee = isRefugee;
+        frag.layoutID = R.layout.fragment_signup;
+        frag.titelID = R.string.titel_signup;
         return frag;
     }
 
