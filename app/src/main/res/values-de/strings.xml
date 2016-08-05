@@ -3,27 +3,26 @@
     <string name="app_name">Refugee Aid</string>
 
     <string name="info">
-        <b>Refugee Aid</b> ist die Plattform, die geflüchtete Menschen und hilfsbereite Bürger
-        zusammenbringt.
+        <b>Refugee Aid</b> ist die Plattform, die Geflüchtete und helfende
+        Bürger zusammenbringt.
         \n
         \n
-
-        <b>Registrieren</b> Sie sich als Geflüchteter mit einem Nutzerkonto und erstellen Sie
-        übersichtlich eine Liste ihrer Bedürfnisse.
+        Zwischen Profil und Karte wechseln.
+        \n
+        Sie sind Geflüchteter? Seien Sie willkommen und <b>registrieren</b> Sie
+        sich kostenlos! Melden Sie sich mit einem Nutzerkonto an und erstellen
+        Sie Ihre persönliche und strukturierte Bedarfsliste.
         \n
         \n
-
-        Sie wollen <b>helfen</b>? Sehen Sie auf der Karte, wo sich Unterkünfte für Geflüchtete in
-        ihrer Umgebung befinden. Nutzen Sie die kurze Entfernung oder den täglichen Arbeitsweg, um
-        <b>Spenden</b> zu leisten. Zu Jeder Unterkunft können Sie den genauen Bedarf der Menschen
-        einsehen.
+        Finden Sie umliegende <b>Unterkünfte</b>.
+        \n
+        Nutzen Sie, dass Sie alle Unterkünfte in Ihrer Umgebung finden und
+        beginnen Sie, zu teilen! Bereit, hinauszugehen und zu helfen.
         \n
         \n
-
         Hergestellt von J. Awisus, Leipzig (2016)
         \n
-
-        Kontakt: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a>
+        Kontakt: <a href="mailto:awisus.gdev@gmail.com">Mail verfassen</a>
     </string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -95,4 +94,7 @@
     <string name="button_helper">Helfer</string>
     <string name="button_refugee">Geflüchteter</string>
     <string name="titel_select_role">Anmelden als …</string>
+    <string name="label_city">Stadt</string>
+    <string name="label_street">Straße</string>
+    <string name="label_title">Titel</string>
 </resources>

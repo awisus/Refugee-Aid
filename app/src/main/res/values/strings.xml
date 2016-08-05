@@ -1,96 +1,100 @@
 <resources>
-<string name="google_app_id">477637456018</string>
-<string name="app_name">Refugee Aid</string>
+    <string name="google_app_id">477637456018</string>
+    <string name="app_name">Refugee Aid</string>
 
-<string name="info">
-<b>Refugee</b> Aid the platform for bringing together refugee people and helpful citizens.
-\n
-\n
+    <string name="info">
+        <b>Refugee</b> Aid the platform for bringing together refugee people and
+        helping citizens.
+        \n
+        \n
+        Switch between Profile and Map.
+        \n
+        You are refugee? Feel welcome and <b>register</b> for free! Sign up with
+        a user account and create your persononal and clearly structured list of
+        needs.
+        \n
+        \n
+        Find surrounding <b>accommodations</b>.
+        \n
+        Take advantage of knowing about refugee accommodations in your area and
+        start sharing! Be ready to get out and help.
+        \n
+        \n
+        Made by J. Awisus, Leipzig (2016)
+        \n
+        Contact: <a href="mailto:awisus.gdev@gmail.com">Write mail</a>
+    </string>
 
-<b>Register</b> as refugee with an user account and create your clearly structured list of
-needs.
-\n
-\n
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
-You like to <b>help</b>? Consult the map to find refugee accommodations in your
-neighborhood. Use the short distance or your daily commuting to donate. You can see
-the exact needs of the residents of any accommodation.
-\n
-\n
+    <string name="nav_profil">Profile</string>
+    <string name="nav_karte">Map</string>
 
-Made by J. Awisus, Leipzig (2016)
-\n
+    <string name="nav_titel_nav">Navigation</string>
+    <string name="nav_titel_info">Information</string>
 
-Contact: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a>
-</string>
+    <string name="titel_ueber">About</string>
+    <string name="titel_profil_refugee">Manage needs</string>
+    <string name="titel_profil_helper">Manage offers</string>
+    <string name="titel_info_helper">Supporter</string>
+    <string name="titel_login">Log in</string>
+    <string name="titel_select_role">Sign in as …</string>
+    <string name="titel_signup">New user</string>
+    <string name="titel_bedarf_entfernen">Delete need</string>
+    <string name="titel_bedarf_neu">Choose category</string>
+    <string name="titel_bearbeite_nutzer">Edit your data</string>
 
-<string name="navigation_drawer_open">Open navigation drawer</string>
-<string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="button_konto_neu">New? Create account here</string>
+    <string name="button_bearbeiten">Edit</string>
+    <string name="button_bearbeiten_fertig">Send</string>
+    <string name="button_konto_loeschen">Delete account</string>
+    <string name="button_abmelden">Log out</string>
+    <string name="button_refugee">Refugee</string>
+    <string name="button_helper">Supporter</string>
 
-<string name="nav_profil">Profile</string>
-<string name="nav_karte">Map</string>
+    <string name="dialog_anmelden">Log in</string>
+    <string name="dialog_loeschen">Delete</string>
+    <string name="dialog_hinzufuegen">Add</string>
+    <string name="dialog_sicher">Are you sure?</string>
+    <string name="dialog_ja">Yes</string>
+    <string name="dialog_nein">No</string>
+    <string name="dialog_abbrechen">Abort</string>
+    <string name="dialog_ok">Okay</string>
+    <string name="dialog_signup">Create account</string>
 
-<string name="nav_titel_nav">Navigation</string>
-<string name="nav_titel_info">Information</string>
+    <string name="string_keine_eintraege">NO ENTRIES</string>
+    <string name="string_bedarfe">Needs:</string>
+    <string name="string_plaetze">Space:</string>
+    <string name="string_bewohner">Residents:</string>
 
-<string name="titel_ueber">About</string>
-<string name="titel_profil_refugee">Manage needs</string>
-<string name="titel_profil_helper">Manage offers</string>
-<string name="titel_info_helper">Supporter</string>
-<string name="titel_login">Log in</string>
-<string name="titel_select_role">Sign in as …</string>
-<string name="titel_signup">New user</string>
-<string name="titel_bedarf_entfernen">Delete need</string>
-<string name="titel_bedarf_neu">Choose category</string>
-<string name="titel_bearbeite_nutzer">Edit your data</string>
+    <string name="label_unterkunft">Accommodation</string>
+    <string name="label_name">User name</string>
+    <string name="label_mail">E-mail</string>
+    <string name="label_passwort">Password</string>
+    <string name="label_confirmation">Confirm password</string>
+    <string name="label_title">Title</string>
+    <string name="label_address">Address</string>
+    <string name="label_street">Street</string>
+    <string name="label_city">City</string>
+    <string name="label_description">Description</string>
 
-<string name="button_konto_neu">New? Create account here</string>
-<string name="button_bearbeiten">Edit</string>
-<string name="button_bearbeiten_fertig">Send</string>
-<string name="button_konto_loeschen">Delete account</string>
-<string name="button_abmelden">Log out</string>
-<string name="button_refugee">Refugee</string>
-<string name="button_helper">Supporter</string>
+    <string name="warnung_name">User name too long</string>
+    <string name="warnung_mail">E mail adresse invalid</string>
+    <string name="warnung_passwort">Password too short</string>
+    <string name="warnung_confirmation">Passwords not matching</string>
 
-<string name="dialog_anmelden">Log in</string>
-<string name="dialog_loeschen">Delete</string>
-<string name="dialog_hinzufuegen">Add</string>
-<string name="dialog_sicher">Are you sure?</string>
-<string name="dialog_ja">Yes</string>
-<string name="dialog_nein">No</string>
-<string name="dialog_abbrechen">Abort</string>
-<string name="dialog_ok">Okay</string>
-<string name="dialog_signup">Create account</string>
+    <string name="warnung_netz">Activate network and restart</string>
+    <string name="warnung_laden">Cannot load information</string>
+    <string name="warnung_signup">Check your input data</string>
+    <string name="warnung_anmelden">User name or password wrong</string>
+    <string name="warnung_fehler">An error has occurred</string>
+    <string name="warnung_bedarf_vorhanden">Already present</string>
+    <string name="warnung_download">Download failed</string>
 
-<string name="string_keine_eintraege">NO ENTRIES</string>
-<string name="string_bedarfe">Needs:</string>
-<string name="string_plaetze">Space:</string>
-<string name="string_bewohner">Residents:</string>
-
-<string name="label_unterkunft">Accommodation</string>
-<string name="label_name">User name</string>
-<string name="label_mail">E-mail</string>
-<string name="label_passwort">Password</string>
-<string name="label_confirmation">Confirm password</string>
-<string name="label_description">Description</string>
-<string name="label_address">Address</string>
-
-<string name="warnung_name">User name too long</string>
-<string name="warnung_mail">E mail adresse invalid</string>
-<string name="warnung_passwort">Password too short</string>
-<string name="warnung_confirmation">Passwords not matching</string>
-
-<string name="warnung_netz">Activate network and restart</string>
-<string name="warnung_laden">Cannot load information</string>
-<string name="warnung_signup">Check your input data</string>
-<string name="warnung_anmelden">User name or password wrong</string>
-<string name="warnung_fehler">An error has occurred</string>
-<string name="warnung_bedarf_vorhanden">Already present</string>
-<string name="warnung_download">Download failed</string>
-
-<string name="meldung_abmelden">Logged out</string>
-<string name="meldung_anmelden">Logging in...</string>
-<string name="meldung_aktualisieren">Updating...</string>
-<string name="meldung_entfernen">Deleting...</string>
-<string name="meldung_hinzufuegen">Adding...</string>
+    <string name="meldung_abmelden">Logged out</string>
+    <string name="meldung_anmelden">Logging in…</string>
+    <string name="meldung_aktualisieren">Updating…</string>
+    <string name="meldung_entfernen">Deleting…</string>
+    <string name="meldung_hinzufuegen">Adding…</string>
 </resources>

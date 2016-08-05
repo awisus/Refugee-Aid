@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Title"
+            android:text="@string/label_title"
             android:id="@+id/tvTitle"
             android:textStyle="bold"
             android:textColor="@color/abc_primary_text_material_light"
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Address"
+            android:text="@string/label_address"
             android:id="@+id/tvAddress"
             android:textStyle="bold"
             android:textColor="@color/abc_primary_text_material_light"
@@ -79,7 +79,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tvAddress"
-            android:hint="Street"/>
+            android:hint="@string/label_street"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -90,13 +90,13 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/etStreet"
-            android:hint="Postal Code, City"/>
+            android:hint="@string/label_city"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Description"
+            android:text="@string/label_description"
             android:id="@+id/tvDescription"
             android:layout_below="@+id/etPostal"
             android:layout_alignParentLeft="true"
