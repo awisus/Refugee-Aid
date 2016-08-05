@@ -38,6 +38,7 @@ Contact: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a>
 <string name="titel_profil_helper">Manage offers</string>
 <string name="titel_info_helper">Supporter</string>
 <string name="titel_login">Log in</string>
+<string name="titel_select_role">Sign in as …</string>
 <string name="titel_signup">New user</string>
 <string name="titel_bedarf_entfernen">Delete need</string>
 <string name="titel_bedarf_neu">Choose category</string>
@@ -48,6 +49,8 @@ Contact: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a>
 <string name="button_bearbeiten_fertig">Send</string>
 <string name="button_konto_loeschen">Delete account</string>
 <string name="button_abmelden">Log out</string>
+<string name="button_refugee">Refugee</string>
+<string name="button_helper">Supporter</string>
 
 <string name="dialog_anmelden">Log in</string>
 <string name="dialog_loeschen">Delete</string>

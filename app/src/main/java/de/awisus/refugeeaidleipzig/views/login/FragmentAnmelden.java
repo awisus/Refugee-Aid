@@ -32,13 +32,13 @@ import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
-import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.LoginData;
+import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.ViewModel;
 import de.awisus.refugeeaidleipzig.models.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
-import de.awisus.refugeeaidleipzig.views.signup.FragmentSignup;
 import de.awisus.refugeeaidleipzig.views.SuperFragmentGetUser;
+import de.awisus.refugeeaidleipzig.views.signup.FragmentSelectRole;
 
 /**
  * Created on 15.01.16.
@@ -131,9 +131,13 @@ public class FragmentAnmelden extends SuperFragmentGetUser implements View.OnCli
         if (view.getId() == R.id.btNeu) {
             dismiss();
 
-            FragmentSignup fragmentSignup;
-            fragmentSignup = FragmentSignup.newInstance(model, false);
-            fragmentSignup.show(getActivity().getSupportFragmentManager(), "Neues Konto");
+//            FragmentSignup fragmentSignup;
+//            fragmentSignup = FragmentSignup.newInstance(model, false);
+//            fragmentSignup.show(getActivity().getSupportFragmentManager(), "Neues Konto");
+
+            FragmentSelectRole fragmentSelectRole;
+            fragmentSelectRole = FragmentSelectRole.newInstance(model);
+            fragmentSelectRole.show(getActivity().getSupportFragmentManager(), "Rolle waehlen");
         }
     }
 

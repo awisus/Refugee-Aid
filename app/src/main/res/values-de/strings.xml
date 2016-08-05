@@ -92,4 +92,7 @@
     <string name="titel_info_helper">Unterstützer</string>
     <string name="label_address">Adresse</string>
     <string name="label_description">Beschreibung</string>
+    <string name="button_helper">Helfer</string>
+    <string name="button_refugee">Geflüchteter</string>
+    <string name="titel_select_role">Anmelden als …</string>
 </resources>
