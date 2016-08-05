@@ -89,8 +89,7 @@ public class FragmentEditOffer extends DialogFragment {
                 try {
                     LatLng coordinates = Utility.getInstance().getLocationFromAddress(address, getContext());
 
-                    Log.w("Latitude", "" +coordinates.latitude);
-                    Log.w("Longitude", "" +coordinates.longitude);
+                    Log.w("Coords", "" +coordinates.latitude +", " +coordinates.longitude);
                 } catch (IOException ex) {
                     Log.e("Coords from address", "Wrong address format");
                 } catch (NullPointerException ex) {
