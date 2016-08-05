@@ -66,22 +66,31 @@ public class FragmentEditOffer extends DialogFragment {
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_edit_offer, null);
 
         builder.setView(view);
-
         Dialog dialog = builder.create();
 
+        initView(view);
+        setListeners(view);
+
+        if(angebot == null) {
+            forNewOffer(dialog);
+        } else {
+            forExistingOffer(dialog);
+        }
+
+        return dialog;
+    }
+
+    private void initView(View view) {
         ivOffer = (ImageView) view.findViewById(R.id.ivOffer);
         etTitel = (EditText) view.findViewById(R.id.etTitel);
         etStreet = (EditText) view.findViewById(R.id.etStreet);
         etPostal = (EditText) view.findViewById(R.id.etPostal);
         etDescription = (EditText) view.findViewById(R.id.etDescription);
+    }
 
-        if(angebot == null) {
-            forNewOffer(dialog);
-        } else {
-            forExistingOffer(view, dialog);
-        }
-
-        FloatingActionButton fabSend = (FloatingActionButton) view.findViewById(R.id.fab_send);
+    private void setListeners(View view) {
+        FloatingActionButton fabSend;
+        fabSend = (FloatingActionButton) view.findViewById(R.id.fab_send);
         fabSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,17 +106,13 @@ public class FragmentEditOffer extends DialogFragment {
                 }
             }
         });
-
-        return dialog;
     }
 
     private void forNewOffer(Dialog dialog) {
-
         dialog.setTitle("New offer");
     }
 
-    private void forExistingOffer(View view, Dialog dialog) {
-
+    private void forExistingOffer(Dialog dialog) {
         dialog.setTitle("Edit offer");
 
         Utility.getInstance().setIvImage(ivOffer, angebot.getImageData());
