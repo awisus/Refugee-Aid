@@ -44,6 +44,7 @@
     <string name="titel_bedarf_entfernen">Delete need</string>
     <string name="titel_bedarf_neu">Choose category</string>
     <string name="titel_bearbeite_nutzer">Edit your data</string>
+    <string name="titel_select_image">Select image</string>
 
     <string name="button_konto_neu">New? Create account here</string>
     <string name="button_bearbeiten">Edit</string>

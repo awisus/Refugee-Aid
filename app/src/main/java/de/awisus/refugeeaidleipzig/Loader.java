@@ -21,7 +21,7 @@ import de.awisus.refugeeaidleipzig.net.HTTPGet;
 public class Loader {
 
     // public static final String SERVER_URL = "https://refugee-aid.herokuapp.com/";
-    public static final String SERVER_URL = "http://klaue:3000/";
+    public static final String SERVER_URL = "http://192.168.44.208:3000/";
     public static final Loader INSTANCE = new Loader();
 
 

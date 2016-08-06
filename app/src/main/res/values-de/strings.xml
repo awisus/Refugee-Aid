@@ -97,4 +97,5 @@
     <string name="label_city">Stadt</string>
     <string name="label_street">Straße</string>
     <string name="label_title">Titel</string>
+    <string name="titel_select_image">Bild wählen</string>
 </resources>

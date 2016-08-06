@@ -19,8 +19,14 @@
 
 package de.awisus.refugeeaidleipzig.views.profile;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -33,6 +39,7 @@ import android.widget.ImageView;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.models.Angebot;
@@ -43,7 +50,9 @@ import de.awisus.refugeeaidleipzig.util.Utility;
  *
  * @author Jens Awisus
  */
-public class FragmentEditOffer extends DialogFragment {
+public class FragmentEditOffer extends DialogFragment implements View.OnClickListener {
+
+    private static final int WAEHLE_BILD = 100;
 
     private ImageView ivOffer;
     private EditText etTitel;
@@ -89,6 +98,8 @@ public class FragmentEditOffer extends DialogFragment {
     }
 
     private void setListeners(View view) {
+        ivOffer.setOnClickListener(this);
+
         FloatingActionButton fabSend;
         fabSend = (FloatingActionButton) view.findViewById(R.id.fab_send);
         fabSend.setOnClickListener(new View.OnClickListener() {
@@ -130,5 +141,48 @@ public class FragmentEditOffer extends DialogFragment {
         }
 
         etDescription.setText(angebot.getContent());
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intentGalerie;
+        intentGalerie = new Intent(Intent.ACTION_PICK);
+        intentGalerie.setType("image/*");
+
+        Intent chooser = new Intent(Intent.ACTION_CHOOSER);
+        chooser.putExtra(Intent.EXTRA_INTENT, intentGalerie);
+        chooser.putExtra(Intent.EXTRA_TITLE, R.string.titel_select_image);
+
+        Intent[] intentArray =  {new Intent(MediaStore.ACTION_IMAGE_CAPTURE)};
+        chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
+
+        startActivityForResult(chooser, WAEHLE_BILD);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == WAEHLE_BILD) {
+            setBild(data.getData());
+        }
+    }
+
+    private void setBild(Uri uri) {
+        if(uri == null) {
+            ivOffer.setImageResource(R.drawable.add_image);
+        } else {
+            try {
+                InputStream is = getActivity().getContentResolver().openInputStream(uri);
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                assert is != null;
+                is.close();
+
+                ivOffer.setImageBitmap(bitmap);
+            } catch (IOException ex) {
+                ivOffer.setImageResource(R.drawable.add_image);
+                Log.e("Set offer image", ex.getMessage());
+            }
+        }
     }
 }
