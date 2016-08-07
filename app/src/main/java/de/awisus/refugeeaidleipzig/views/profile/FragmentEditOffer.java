@@ -151,17 +151,24 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
                                 "user_id",   "" + nutzer.getId()
                         );
                     } else {
-                        String imageData = imageBitmap == null ?
-                                angebot.getImageData() :
-                                Utility.getInstance().imageToString(imageBitmap);
-                        new OfferPatch(getActivity(), R.string.meldung_aktualisieren).execute(
-                                "id",        "" + angebot.getId(),
-                                "title",     "" + etTitel.getText(),
-                                "text",      "" + etDescription.getText(),
-                                "image",     "" + imageData,
-                                "latitude",  "" + coordinates.latitude,
-                                "longitude", "" + coordinates.longitude
-                        );
+                        if(imageBitmap == null) {
+                            new OfferPatch(getActivity(), R.string.meldung_aktualisieren).execute(
+                                    "id",        "" + angebot.getId(),
+                                    "title",     "" + etTitel.getText(),
+                                    "text",      "" + etDescription.getText(),
+                                    "latitude",  "" + coordinates.latitude,
+                                    "longitude", "" + coordinates.longitude
+                            );
+                        } else {
+                            new OfferPatch(getActivity(), R.string.meldung_aktualisieren).execute(
+                                    "id",        "" + angebot.getId(),
+                                    "title",     "" + etTitel.getText(),
+                                    "text",      "" + etDescription.getText(),
+                                    "image",     "" + Utility.getInstance().imageToString(imageBitmap),
+                                    "latitude",  "" + coordinates.latitude,
+                                    "longitude", "" + coordinates.longitude
+                            );
+                        }
                     }
                 } catch (IOException | NullPointerException ex) {
                     Toast.makeText(getActivity(), R.string.warnung_address, Toast.LENGTH_SHORT ).show();
@@ -257,8 +264,11 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
 
                     angebot.setTitle(etTitel.getText().toString());
                     angebot.setContent(etDescription.getText().toString());
-                    angebot.setImageData(Utility.getInstance().imageToString(imageBitmap));
                     angebot.setLatLng(Utility.getInstance().getLocationFromAddress(address, getContext()));
+
+                    if(imageBitmap != null) {
+                        angebot.setImageData(Utility.getInstance().imageToString(imageBitmap));
+                    }
 
                     nutzer.report();
 
