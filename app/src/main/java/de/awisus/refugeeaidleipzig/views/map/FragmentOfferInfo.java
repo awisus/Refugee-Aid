@@ -32,7 +32,8 @@ import java.io.IOException;
 
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.models.Angebot;
-import de.awisus.refugeeaidleipzig.util.Utility;
+import de.awisus.refugeeaidleipzig.util.ImageUtility;
+import de.awisus.refugeeaidleipzig.util.LocationUtility;
 
 /**
  * Created on 12.01.16.
@@ -73,7 +74,7 @@ public class FragmentOfferInfo extends DialogFragment {
         TextView tvAddress = (TextView) view.findViewById(R.id.tvAddress);
 
         tvContent.setText(angebot.getContent());
-        Utility.getInstance().setIvImage(ivImage, angebot.getImageData());
+        ImageUtility.setIvImage(ivImage, angebot.getImageData());
         setTvAddress(tvAddress);
 
         builder.setView(view);
@@ -89,7 +90,7 @@ public class FragmentOfferInfo extends DialogFragment {
     private void setTvAddress(TextView tvAddress) {
         try {
             tvAddress.setText(
-                    Utility.getInstance().latlngToAdress(angebot.getLatLng(), getActivity())
+                    LocationUtility.latlngToAdress(angebot.getLatLng(), getActivity())
             );
         } catch (IOException ex) {
             Log.e("Set offer Adress", ex.getMessage());

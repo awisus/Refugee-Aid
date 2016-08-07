@@ -22,8 +22,9 @@ public abstract class BackgroundTask<Params, Progress, Result> extends AsyncTask
 
     @Override
     protected void onPreExecute() {
-        ladebalken = Utility.getInstance().zeigeLadebalken(
-                context, context.getResources().getString(textID));
+        ladebalken = ViewUtility.zeigeLadebalken(
+                context, context.getResources().getString(textID)
+        );
     }
 
     @Override

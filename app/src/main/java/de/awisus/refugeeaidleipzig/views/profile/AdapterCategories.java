@@ -8,7 +8,7 @@ import java.util.Vector;
 
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.models.Kategorie;
-import de.awisus.refugeeaidleipzig.util.Utility;
+import de.awisus.refugeeaidleipzig.util.ImageUtility;
 import de.awisus.refugeeaidleipzig.views.SuperAdapter;
 
 /**
@@ -26,7 +26,7 @@ public class AdapterCategories extends SuperAdapter<Kategorie> {
         ImageView ivBild;
         ivBild = (ImageView) view.findViewById(R.id.ivBild);
         ivBild.setImageBitmap(
-                Utility.getInstance().stringToImage(liste.get(position).getImageData())
+                ImageUtility.stringToImage(liste.get(position).getImageData())
         );
     }
 }

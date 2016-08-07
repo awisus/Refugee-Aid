@@ -22,17 +22,10 @@ public class Loader {
 
     // public static final String SERVER_URL = "https://refugee-aid.herokuapp.com/";
     public static final String SERVER_URL = "http://192.168.44.208:3000/";
-    public static final Loader INSTANCE = new Loader();
-
 
     private Loader() {}
 
-    public static Loader getInstance() {
-        return INSTANCE;
-    }
-
-
-    public DataMap<Unterkunft> getUnterkuenfte() throws IOException, JSONException, InterruptedException, ExecutionException {
+    public static DataMap<Unterkunft> getUnterkuenfte() throws IOException, JSONException, InterruptedException, ExecutionException {
 
         DataMap<Unterkunft> unterkunftMap = new DataMap<>();
 
@@ -48,7 +41,7 @@ public class Loader {
         return unterkunftMap;
     }
 
-    public DataMap<Angebot> getAngebote() throws IOException, JSONException, InterruptedException, ExecutionException {
+    public static DataMap<Angebot> getAngebote() throws IOException, JSONException, InterruptedException, ExecutionException {
 
         DataMap<Angebot> angebotMap = new DataMap<>();
 
@@ -64,7 +57,7 @@ public class Loader {
         return angebotMap;
     }
 
-    public DataMap<Kategorie> getKategorien() throws IOException, JSONException, InterruptedException, ExecutionException {
+    public static DataMap<Kategorie> getKategorien() throws IOException, JSONException, InterruptedException, ExecutionException {
 
         DataMap<Kategorie> kategorieMap = new DataMap<>();
 

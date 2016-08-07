@@ -47,7 +47,8 @@ import de.awisus.refugeeaidleipzig.models.Angebot;
 import de.awisus.refugeeaidleipzig.models.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
-import de.awisus.refugeeaidleipzig.util.Utility;
+import de.awisus.refugeeaidleipzig.util.ImageUtility;
+import de.awisus.refugeeaidleipzig.util.LocationUtility;
 
 /**
  * Created on 05.08.16.
@@ -114,12 +115,12 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
         dialog.setTitle("Edit offer");
         LatLng latLng = angebot.getLatLng();
 
-        Utility.getInstance().setIvImage(ivOffer, angebot.getImageData());
+        ImageUtility.setIvImage(ivOffer, angebot.getImageData());
 
         etTitel.setText(angebot.toString());
         try {
-            String address = Utility.getInstance().latlngToStreet(latLng, getActivity());
-            String city    = Utility.getInstance().latlngToCity(latLng, getActivity());
+            String address = LocationUtility.latlngToStreet(latLng, getActivity());
+            String city    = LocationUtility.latlngToCity(latLng, getActivity());
             etStreet.setText(address);
             etPostal.setText(city);
         } catch (IOException ex) {
@@ -139,13 +140,13 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
             public void onClick(View view) {
                 String address = etStreet.getText() +", " +etPostal.getText();
                 try {
-                    LatLng coordinates = Utility.getInstance().getLocationFromAddress(address, getContext());
+                    LatLng coordinates = LocationUtility.getLocationFromAddress(address, getContext());
 
                     if(neu) {
                         new OfferPost(getActivity(), R.string.meldung_hinzufuegen).execute(
                                 "title",     "" + etTitel.getText(),
                                 "text",      "" + etDescription.getText(),
-                                "image",     "" + Utility.getInstance().imageToString(imageBitmap),
+                                "image",     "" + ImageUtility.imageToString(imageBitmap),
                                 "latitude",  "" + coordinates.latitude,
                                 "longitude", "" + coordinates.longitude,
                                 "user_id",   "" + nutzer.getId()
@@ -164,7 +165,7 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
                                     "id",        "" + angebot.getId(),
                                     "title",     "" + etTitel.getText(),
                                     "text",      "" + etDescription.getText(),
-                                    "image",     "" + Utility.getInstance().imageToString(imageBitmap),
+                                    "image",     "" + ImageUtility.imageToString(imageBitmap),
                                     "latitude",  "" + coordinates.latitude,
                                     "longitude", "" + coordinates.longitude
                             );
@@ -207,7 +208,7 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
             ivOffer.setImageResource(R.drawable.add_image);
         } else {
             try {
-                imageBitmap = Utility.getInstance().uriToBitmap(getActivity(), uri);
+                imageBitmap = ImageUtility.uriToBitmap(getActivity(), uri);
                 ivOffer.setImageBitmap(imageBitmap);
             } catch (IOException ex) {
                 ivOffer.setImageResource(R.drawable.add_image);
@@ -264,10 +265,10 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
 
                     angebot.setTitle(etTitel.getText().toString());
                     angebot.setContent(etDescription.getText().toString());
-                    angebot.setLatLng(Utility.getInstance().getLocationFromAddress(address, getContext()));
+                    angebot.setLatLng(LocationUtility.getLocationFromAddress(address, getContext()));
 
                     if(imageBitmap != null) {
-                        angebot.setImageData(Utility.getInstance().imageToString(imageBitmap));
+                        angebot.setImageData(ImageUtility.imageToString(imageBitmap));
                     }
 
                     nutzer.report();

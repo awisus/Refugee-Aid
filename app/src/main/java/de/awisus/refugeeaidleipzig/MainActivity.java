@@ -150,15 +150,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ViewModel model = new ViewModel();
 
                 model.clearLocationData();
-                model.setKategorien(
-                        Loader.getInstance().getKategorien()
-                );
-                model.setAngebote(
-                        Loader.getInstance().getAngebote()
-                );
-                model.setUnterkuenfte(
-                        Loader.getInstance().getUnterkuenfte()
-                );
+                model.setKategorien(Loader.getKategorien());
+                model.setAngebote(Loader.getAngebote());
+                model.setUnterkuenfte(Loader.getUnterkuenfte());
 
                 return model;
             } catch (IOException | JSONException | InterruptedException | ExecutionException e) {

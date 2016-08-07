@@ -17,7 +17,7 @@ import de.awisus.refugeeaidleipzig.models.ImageDataObject;
 import de.awisus.refugeeaidleipzig.models.Nutzer;
 import de.awisus.refugeeaidleipzig.net.WebFlirt;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
-import de.awisus.refugeeaidleipzig.util.Utility;
+import de.awisus.refugeeaidleipzig.util.ImageUtility;
 import de.awisus.refugeeaidleipzig.views.SuperAdapter;
 
 /**
@@ -42,7 +42,7 @@ public class AdapterUserData extends SuperAdapter<ImageDataObject> {
 
         ImageView ivBild  = (ImageView) view.findViewById(R.id.ivBild);
         ivBild.setImageBitmap(
-                Utility.getInstance().stringToImage(data.getImageData())
+                ImageUtility.stringToImage(data.getImageData())
         );
 
         FloatingActionButton fabEdit  = (FloatingActionButton) view.findViewById(R.id.fab_edit);
