@@ -86,8 +86,8 @@
     <string name="dialog_nein">Nein</string>
     <string name="dialog_sicher">Sind Sie sicher?</string>
     <string name="titel_ueber">Über</string>
-    <string name="titel_profil_helper">Angebote verwalten</string>
-    <string name="titel_profil_refugee">Bedarf verwalten</string>
+    <string name="titel_profil_helper">Ihre Angebote</string>
+    <string name="titel_profil_refugee">Ihr Bedarf</string>
     <string name="titel_info_helper">Unterstützer</string>
     <string name="label_address">Adresse</string>
     <string name="label_description">Beschreibung</string>

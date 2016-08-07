@@ -35,8 +35,8 @@
     <string name="nav_titel_info">Information</string>
 
     <string name="titel_ueber">About</string>
-    <string name="titel_profil_refugee">Manage needs</string>
-    <string name="titel_profil_helper">Manage offers</string>
+    <string name="titel_profil_refugee">Your needs</string>
+    <string name="titel_profil_helper">Your offers</string>
     <string name="titel_info_helper">Supporter</string>
     <string name="titel_login">Log in</string>
     <string name="titel_select_role">Sign in as …</string>
