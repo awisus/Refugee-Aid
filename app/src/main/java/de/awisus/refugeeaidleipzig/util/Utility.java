@@ -38,11 +38,9 @@ public class Utility {
         return ProgressDialog.show(activity, null, nachricht, true, false);
     }
 
-    public void setIvImage(ImageView ivImage, String imageData) throws IllegalArgumentException {
+    public void setIvImage(ImageView ivImage, String imageData, int size) throws IllegalArgumentException {
         try {
-            ivImage.setImageBitmap(
-                    Utility.getInstance().stringToImage(imageData)
-            );
+            ivImage.setImageBitmap(stringToImage(imageData));
         } catch (IllegalArgumentException ex) {
             Log.e("Set offer image", ex.getMessage());
         }
@@ -62,20 +60,20 @@ public class Utility {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
 
-            byte[] byteArray = byteArrayOutputStream .toByteArray();
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
             return Base64.encodeToString(byteArray, Base64.DEFAULT);
         } else {
             return null;
         }
     }
 
-    public Bitmap uriToBitmap(Context context, Uri uri) throws IOException {
+    public Bitmap uriToBitmap(Context context, Uri uri, int size) throws IOException {
         InputStream is = context.getContentResolver().openInputStream(uri);
         Bitmap bitmap = BitmapFactory.decodeStream(is);
         assert is != null;
         is.close();
 
-        return bitmap;
+        return Bitmap.createScaledBitmap(bitmap, size, size, false);
     }
 
     public LatLng getLocationFromAddress(String strAddress, Context context) throws IOException {

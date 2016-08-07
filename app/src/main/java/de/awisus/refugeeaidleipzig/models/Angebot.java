@@ -57,6 +57,24 @@ public class Angebot extends ImageDataObject implements ILocationDataObject {
         return angebot;
     }
 
+    public void setTitle(String title) {
+        this.name = title;
+        this.name = this.name.trim();
+    }
+
+    public void setImageData(String imageData) {
+        this.imageData = imageData;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+        this.content = this.content.trim();
+    }
+
+    public void setLatLng(LatLng latLng) {
+        this.latLng = latLng;
+    }
+
     public String getContent() {
         return content;
     }

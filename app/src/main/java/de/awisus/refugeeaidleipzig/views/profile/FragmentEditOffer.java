@@ -114,7 +114,7 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
         dialog.setTitle("Edit offer");
         LatLng latLng = angebot.getLatLng();
 
-        Utility.getInstance().setIvImage(ivOffer, angebot.getImageData());
+        Utility.getInstance().setIvImage(ivOffer, angebot.getImageData(), ivOffer.getWidth());
 
         etTitel.setText(angebot.toString());
         try {
@@ -143,22 +143,28 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
 
                     if(neu) {
                         new OfferPost(getActivity(), R.string.meldung_hinzufuegen).execute(
-                                "title", "" + etTitel.getText(),
-                                "text", "" + etDescription.getText(),
-                                "image", "" + Utility.getInstance().imageToString(imageBitmap),
-                                "latitude", "" + coordinates.latitude,
+                                "title",     "" + etTitel.getText(),
+                                "text",      "" + etDescription.getText(),
+                                "image",     "" + Utility.getInstance().imageToString(imageBitmap),
+                                "latitude",  "" + coordinates.latitude,
                                 "longitude", "" + coordinates.longitude,
-                                "user_id", "" + nutzer.getId()
+                                "user_id",   "" + nutzer.getId()
                         );
                     } else {
-
+                        String imageData = imageBitmap == null ?
+                                angebot.getImageData() :
+                                Utility.getInstance().imageToString(imageBitmap);
+                        new OfferPatch(getActivity(), R.string.meldung_aktualisieren).execute(
+                                "id",        "" + angebot.getId(),
+                                "title",     "" + etTitel.getText(),
+                                "text",      "" + etDescription.getText(),
+                                "image",     "" + imageData,
+                                "latitude",  "" + coordinates.latitude,
+                                "longitude", "" + coordinates.longitude
+                        );
                     }
                 } catch (IOException | NullPointerException ex) {
-                    Toast.makeText(
-                            getActivity(),
-                            R.string.warnung_address,
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    Toast.makeText(getActivity(), R.string.warnung_address, Toast.LENGTH_SHORT ).show();
                 }
             }
         });
@@ -194,7 +200,7 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
             ivOffer.setImageResource(R.drawable.add_image);
         } else {
             try {
-                imageBitmap = Utility.getInstance().uriToBitmap(getActivity(), uri);
+                imageBitmap = Utility.getInstance().uriToBitmap(getActivity(), uri, ivOffer.getWidth());
                 ivOffer.setImageBitmap(imageBitmap);
             } catch (IOException ex) {
                 ivOffer.setImageResource(R.drawable.add_image);
@@ -225,6 +231,41 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
             } else {
                 nutzer.addData(result);
                 dismiss();
+            }
+        }
+    }
+
+    private class OfferPatch extends BackgroundTask<String, String, Angebot> {
+
+        public OfferPatch(Activity context, int textID) {
+            super(context, textID);
+        }
+
+        @Override
+        protected Angebot doInBackground(String... params) {
+            String antwort = WebFlirt.getInstance().patch("offers_remote", params);
+            return antwort.equals("OK") ? angebot : null;
+        }
+
+        @Override
+        protected void doPostExecute(Angebot result) {
+            if(result == null) {
+                Toast.makeText(context, R.string.warnung_signup, Toast.LENGTH_SHORT).show();
+            } else {
+                try {
+                    String address = etStreet.getText() + ", " + etPostal.getText();
+
+                    angebot.setTitle(etTitel.getText().toString());
+                    angebot.setContent(etDescription.getText().toString());
+                    angebot.setImageData(Utility.getInstance().imageToString(imageBitmap));
+                    angebot.setLatLng(Utility.getInstance().getLocationFromAddress(address, getContext()));
+
+                    nutzer.report();
+
+                    dismiss();
+                } catch (IOException | NullPointerException ex) {
+                    Toast.makeText(getActivity(), R.string.warnung_address, Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

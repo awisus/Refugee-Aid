@@ -73,7 +73,7 @@ public class FragmentOfferInfo extends DialogFragment {
         TextView tvAddress = (TextView) view.findViewById(R.id.tvAddress);
 
         tvContent.setText(angebot.getContent());
-        Utility.getInstance().setIvImage(ivImage, angebot.getImageData());
+        Utility.getInstance().setIvImage(ivImage, angebot.getImageData(), 132);
         setTvAddress(tvAddress);
 
         builder.setView(view);

@@ -101,12 +101,15 @@ public class Nutzer extends IDObject {
 
     public void addData(ImageDataObject data) {
         this.data.add(data);
-        setChanged();
-        notifyObservers();
+        report();
     }
 
     public void deleteData(int id) {
         data.remove(id);
+        report();
+    }
+
+    public void report() {
         setChanged();
         notifyObservers();
     }
@@ -117,18 +120,16 @@ public class Nutzer extends IDObject {
 
     public void setName(String name) {
         this.name = name;
-        setChanged();
-        notifyObservers();
+        report();
     }
 
     public void setMail(String mail) {
         this.mail = mail;
-        setChanged();
-        notifyObservers();
+        report();
     }
 
 
-    ////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////
      // Getters /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
