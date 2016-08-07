@@ -77,7 +77,8 @@ public class FragmentKategorieList extends DialogFragment implements AdapterView
         } else {
             new BedarfPost(getActivity(), R.string.meldung_hinzufuegen).execute(
                     "user_id",      "" + nutzer.getId(),
-                    "category_id",  "" + kategorie.getId());
+                    "category_id",  "" + kategorie.getId()
+            );
         }
 
         dismiss();
@@ -93,9 +94,7 @@ public class FragmentKategorieList extends DialogFragment implements AdapterView
         protected Bedarf doInBackground(String... params) {
             try {
                 String antwort = WebFlirt.getInstance().post("needs_remote", params);
-                Bedarf bedarf = Bedarf.fromJSON(new JSONObject(antwort));
-
-                return bedarf;
+                return Bedarf.fromJSON(new JSONObject(antwort));
             } catch (Exception e) {
                 return null;
             }
@@ -107,7 +106,7 @@ public class FragmentKategorieList extends DialogFragment implements AdapterView
             if(result == null) {
                 Toast.makeText(context, R.string.warnung_bedarf_vorhanden, Toast.LENGTH_SHORT).show();
             } else {
-                nutzer.addBedarf(result);
+                nutzer.addData(result);
             }
         }
     }

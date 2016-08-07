@@ -23,7 +23,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -35,14 +34,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
-import java.io.InputStream;
 
 import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.models.Angebot;
+import de.awisus.refugeeaidleipzig.models.Nutzer;
+import de.awisus.refugeeaidleipzig.net.WebFlirt;
+import de.awisus.refugeeaidleipzig.util.BackgroundTask;
 import de.awisus.refugeeaidleipzig.util.Utility;
 
 /**
@@ -60,10 +64,14 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
     private EditText etPostal;
     private EditText etDescription;
 
+    private Bitmap imageBitmap;
+
+    private Nutzer nutzer;
     private Angebot angebot;
 
-    public static FragmentEditOffer newInstance(Angebot angebot) {
+    public static FragmentEditOffer newInstance(Nutzer nutzer, Angebot angebot) {
         FragmentEditOffer frag = new FragmentEditOffer();
+        frag.nutzer = nutzer;
         frag.angebot = angebot;
         return frag;
     }
@@ -78,12 +86,13 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
         Dialog dialog = builder.create();
 
         initView(view);
-        setListeners(view);
 
         if(angebot == null) {
             forNewOffer(dialog);
+            setListeners(view, true);
         } else {
             forExistingOffer(dialog);
+            setListeners(view, false);
         }
 
         return dialog;
@@ -97,7 +106,30 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
         etDescription = (EditText) view.findViewById(R.id.etDescription);
     }
 
-    private void setListeners(View view) {
+    private void forNewOffer(Dialog dialog) {
+        dialog.setTitle("New offer");
+    }
+
+    private void forExistingOffer(Dialog dialog) {
+        dialog.setTitle("Edit offer");
+        LatLng latLng = angebot.getLatLng();
+
+        Utility.getInstance().setIvImage(ivOffer, angebot.getImageData());
+
+        etTitel.setText(angebot.toString());
+        try {
+            String address = Utility.getInstance().latlngToStreet(latLng, getActivity());
+            String city    = Utility.getInstance().latlngToCity(latLng, getActivity());
+            etStreet.setText(address);
+            etPostal.setText(city);
+        } catch (IOException ex) {
+            Log.e("Set offer Address", ex.getMessage());
+        }
+
+        etDescription.setText(angebot.getContent());
+    }
+
+    private void setListeners(View view, final boolean neu) {
         ivOffer.setOnClickListener(this);
 
         FloatingActionButton fabSend;
@@ -109,38 +141,27 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
                 try {
                     LatLng coordinates = Utility.getInstance().getLocationFromAddress(address, getContext());
 
-                    Log.w("Coords", "" +coordinates.latitude +", " +coordinates.longitude);
-                } catch (IOException ex) {
-                    Log.e("Coords from address", "Wrong address format");
-                } catch (NullPointerException ex) {
-                    Log.e("Coords from address", "no address received");
+                    if(neu) {
+                        new OfferPost(getActivity(), R.string.meldung_hinzufuegen).execute(
+                                "title", "" + etTitel.getText(),
+                                "text", "" + etDescription.getText(),
+                                "image", "" + Utility.getInstance().imageToString(imageBitmap),
+                                "latitude", "" + coordinates.latitude,
+                                "longitude", "" + coordinates.longitude,
+                                "user_id", "" + nutzer.getId()
+                        );
+                    } else {
+
+                    }
+                } catch (IOException | NullPointerException ex) {
+                    Toast.makeText(
+                            getActivity(),
+                            R.string.warnung_address,
+                            Toast.LENGTH_SHORT
+                    ).show();
                 }
             }
         });
-    }
-
-    private void forNewOffer(Dialog dialog) {
-        dialog.setTitle("New offer");
-    }
-
-    private void forExistingOffer(Dialog dialog) {
-        dialog.setTitle("Edit offer");
-
-        Utility.getInstance().setIvImage(ivOffer, angebot.getImageData());
-
-        etTitel.setText(angebot.toString());
-        try {
-            etStreet.setText(
-                    Utility.getInstance().latlngToStreet(angebot.getLatLng(), getActivity())
-            );
-            etPostal.setText(
-                    Utility.getInstance().latlngToCity(angebot.getLatLng(), getActivity())
-            );
-        } catch (IOException ex) {
-            Log.e("Set offer Address", ex.getMessage());
-        }
-
-        etDescription.setText(angebot.getContent());
     }
 
     @Override
@@ -173,15 +194,37 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
             ivOffer.setImageResource(R.drawable.add_image);
         } else {
             try {
-                InputStream is = getActivity().getContentResolver().openInputStream(uri);
-                Bitmap bitmap = BitmapFactory.decodeStream(is);
-                assert is != null;
-                is.close();
-
-                ivOffer.setImageBitmap(bitmap);
+                imageBitmap = Utility.getInstance().uriToBitmap(getActivity(), uri);
+                ivOffer.setImageBitmap(imageBitmap);
             } catch (IOException ex) {
                 ivOffer.setImageResource(R.drawable.add_image);
-                Log.e("Set offer image", ex.getMessage());
+            }
+        }
+    }
+
+    private class OfferPost extends BackgroundTask<String, Integer, Angebot> {
+
+        private OfferPost(Activity context, int textID) {
+            super(context, textID);
+        }
+
+        @Override
+        protected Angebot doInBackground(String... params) {
+            try {
+                String antwort = WebFlirt.getInstance().post("offers_remote", params);
+                return Angebot.fromJSON(new JSONObject(antwort));
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void doPostExecute(Angebot result) {
+            if(result == null) {
+                Toast.makeText(context, R.string.warnung_bedarf_vorhanden, Toast.LENGTH_SHORT).show();
+            } else {
+                nutzer.addData(result);
+                dismiss();
             }
         }
     }

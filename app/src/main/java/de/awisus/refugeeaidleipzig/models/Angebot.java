@@ -46,8 +46,8 @@ public class Angebot extends ImageDataObject implements ILocationDataObject {
         angebot.content         = json.getString("text");
         angebot.imageData       = json.getString("image");
         angebot.latLng = new LatLng(
-                json.getDouble("longitude"),
-                json.getDouble("latitude")
+                json.getDouble("latitude"),
+                json.getDouble("longitude")
         );
 
         // Better trim Strings, perform rid of white spaces

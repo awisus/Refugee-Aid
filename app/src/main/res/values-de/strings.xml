@@ -98,4 +98,5 @@
     <string name="label_street">Straße</string>
     <string name="label_title">Titel</string>
     <string name="titel_select_image">Bild wählen</string>
+    <string name="warnung_address">Bitte gültige Adresse angeben</string>
 </resources>

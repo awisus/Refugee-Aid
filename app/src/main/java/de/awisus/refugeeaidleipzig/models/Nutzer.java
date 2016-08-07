@@ -99,13 +99,13 @@ public class Nutzer extends IDObject {
      // Methods /////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    public void addBedarf(Bedarf bedarf) {
-        this.data.add(bedarf);
+    public void addData(ImageDataObject data) {
+        this.data.add(data);
         setChanged();
         notifyObservers();
     }
 
-    public void loescheBedarf(int id) {
+    public void deleteData(int id) {
         data.remove(id);
         setChanged();
         notifyObservers();

@@ -7,13 +7,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,11 +50,32 @@ public class Utility {
 
     public Bitmap stringToImage(String imageData) throws IllegalArgumentException {
         if(imageData != null) {
-            byte[] decodedString = Base64.decode(imageData, Base64.DEFAULT);
-            return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            byte[] byteArray = Base64.decode(imageData, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         } else {
             return null;
         }
+    }
+
+    public String imageToString(Bitmap bitmap) throws IllegalArgumentException {
+        if(bitmap != null) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+
+            byte[] byteArray = byteArrayOutputStream .toByteArray();
+            return Base64.encodeToString(byteArray, Base64.DEFAULT);
+        } else {
+            return null;
+        }
+    }
+
+    public Bitmap uriToBitmap(Context context, Uri uri) throws IOException {
+        InputStream is = context.getContentResolver().openInputStream(uri);
+        Bitmap bitmap = BitmapFactory.decodeStream(is);
+        assert is != null;
+        is.close();
+
+        return bitmap;
     }
 
     public LatLng getLocationFromAddress(String strAddress, Context context) throws IOException {
@@ -95,9 +119,7 @@ public class Utility {
         );
 
         if (addresses != null && addresses.size() > 0) {
-            String address = addresses.get(0).getAddressLine(0);
-
-            return address;
+            return addresses.get(0).getAddressLine(0);
         }
 
         return null;

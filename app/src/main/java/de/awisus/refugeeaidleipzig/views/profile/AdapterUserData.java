@@ -40,9 +40,26 @@ public class AdapterUserData extends SuperAdapter<ImageDataObject> {
     protected void doExtraBits(int position, View view) {
         final ImageDataObject data = liste.get(position);
 
-        FloatingActionButton fabEdit = (FloatingActionButton) view.findViewById(R.id.fab_edit);
+        ImageView ivBild  = (ImageView) view.findViewById(R.id.ivBild);
+        ivBild.setImageBitmap(
+                Utility.getInstance().stringToImage(data.getImageData())
+        );
+
+        FloatingActionButton fabEdit  = (FloatingActionButton) view.findViewById(R.id.fab_edit);
+        FloatingActionButton fabMinus = (FloatingActionButton) view.findViewById(R.id.fab_minus);
+
         if(nutzer.isRefugee()) {
             fabEdit.setVisibility(View.GONE);
+            fabMinus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int id = data.getId();
+
+                    if(data instanceof Bedarf) {
+                        new BedarfDelete(activity, R.string.meldung_entfernen).execute("id", "" + id);
+                    }
+                }
+            });
         } else {
             fabEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -50,31 +67,21 @@ public class AdapterUserData extends SuperAdapter<ImageDataObject> {
                     Angebot angebot = (Angebot) data;
 
                     FragmentEditOffer fragmentEditOffer;
-                    fragmentEditOffer = FragmentEditOffer.newInstance(angebot);
+                    fragmentEditOffer = FragmentEditOffer.newInstance(nutzer, angebot);
                     fragmentEditOffer.show(activity.getSupportFragmentManager(), "Bearbeite Angebot");
                 }
             });
-        }
-
-        ImageView ivBild  = (ImageView) view.findViewById(R.id.ivBild);
-        ivBild.setImageBitmap(
-                Utility.getInstance().stringToImage(data.getImageData())
-        );
-
-        FloatingActionButton fabMinus;
-        fabMinus = (FloatingActionButton) view.findViewById(R.id.fab_minus);
-        fabMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(view.getId() == R.id.fab_minus) {
+            fabMinus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                     int id = data.getId();
 
-                    if(data instanceof Bedarf) {
-                        new BedarfDelete(activity, R.string.meldung_entfernen).execute("id", "" + id);
+                    if(data instanceof Angebot) {
+                        new OfferDelete(activity, R.string.meldung_entfernen).execute("id", "" + id);
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     private class BedarfDelete extends BackgroundTask<String, Integer, Integer> {
@@ -98,7 +105,33 @@ public class AdapterUserData extends SuperAdapter<ImageDataObject> {
             if(result == null) {
                 Toast.makeText(context, R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
             } else {
-                nutzer.loescheBedarf(result);
+                nutzer.deleteData(result);
+            }
+        }
+    }
+
+    private class OfferDelete extends BackgroundTask<String, Integer, Integer> {
+
+        public OfferDelete(Activity context, int textID) {
+            super(context, textID);
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+            try {
+                String antwort = WebFlirt.getInstance().delete("offers_remote", params);
+                return Integer.parseInt(antwort);
+            } catch (Exception e){
+                return null;
+            }
+        }
+
+        @Override
+        protected void doPostExecute(Integer result) {
+            if(result == null) {
+                Toast.makeText(context, R.string.warnung_fehler, Toast.LENGTH_SHORT).show();
+            } else {
+                nutzer.deleteData(result);
             }
         }
     }

@@ -211,7 +211,7 @@ public class FragmentProfil extends Fragment implements Observer {
                             nutzer, model.getKategorien().asVector())
                             .show(getFragmentManager(), "Kategorien");
                 } else {
-                    FragmentEditOffer.newInstance(null)
+                    FragmentEditOffer.newInstance(nutzer, null)
                             .show(getFragmentManager(), "Offer");
                 }
                 return true;
