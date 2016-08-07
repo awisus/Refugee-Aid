@@ -207,7 +207,7 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
             ivOffer.setImageResource(R.drawable.add_image);
         } else {
             try {
-                imageBitmap = Utility.getInstance().uriToBitmap(getActivity(), uri, ivOffer.getWidth());
+                imageBitmap = Utility.getInstance().uriToBitmap(getActivity(), uri);
                 ivOffer.setImageBitmap(imageBitmap);
             } catch (IOException ex) {
                 ivOffer.setImageResource(R.drawable.add_image);

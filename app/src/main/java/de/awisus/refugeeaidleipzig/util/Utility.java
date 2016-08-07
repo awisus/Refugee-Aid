@@ -27,6 +27,8 @@ import java.util.Locale;
  */
 public class Utility {
 
+    public static final int SCALE = 410;
+
     public static final Utility INSTANCE = new Utility();
 
     private Utility() {}
@@ -67,13 +69,19 @@ public class Utility {
         }
     }
 
-    public Bitmap uriToBitmap(Context context, Uri uri, int size) throws IOException {
+    public Bitmap uriToBitmap(Context context, Uri uri) throws IOException {
         InputStream is = context.getContentResolver().openInputStream(uri);
         Bitmap bitmap = BitmapFactory.decodeStream(is);
         assert is != null;
         is.close();
 
-        return Bitmap.createScaledBitmap(bitmap, size, size, false);
+        float ratio = Math.min(
+                (float) SCALE / bitmap.getWidth(),
+                (float) SCALE / bitmap.getHeight());
+        int width = Math.round((float) ratio * bitmap.getWidth());
+        int height = Math.round((float) ratio * bitmap.getHeight());
+
+        return Bitmap.createScaledBitmap(bitmap, width, height, false);
     }
 
     public LatLng getLocationFromAddress(String strAddress, Context context) throws IOException {
