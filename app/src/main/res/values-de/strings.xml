@@ -49,10 +49,10 @@
 
     <string name="button_konto_neu">Neu? Hier Konto erstellen</string>
 
-    <string name="string_keine_eintraege">KEINE EINTRÄGE</string>
-    <string name="string_bedarfe">Bedarf: </string>
-    <string name="string_plaetze">Plätze: </string>
-    <string name="string_bewohner">Bewohner: </string>
+    <string name="label_keine_eintraege">KEINE EINTRÄGE</string>
+    <string name="label_bedarfe">Bedarf</string>
+    <string name="label_plaetze">Plätze</string>
+    <string name="label_bewohner">Bewohner</string>
 
     <string name="label_unterkunft">Unterkunft</string>
     <string name="label_name">Nutzername</string>

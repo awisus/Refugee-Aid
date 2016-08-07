@@ -52,7 +52,6 @@ import de.awisus.refugeeaidleipzig.models.ILocationDataObject;
 import de.awisus.refugeeaidleipzig.models.Nutzer;
 import de.awisus.refugeeaidleipzig.models.Unterkunft;
 import de.awisus.refugeeaidleipzig.util.BackgroundTask;
-import de.awisus.refugeeaidleipzig.views.FragmentInfo;
 
 /**
  * Created on 11.01.16.
@@ -169,7 +168,8 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
             Nutzer nutzer = model.getNutzer();
             if(nutzer.isRefugee()) {
                 karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                        nutzer.getUnterkunft().getLatLng(), 11f));
+                        nutzer.getUnterkunft().getLatLng(), 11f)
+                );
             } else {
                 defaultZoom();
             }
@@ -183,7 +183,9 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
 
     private void defaultZoom() {
         // Zoom to arbitrary accommodation
-        karte.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.5, 10.5), 5.8f));
+        karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                new LatLng(51.5, 10.5), 5.8f)
+        );
     }
 
     private void setMarkers() {
@@ -217,35 +219,8 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     }
 
     private void showAccommodationInfo(Unterkunft unterkunft) {
-        /*
-         * Build up the details string to be shown in a separate window.
-         * Example format:
-         *
-         *   Spaces: 30
-         *   Residents: 28
-         *
-         *   Needs: Football, Jacket, Toothbrush
-         */
-
-        String detail;
-        detail  = getResources().getString(R.string.string_plaetze) + " ";
-        detail += unterkunft.getGroesse();
-        detail += "\n";
-        detail += getResources().getString(R.string.string_bewohner) + " ";
-        detail += unterkunft.getBewohner();
-
-        detail += "\n\n";
-
-        detail += unterkunft.hatBedarf()
-                ? getResources().getString(R.string.string_bedarfe) + "\n"
-                + unterkunft.getBedarfeAlsString()
-                : getResources().getString(R.string.string_keine_eintraege);
-
-        // Call a new info fragment with name and details about the accommodation
-        FragmentInfo.newInstance(
-                unterkunft.toString(),
-                detail
-        ).show(getActivity().getSupportFragmentManager(), unterkunft.toString());
+        FragmentAccommodationInfo.newInstance(unterkunft)
+                .show(getActivity().getSupportFragmentManager(), unterkunft.toString());
     }
 
     @Override

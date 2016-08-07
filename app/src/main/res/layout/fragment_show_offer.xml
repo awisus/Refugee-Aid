@@ -15,7 +15,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:autoLink="email"
         android:text="@string/label_description"
-        android:id="@+id/tvHeaderContent"
+        android:id="@+id/tvHeaderDescription"
         android:layout_below="@+id/ivImage"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -58,7 +58,7 @@
         android:text="[INHALT]"
         android:id="@+id/tvContent"
         android:textColor="@color/abc_primary_text_material_light"
-        android:layout_below="@+id/tvHeaderContent"
+        android:layout_below="@+id/tvHeaderDescription"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         />

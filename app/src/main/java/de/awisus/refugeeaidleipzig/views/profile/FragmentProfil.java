@@ -167,7 +167,7 @@ public class FragmentProfil extends Fragment implements Observer {
             }
 
             if(nutzer.hatBedarf()) tvLeer.setText("");
-            else tvLeer.setText(R.string.string_keine_eintraege);
+            else tvLeer.setText(R.string.label_keine_eintraege);
 
             nutzer.addObserver(this);
         }
@@ -193,7 +193,7 @@ public class FragmentProfil extends Fragment implements Observer {
     public void update(Observable observable, Object data) {
         adapter.notifyDataSetChanged();
         if(nutzer.hatBedarf()) tvLeer.setText("");
-        else tvLeer.setText(R.string.string_keine_eintraege);
+        else tvLeer.setText(R.string.label_keine_eintraege);
 
         tvName.setText(nutzer.getName());
     }

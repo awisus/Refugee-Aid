@@ -64,11 +64,10 @@
     <string name="dialog_ok">Okay</string>
     <string name="dialog_signup">Create account</string>
 
-    <string name="string_keine_eintraege">NO ENTRIES</string>
-    <string name="string_bedarfe">Needs:</string>
-    <string name="string_plaetze">Space:</string>
-    <string name="string_bewohner">Residents:</string>
-
+    <string name="label_keine_eintraege">NO ENTRIES</string>
+    <string name="label_bedarfe">Needs</string>
+    <string name="label_plaetze">Space</string>
+    <string name="label_bewohner">Residents</string>
     <string name="label_unterkunft">Accommodation</string>
     <string name="label_name">User name</string>
     <string name="label_mail">E-mail</string>
