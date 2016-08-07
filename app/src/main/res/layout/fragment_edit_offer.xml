@@ -104,9 +104,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_file_upload_white_24dp"
-        android:layout_alignTop="@+id/tvDescription"
-        android:layout_alignRight="@+id/etDescription"
-        android:layout_alignEnd="@+id/etDescription"
-        android:layout_marginTop="-8dp"/>
+        android:layout_alignTop="@+id/tvAddress"
+        android:layout_alignRight="@+id/etStreet"
+        android:layout_alignEnd="@+id/etStreet"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="-6dp"/>
 
 </RelativeLayout>

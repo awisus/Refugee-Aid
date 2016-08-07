@@ -3,6 +3,12 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:padding="@dimen/frag_margin">
 
+    <ImageView
+        android:layout_width="132dp"
+        android:layout_height="132dp"
+        android:id="@+id/ivImage"
+        android:layout_alignParentTop="true"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +22,7 @@
         android:layout_marginTop="@dimen/frag_margin"
         android:textColor="@color/abc_primary_text_material_light"
         android:textStyle="bold"
-        />
+        android:layout_marginBottom="4dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,19 +31,12 @@
         android:autoLink="email"
         android:text="@string/label_address"
         android:id="@+id/tvHeaderAddress"
-        android:layout_below="@+id/tvContent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="@dimen/frag_margin"
         android:textColor="@color/abc_primary_text_material_light"
-        android:textStyle="bold"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ivImage"
-        android:layout_alignParentTop="true"
-        />
+        android:textStyle="bold"
+        android:layout_above="@+id/tvAddress"
+        android:layout_alignLeft="@+id/tvAddress"
+        android:layout_alignStart="@+id/tvAddress"
+        android:layout_marginBottom="4dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,10 +46,9 @@
         android:text="[ADRESSE]"
         android:id="@+id/tvAddress"
         android:textColor="@color/abc_primary_text_material_light"
-        android:layout_below="@+id/tvHeaderAddress"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="4dp"/>
+        android:layout_alignBottom="@+id/ivImage"
+        android:layout_marginLeft="@dimen/frag_margin"
+        android:layout_toRightOf="@+id/ivImage"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,6 +61,6 @@
         android:layout_below="@+id/tvHeaderContent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="4dp"/>
+        />
 
 </RelativeLayout>
