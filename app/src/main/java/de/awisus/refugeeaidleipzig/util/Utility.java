@@ -38,7 +38,7 @@ public class Utility {
         return ProgressDialog.show(activity, null, nachricht, true, false);
     }
 
-    public void setIvImage(ImageView ivImage, String imageData, int size) throws IllegalArgumentException {
+    public void setIvImage(ImageView ivImage, String imageData) throws IllegalArgumentException {
         try {
             ivImage.setImageBitmap(stringToImage(imageData));
         } catch (IllegalArgumentException ex) {

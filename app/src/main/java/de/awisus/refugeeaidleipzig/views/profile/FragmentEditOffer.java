@@ -114,7 +114,7 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
         dialog.setTitle("Edit offer");
         LatLng latLng = angebot.getLatLng();
 
-        Utility.getInstance().setIvImage(ivOffer, angebot.getImageData(), ivOffer.getWidth());
+        Utility.getInstance().setIvImage(ivOffer, angebot.getImageData());
 
         etTitel.setText(angebot.toString());
         try {
