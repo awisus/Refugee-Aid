@@ -23,6 +23,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -99,7 +100,30 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
             setListeners(view, false);
         }
 
+        requestPermissions();
         return dialog;
+    }
+
+    private void requestPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.System.canWrite(getActivity())) {
+                getActivity().requestPermissions(new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE}, 2909
+                );
+            }
+        }
+    }
+
+    private boolean havePermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int hasWriteContactsPermission = getActivity().checkSelfPermission(
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+            );
+            return hasWriteContactsPermission == PackageManager.PERMISSION_GRANTED;
+        }
+
+        return true;
     }
 
     private void initView(View view) {
@@ -183,17 +207,13 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.System.canWrite(getActivity())) {
-                getActivity().requestPermissions(new String[]{
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE}, 2909
-                );
-
+        if(havePermissions()) {
+            startChooser();
+        } else {
+            requestPermissions();
+            if(havePermissions()) {
                 startChooser();
             }
-        } else {
-            startChooser();
         }
     }
 
