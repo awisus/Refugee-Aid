@@ -19,13 +19,16 @@
 
 package de.awisus.refugeeaidleipzig.views.profile;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -180,6 +183,21 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.System.canWrite(getActivity())) {
+                getActivity().requestPermissions(new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE}, 2909
+                );
+
+                startChooser();
+            }
+        } else {
+            startChooser();
+        }
+    }
+
+    private void startChooser() {
         Intent intentGalerie;
         intentGalerie = new Intent(Intent.ACTION_PICK);
         intentGalerie.setType("image/*");
@@ -193,7 +211,6 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
 
         startActivityForResult(chooser, WAEHLE_BILD);
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
