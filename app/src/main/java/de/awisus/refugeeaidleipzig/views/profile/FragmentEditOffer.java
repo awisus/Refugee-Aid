@@ -135,11 +135,12 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
     }
 
     private void forNewOffer(Dialog dialog) {
-        dialog.setTitle("New offer");
+        dialog.setTitle(R.string.titel_neues_angebot);
     }
 
     private void forExistingOffer(Dialog dialog) {
-        dialog.setTitle("Edit offer");
+        dialog.setTitle(R.string.titel_bearbeite_angebot);
+
         LatLng latLng = angebot.getLatLng();
 
         ImageUtility.setIvImage(ivOffer, angebot.getImageData());

@@ -103,4 +103,6 @@
     <string name="titel_select_image">Bild wählen</string>
     <string name="warnung_address">Bitte gültige Adresse angeben</string>
     <string name="warnung_title">Bitte einen Titel angeben</string>
+    <string name="titel_bearbeite_angebot">Bearbeite Angebot</string>
+    <string name="titel_neues_angebot">Neues Angebot</string>
 </resources>
