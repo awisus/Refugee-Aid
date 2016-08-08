@@ -217,9 +217,6 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
             startChooser();
         } else {
             requestPermissions();
-            if(havePermissions()) {
-                startChooser();
-            }
         }
     }
 
