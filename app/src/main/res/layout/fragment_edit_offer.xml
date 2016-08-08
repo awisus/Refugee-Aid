@@ -96,7 +96,8 @@
         android:id="@+id/etDescription"
         android:layout_below="@+id/tvDescription"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:hint="@string/label_description_details"/>
 
     <android.support.design.widget.FloatingActionButton
         app:backgroundTint="@color/colorPrimary"

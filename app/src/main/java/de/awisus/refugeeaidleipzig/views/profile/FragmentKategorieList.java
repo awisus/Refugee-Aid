@@ -93,7 +93,7 @@ public class FragmentKategorieList extends DialogFragment implements AdapterView
         @Override
         protected Bedarf doInBackground(String... params) {
             try {
-                String antwort = WebFlirt.getInstance().post("needs_remote", params);
+                String antwort = WebFlirt.post("needs_remote", params);
                 return Bedarf.fromJSON(new JSONObject(antwort));
             } catch (Exception e) {
                 return null;

@@ -163,7 +163,7 @@ public class FragmentSignup extends SuperFragmentEditUser {
         @Override
         protected Nutzer doInBackground(String... params) {
             try {
-                String antwort = WebFlirt.getInstance().post("users_remote", params);
+                String antwort = WebFlirt.post("users_remote", params);
                 return Nutzer.fromJSON(model.getUnterkuenfte(), new JSONObject(antwort));
             } catch (JSONException e) {
                 return null;

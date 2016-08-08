@@ -225,7 +225,7 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
         @Override
         protected Angebot doInBackground(String... params) {
             try {
-                String antwort = WebFlirt.getInstance().post("offers_remote", params);
+                String antwort = WebFlirt.post("offers_remote", params);
                 return Angebot.fromJSON(new JSONObject(antwort));
             } catch (Exception e) {
                 return null;
@@ -251,7 +251,7 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
 
         @Override
         protected Angebot doInBackground(String... params) {
-            String antwort = WebFlirt.getInstance().patch("offers_remote", params);
+            String antwort = WebFlirt.patch("offers_remote", params);
             return antwort.equals("OK") ? angebot : null;
         }
 

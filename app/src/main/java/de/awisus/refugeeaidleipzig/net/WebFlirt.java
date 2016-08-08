@@ -11,19 +11,12 @@ import java.util.concurrent.ExecutionException;
  */
 public class WebFlirt {
 
-    // public static final String SERVER_URL = "https://refugee-aid.herokuapp.com/";
-    public static final String SERVER_URL = "http://192.168.44.208:3000/";
-    public static final WebFlirt INSTANCE = new WebFlirt();
-
+    public static final String SERVER_URL = "https://refugee-aid.herokuapp.com/";
 
     private WebFlirt() {}
 
-    public static WebFlirt getInstance() {
-        return INSTANCE;
-    }
 
-
-    public String get(String path) throws JSONException, InterruptedException, ExecutionException {
+    public static String get(String path) throws JSONException, InterruptedException, ExecutionException {
         path = path.replaceAll(" ", "%20");
 
         HTTPGet httpGet;
@@ -33,7 +26,7 @@ public class WebFlirt {
     }
 
 
-    public String patch(String path, String... parameter) {
+    public static String patch(String path, String... parameter) {
         path = path.replaceAll(" ", "%20");
 
         HTTPPatch httpPatch;
@@ -46,7 +39,7 @@ public class WebFlirt {
         return httpPatch.perform(path);
     }
 
-    public String post(String path, String... parameter) {
+    public static String post(String path, String... parameter) {
         path = path.replaceAll(" ", "%20");
 
         HTTPPost httpPost;
@@ -59,7 +52,7 @@ public class WebFlirt {
         return httpPost.perform(path);
     }
 
-    public String delete(String path, String... parameter) {
+    public static String delete(String path, String... parameter) {
         path = path.replaceAll(" ", "%20");
 
         HTTPDelete httpDelete;

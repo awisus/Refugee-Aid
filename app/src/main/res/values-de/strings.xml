@@ -59,6 +59,9 @@
     <string name="label_mail">E-Mail</string>
     <string name="label_passwort">Passwort</string>
     <string name="label_confirmation">Passwort wiederholen</string>
+    <string name="label_description_details">
+        Bitte geben Sie Details zu Ihren Angebot und Kontakdaten an
+    </string>
 
     <string name="warnung_name">Nutzername zu lang</string>
     <string name="warnung_mail">E-Mail-Adresse ungültig</string>

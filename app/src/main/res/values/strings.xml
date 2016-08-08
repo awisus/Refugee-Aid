@@ -78,6 +78,9 @@
     <string name="label_street">Street</string>
     <string name="label_city">City</string>
     <string name="label_description">Description</string>
+    <string name="label_description_details">
+        Please provide details about your offer and how to contact you
+    </string>
 
     <string name="warnung_name">User name too long</string>
     <string name="warnung_mail">E mail adresse invalid</string>

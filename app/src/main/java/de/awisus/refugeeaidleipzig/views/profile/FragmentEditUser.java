@@ -188,7 +188,7 @@ public class FragmentEditUser extends SuperFragmentEditUser {
 
         @Override
         protected Nutzer doInBackground(String... params) {
-            String antwort = WebFlirt.getInstance().patch("users_remote", params);
+            String antwort = WebFlirt.patch("users_remote", params);
             return antwort.equals("OK") ? nutzer : null;
         }
 
@@ -223,7 +223,7 @@ public class FragmentEditUser extends SuperFragmentEditUser {
 
         @Override
         protected String doInBackground(String... params) {
-            String antwort = WebFlirt.getInstance().delete("users_remote", params);
+            String antwort = WebFlirt.delete("users_remote", params);
             return antwort.equals("OK") ? antwort : null;
         }
 

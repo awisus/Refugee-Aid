@@ -316,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String name = params[0].getName();
                 String passwort = params[0].getPasswort();
 
-                String antwort = WebFlirt.getInstance().get("getUser/" + name + "/" + passwort);
+                String antwort = WebFlirt.get("getUser/" + name + "/" + passwort);
 
                 return Nutzer.fromJSON(model.getUnterkuenfte(), new JSONObject(antwort));
             } catch (JSONException | InterruptedException | ExecutionException e) {

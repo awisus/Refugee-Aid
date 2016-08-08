@@ -93,7 +93,7 @@ public class AdapterUserData extends SuperAdapter<ImageDataObject> {
         @Override
         protected Integer doInBackground(String... params) {
             try {
-                String antwort = WebFlirt.getInstance().delete("needs_remote", params);
+                String antwort = WebFlirt.delete("needs_remote", params);
                 return Integer.parseInt(antwort);
             } catch (Exception e){
                 return null;
@@ -119,7 +119,7 @@ public class AdapterUserData extends SuperAdapter<ImageDataObject> {
         @Override
         protected Integer doInBackground(String... params) {
             try {
-                String antwort = WebFlirt.getInstance().delete("offers_remote", params);
+                String antwort = WebFlirt.delete("offers_remote", params);
                 return Integer.parseInt(antwort);
             } catch (Exception e){
                 return null;
