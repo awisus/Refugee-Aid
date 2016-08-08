@@ -86,6 +86,7 @@
     <string name="warnung_mail">E mail adresse invalid</string>
     <string name="warnung_passwort">Password too short</string>
     <string name="warnung_confirmation">Passwords not matching</string>
+    <string name="warnung_title">Please enter a title</string>
     <string name="warnung_address">Please enter valid address</string>
 
     <string name="warnung_netz">Activate network and restart</string>

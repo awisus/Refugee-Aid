@@ -167,6 +167,11 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
             public void onClick(View view) {
                 String address = etStreet.getText() +", " +etPostal.getText();
                 try {
+                    if(etTitel.getText() == null || etTitel.getText().length() == 0) {
+                        Toast.makeText(getActivity(), R.string.warnung_title, Toast.LENGTH_SHORT ).show();
+                        return;
+                    }
+
                     LatLng coordinates = LocationUtility.getLocationFromAddress(address, getContext());
 
                     if(neu) {
