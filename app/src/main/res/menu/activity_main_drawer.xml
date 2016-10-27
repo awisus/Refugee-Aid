@@ -5,11 +5,11 @@
         <menu>
             <item
                 android:id="@+id/nav_profil"
-                android:icon="@android:drawable/ic_menu_myplaces"
+                android:icon="@drawable/ic_account_circle_white_24dp"
                 android:title="@string/nav_profil" />
             <item
                 android:id="@+id/nav_karte"
-                android:icon="@android:drawable/ic_dialog_map"
+                android:icon="@drawable/ic_map_white_24dp"
                 android:title="@string/nav_karte" />
         </menu>
     </item>
@@ -18,7 +18,7 @@
         <menu>
             <item
                 android:id="@+id/nav_ueber"
-                android:icon="@android:drawable/ic_menu_info_details"
+                android:icon="@drawable/ic_info_outline_white_24dp"
                 android:title="@string/nav_titel_info" />
         </menu>
     </item>
