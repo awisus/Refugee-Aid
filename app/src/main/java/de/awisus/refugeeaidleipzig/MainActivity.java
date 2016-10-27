@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private class Initialiser extends BackgroundTask<String, Integer, ViewModel> {
 
-        public Initialiser(Activity context, int textID) {
+        Initialiser(Activity context, int textID) {
             super(context, textID);
         }
 

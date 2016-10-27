@@ -2,14 +2,12 @@
     <string name="google_app_id">477637456018</string>
     <string name="app_name">Refugee Aid</string>
 
-    <string name="about1">
-        <b>Refugee</b> Aid the platform for bringing together refugee people and
-        helping citizens.
+    <string name="about1"><b>Refugee</b> Aid the platform for bringing together
+        refugee people and helping citizens.
     </string>
-    <string name="about2">
-        You are refugee? Feel welcome and <b>register</b> for free! Sign up with
-        a user account and create your persononal and clearly structured list of
-        needs.
+    <string name="about2">You are refugee? Feel welcome and <b>register</b> for
+        free! Sign up with a user account and create your persononal and clearly
+        structured list of needs.
     </string>
     <string name="about_from">With ♥ from Leipzig by Jens Awisus - 2016</string>
     <string name="about_contact" translatable="false">Mail: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a></string>

@@ -2,17 +2,15 @@
     <string name="google_app_id">477637456018</string>
     <string name="app_name">Refugee Aid</string>
 
-    <string name="about1">
-        <b>Refugee Aid</b> ist die Plattform, die Geflüchtete und helfende
-        Bürger zusammenbringt.
+    <string name="about1"><b>Refugee Aid</b> ist die Plattform, die Geflüchtete
+        und helfende Bürger zusammenbringt.
     </string>
-    <string name="about2">
-        Sie sind Geflüchteter? Seien Sie willkommen und <b>registrieren</b> Sie
-        sich kostenlos! Melden Sie sich mit einem Nutzerkonto an und erstellen
-        Sie Ihre persönliche und strukturierte Bedarfsliste.
+    <string name="about2">Sie sind Geflüchteter? Seien Sie willkommen und
+        <b>registrieren</b> Sie sich kostenlos! Melden Sie sich mit einem
+        Nutzerkonto an und erstellen Sie Ihre persönliche und strukturierte
+        Bedarfsliste.
     </string>
     <string name="about_from">Mit ♥ aus Leipzig von Jens Awisus - 2016</string>
-    <string name="about_contact" translatable="false">Mail: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a></string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
