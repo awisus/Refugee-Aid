@@ -50,7 +50,7 @@ public class FragmentKategorieList extends DialogFragment implements AdapterView
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_list_kategorie, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialogue_list_kategorie, null);
 
         adapter = new AdapterCategories(getActivity(), android.R.layout.simple_list_item_1, liste, R.layout.entry_kategorie);
 

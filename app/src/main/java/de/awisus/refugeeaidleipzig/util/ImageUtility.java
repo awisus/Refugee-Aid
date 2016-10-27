@@ -1,9 +1,12 @@
 package de.awisus.refugeeaidleipzig.util;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
@@ -15,11 +18,11 @@ import java.io.InputStream;
 /**
  * Created on 07.08.16.
  *
- * @author jens
+ * @author Jens Awisus
  */
 public class ImageUtility {
 
-    public static final int SCALE = 410;
+    private static final int SCALE = 512;
 
     private ImageUtility() {}
 
@@ -64,6 +67,45 @@ public class ImageUtility {
         int width = Math.round(ratio * bitmap.getWidth());
         int height = Math.round(ratio * bitmap.getHeight());
 
-        return Bitmap.createScaledBitmap(bitmap, width, height, false);
+        // get orientation of bitmap and get degrees for rotation
+
+        int rotation = getOrientation(context, uri);
+
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, width, height, true);
+        Bitmap rotatedBitmap = null;
+
+        // if rotation > 0 -> rotate bitmap
+
+        if (rotation != 0) {
+            // we may be needing the bitmap to rotate
+            Matrix matrix = new Matrix();
+            matrix.postRotate(rotation);
+
+            rotatedBitmap = Bitmap.createBitmap(
+                    scaledBitmap , 0, 0,
+                    scaledBitmap.getWidth(),
+                    scaledBitmap.getHeight(),
+                    matrix, true);
+
+            scaledBitmap.recycle();
+        }
+
+        return rotatedBitmap == null ? scaledBitmap : rotatedBitmap;
+    }
+
+    private static int getOrientation(Context context, Uri uri) {
+        Cursor cursor = context.getContentResolver().query(uri,
+                new String[] { MediaStore.Images.ImageColumns.ORIENTATION },
+                null, null, null);
+
+        int result = -1;
+        if (null != cursor) {
+            if (cursor.moveToFirst()) {
+                result = cursor.getInt(0);
+            }
+            cursor.close();
+        }
+
+        return result;
     }
 }

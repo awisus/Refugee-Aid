@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="@dimen/frag_margin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/label_name"
+        android:textAllCaps="true"
+        android:id="@+id/tvName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textStyle="normal|bold"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etName"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tvName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/label_passwort"
+        android:textAllCaps="true"
+        android:id="@+id/tvPasswort"
+        android:layout_below="@+id/etName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:textStyle="normal|bold"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etPassword"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:inputType="textPassword"
+        android:layout_below="@+id/tvPasswort"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin" />
+
+    <Button
+        style="?android:attr/borderlessButtonStyle"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_konto_neu"
+        android:id="@+id/btNeu"
+        android:layout_below="@+id/btAnmelden"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
+    <Button
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_anmelden"
+        android:id="@+id/btAnmelden"
+        android:layout_below="@+id/etPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/frag_margin" />
+
+</RelativeLayout>

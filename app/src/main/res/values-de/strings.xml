@@ -2,28 +2,17 @@
     <string name="google_app_id">477637456018</string>
     <string name="app_name">Refugee Aid</string>
 
-    <string name="info">
+    <string name="about1">
         <b>Refugee Aid</b> ist die Plattform, die Geflüchtete und helfende
         Bürger zusammenbringt.
-        \n
-        \n
-        Zwischen Profil und Karte wechseln.
-        \n
+    </string>
+    <string name="about2">
         Sie sind Geflüchteter? Seien Sie willkommen und <b>registrieren</b> Sie
         sich kostenlos! Melden Sie sich mit einem Nutzerkonto an und erstellen
         Sie Ihre persönliche und strukturierte Bedarfsliste.
-        \n
-        \n
-        Finden Sie umliegende <b>Unterkünfte</b>.
-        \n
-        Nutzen Sie, dass Sie alle Unterkünfte in Ihrer Umgebung finden und
-        beginnen Sie, zu teilen! Bereit, hinauszugehen und zu helfen.
-        \n
-        \n
-        Hergestellt von J. Awisus, Leipzig (2016)
-        \n
-        Kontakt: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a>
     </string>
+    <string name="about_from">Mit ♥ aus Leipzig von Jens Awisus - 2016</string>
+    <string name="about_contact" translatable="false">Mail: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a></string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -105,4 +94,7 @@
     <string name="warnung_title">Bitte einen Titel angeben</string>
     <string name="titel_bearbeite_angebot">Bearbeite Angebot</string>
     <string name="titel_neues_angebot">Neues Angebot</string>
+    <string name="button_ok">In Ordnung</string>
+    <string name="button_abort">Abbrechen</string>
+    <string name="button_send">Absenden</string>
 </resources>

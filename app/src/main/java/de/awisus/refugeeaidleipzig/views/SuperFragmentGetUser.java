@@ -50,7 +50,7 @@ public abstract class SuperFragmentGetUser extends DialogFragment {
 
     protected abstract class NutzerGet extends BackgroundTask<String, Integer, Nutzer> {
 
-        protected LoginData login;
+        private LoginData login;
 
         protected NutzerGet(Activity context, int textID, LoginData login) {
             super(context, textID);

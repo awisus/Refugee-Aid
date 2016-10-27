@@ -20,6 +20,7 @@
 package de.awisus.refugeeaidleipzig.views.profile;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -79,6 +80,22 @@ public class FragmentEditUser extends SuperFragmentEditUser {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        final AlertDialog dialog = (AlertDialog) getDialog();
+
+        if(dialog != null) {
+            Button positiveButton = dialog.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    patch();
+                }
+            });
+        }
+    }
+
+    @Override
     protected void initElements(View view) {
         super.initElements(view);
 
@@ -133,14 +150,6 @@ public class FragmentEditUser extends SuperFragmentEditUser {
             }
         });
 
-        Button btExecute = (Button) view.findViewById(R.id.btExecute);
-        btExecute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                patch();
-            }
-        });
-
         Button btDeleteAccount = (Button) view.findViewById(R.id.btDeleteAccount);
         btDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,7 +190,7 @@ public class FragmentEditUser extends SuperFragmentEditUser {
 
         private LoginData login;
 
-        public NutzerPatch(Activity context, int textID, LoginData login) {
+        NutzerPatch(Activity context, int textID, LoginData login) {
             super(context, textID);
             this.login = login;
         }
@@ -217,7 +226,7 @@ public class FragmentEditUser extends SuperFragmentEditUser {
 
     private class NutzerDelete extends BackgroundTask<String, Integer, String> {
 
-        public NutzerDelete(Activity context, int textID) {
+        NutzerDelete(Activity context, int textID) {
             super(context, textID);
         }
 

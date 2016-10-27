@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent" android:layout_height="match_parent"
+                android:paddingEnd="@dimen/frag_margin"
+                android:paddingLeft="@dimen/frag_margin"
+                android:paddingRight="@dimen/frag_margin"
+                android:paddingStart="@dimen/frag_margin"
+                android:paddingTop="@dimen/frag_margin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/about1"
+        android:id="@+id/tv_content1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/about2"
+        android:id="@+id/tv_content2"
+        android:layout_below="@+id/tv_content1"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:autoLink="email"
+        android:text="@string/about_contact"
+        android:id="@+id/tv_contact"
+        android:layout_below="@+id/tv_content2"
+        android:layout_marginTop="@dimen/activity_margin"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/about_from"
+        android:id="@+id/tv_from"
+        android:layout_below="@+id/tv_contact"
+        android:layout_marginTop="@dimen/activity_margin"/>
+
+</RelativeLayout>

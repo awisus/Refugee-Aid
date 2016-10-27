@@ -2,28 +2,17 @@
     <string name="google_app_id">477637456018</string>
     <string name="app_name">Refugee Aid</string>
 
-    <string name="info">
+    <string name="about1">
         <b>Refugee</b> Aid the platform for bringing together refugee people and
         helping citizens.
-        \n
-        \n
-        Switch between Profile and Map.
-        \n
+    </string>
+    <string name="about2">
         You are refugee? Feel welcome and <b>register</b> for free! Sign up with
         a user account and create your persononal and clearly structured list of
         needs.
-        \n
-        \n
-        Find surrounding <b>accommodations</b>.
-        \n
-        Take advantage of knowing about refugee accommodations in your area and
-        start sharing! Be ready to get out and help.
-        \n
-        \n
-        Made by J. Awisus, Leipzig (2016)
-        \n
-        Contact: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a>
     </string>
+    <string name="about_from">With ♥ from Leipzig by Jens Awisus - 2016</string>
+    <string name="about_contact" translatable="false">Mail: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a></string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -48,6 +37,9 @@
     <string name="titel_bearbeite_angebot">Edit offer</string>
     <string name="titel_select_image">Select image</string>
 
+    <string name="button_ok">Okay</string>
+    <string name="button_send">Send</string>
+    <string name="button_abort">Abort</string>
     <string name="button_konto_neu">New? Create account here</string>
     <string name="button_bearbeiten">Edit</string>
     <string name="button_bearbeiten_fertig">Send</string>

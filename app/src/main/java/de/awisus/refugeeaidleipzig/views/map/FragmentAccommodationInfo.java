@@ -51,7 +51,7 @@ public class FragmentAccommodationInfo extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_show_accommodation, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialogue_show_accommodation, null);
 
         TextView tvAddress   = (TextView) view.findViewById(R.id.tvAddress);
         TextView tvSpace     = (TextView) view.findViewById(R.id.tvSpace);

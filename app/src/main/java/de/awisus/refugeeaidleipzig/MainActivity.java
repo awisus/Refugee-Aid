@@ -288,14 +288,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Show About Dialogue
         if(id == R.id.nav_ueber) {
 
-            String titel;
-            titel = getResources().getString(R.string.titel_ueber);
-            titel += " ";
-            titel += getResources().getString(R.string.app_name);
-            titel += " v" + BuildConfig.VERSION_NAME;
+            String titel = "Version " + BuildConfig.VERSION_NAME;
 
             FragmentInfo fragUeber =
-            FragmentInfo.newInstance(titel, R.string.info);
+            FragmentInfo.newInstance(titel);
             fragUeber.show(getSupportFragmentManager(), titel);
         }
 
@@ -306,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private class NutzerGet extends BackgroundTask<LoginData, Integer, Nutzer> {
 
-        protected NutzerGet(Activity context, int textID) {
+        NutzerGet(Activity context, int textID) {
             super(context, textID);
         }
 

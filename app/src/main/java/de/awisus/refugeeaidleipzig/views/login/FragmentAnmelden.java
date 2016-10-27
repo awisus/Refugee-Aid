@@ -22,6 +22,7 @@ package de.awisus.refugeeaidleipzig.views.login;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
@@ -92,11 +93,12 @@ public class FragmentAnmelden extends SuperFragmentGetUser implements View.OnCli
      * @param savedInstanceState Bundle of saved instance state
      * @return dialogue created by the AlertDialog.Builder
      */
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Button btAnmelden, btNeu;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_anmelden, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialogue_anmelden, null);
 
         warnungID = R.string.warnung_anmelden;
 
@@ -131,10 +133,6 @@ public class FragmentAnmelden extends SuperFragmentGetUser implements View.OnCli
         if (view.getId() == R.id.btNeu) {
             dismiss();
 
-//            FragmentSignup fragmentSignup;
-//            fragmentSignup = FragmentSignup.newInstance(model, false);
-//            fragmentSignup.show(getActivity().getSupportFragmentManager(), "Neues Konto");
-
             FragmentSelectRole fragmentSelectRole;
             fragmentSelectRole = FragmentSelectRole.newInstance(model);
             fragmentSelectRole.show(getActivity().getSupportFragmentManager(), "Rolle waehlen");
@@ -152,7 +150,7 @@ public class FragmentAnmelden extends SuperFragmentGetUser implements View.OnCli
 
     private class NutzerGet extends SuperFragmentGetUser.NutzerGet {
 
-        protected NutzerGet(Activity context, int textID, LoginData login) {
+        NutzerGet(Activity context, int textID, LoginData login) {
             super(context, textID, login);
         }
 

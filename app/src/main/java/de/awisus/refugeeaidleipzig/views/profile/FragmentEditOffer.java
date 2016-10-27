@@ -31,11 +31,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -85,23 +85,84 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_edit_offer, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialogue_edit_offer, null);
 
         builder.setView(view);
+        builder.setPositiveButton(R.string.button_send, null);
+        builder.setNegativeButton(R.string.button_abort, null);
         Dialog dialog = builder.create();
 
         initView(view);
 
         if(angebot == null) {
             forNewOffer(dialog);
-            setListeners(view, true);
         } else {
             forExistingOffer(dialog);
-            setListeners(view, false);
         }
+
+        ivOffer.setOnClickListener(this);
 
         requestPermissions();
         return dialog;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        final AlertDialog dialog = (AlertDialog) getDialog();
+        final boolean neu = angebot == null;
+
+        if(dialog != null) {
+            Button positiveButton = dialog.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String address = etStreet.getText() +", " +etPostal.getText();
+                    try {
+                        if(etTitel.getText() == null || etTitel.getText().length() == 0) {
+                            Toast.makeText(getActivity(), R.string.warnung_title, Toast.LENGTH_SHORT ).show();
+                            return;
+                        }
+
+                        LatLng coordinates = LocationUtility.getLocationFromAddress(address, getContext());
+                        assert coordinates != null;
+
+                        if(neu) {
+                            new OfferPost(getActivity(), R.string.meldung_hinzufuegen).execute(
+                                    "title",     "" + etTitel.getText(),
+                                    "text",      "" + etDescription.getText(),
+                                    "image",     "" + ImageUtility.imageToString(imageBitmap),
+                                    "latitude",  "" + coordinates.latitude,
+                                    "longitude", "" + coordinates.longitude,
+                                    "user_id",   "" + nutzer.getId()
+                            );
+                        } else {
+                            if(imageBitmap == null) {
+                                new OfferPatch(getActivity(), R.string.meldung_aktualisieren).execute(
+                                        "id",        "" + angebot.getId(),
+                                        "title",     "" + etTitel.getText(),
+                                        "text",      "" + etDescription.getText(),
+                                        "latitude",  "" + coordinates.latitude,
+                                        "longitude", "" + coordinates.longitude
+                                );
+                            } else {
+                                new OfferPatch(getActivity(), R.string.meldung_aktualisieren).execute(
+                                        "id",        "" + angebot.getId(),
+                                        "title",     "" + etTitel.getText(),
+                                        "text",      "" + etDescription.getText(),
+                                        "image",     "" + ImageUtility.imageToString(imageBitmap),
+                                        "latitude",  "" + coordinates.latitude,
+                                        "longitude", "" + coordinates.longitude
+                                );
+                            }
+                        }
+                    } catch (IOException | NullPointerException ex) {
+                        Toast.makeText(getActivity(), R.string.warnung_address, Toast.LENGTH_SHORT ).show();
+                    }
+                }
+            });
+        }
     }
 
     private void requestPermissions() {
@@ -156,59 +217,6 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
         }
 
         etDescription.setText(angebot.getContent());
-    }
-
-    private void setListeners(View view, final boolean neu) {
-        ivOffer.setOnClickListener(this);
-
-        FloatingActionButton fabSend;
-        fabSend = (FloatingActionButton) view.findViewById(R.id.fab_send);
-        fabSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String address = etStreet.getText() +", " +etPostal.getText();
-                try {
-                    if(etTitel.getText() == null || etTitel.getText().length() == 0) {
-                        Toast.makeText(getActivity(), R.string.warnung_title, Toast.LENGTH_SHORT ).show();
-                        return;
-                    }
-
-                    LatLng coordinates = LocationUtility.getLocationFromAddress(address, getContext());
-
-                    if(neu) {
-                        new OfferPost(getActivity(), R.string.meldung_hinzufuegen).execute(
-                                "title",     "" + etTitel.getText(),
-                                "text",      "" + etDescription.getText(),
-                                "image",     "" + ImageUtility.imageToString(imageBitmap),
-                                "latitude",  "" + coordinates.latitude,
-                                "longitude", "" + coordinates.longitude,
-                                "user_id",   "" + nutzer.getId()
-                        );
-                    } else {
-                        if(imageBitmap == null) {
-                            new OfferPatch(getActivity(), R.string.meldung_aktualisieren).execute(
-                                    "id",        "" + angebot.getId(),
-                                    "title",     "" + etTitel.getText(),
-                                    "text",      "" + etDescription.getText(),
-                                    "latitude",  "" + coordinates.latitude,
-                                    "longitude", "" + coordinates.longitude
-                            );
-                        } else {
-                            new OfferPatch(getActivity(), R.string.meldung_aktualisieren).execute(
-                                    "id",        "" + angebot.getId(),
-                                    "title",     "" + etTitel.getText(),
-                                    "text",      "" + etDescription.getText(),
-                                    "image",     "" + ImageUtility.imageToString(imageBitmap),
-                                    "latitude",  "" + coordinates.latitude,
-                                    "longitude", "" + coordinates.longitude
-                            );
-                        }
-                    }
-                } catch (IOException | NullPointerException ex) {
-                    Toast.makeText(getActivity(), R.string.warnung_address, Toast.LENGTH_SHORT ).show();
-                }
-            }
-        });
     }
 
     @Override
@@ -285,7 +293,7 @@ public class FragmentEditOffer extends DialogFragment implements View.OnClickLis
 
     private class OfferPatch extends BackgroundTask<String, String, Angebot> {
 
-        public OfferPatch(Activity context, int textID) {
+        OfferPatch(Activity context, int textID) {
             super(context, textID);
         }
 

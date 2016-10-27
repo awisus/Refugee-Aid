@@ -8,8 +8,8 @@ android {
         applicationId "de.awisus.refugeeaidleipzig"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 3
-        versionName "0.2.1"
+        versionCode 4
+        versionName "0.2.2"
         multiDexEnabled true
     }
     dexOptions {

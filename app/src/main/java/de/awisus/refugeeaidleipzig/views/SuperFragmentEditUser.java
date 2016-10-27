@@ -21,6 +21,7 @@ package de.awisus.refugeeaidleipzig.views;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.view.View;
@@ -61,6 +62,7 @@ public abstract class SuperFragmentEditUser extends SuperFragmentGetUser {
      * @param savedInstanceState Bundle of saved instance state
      * @return dialogue created by the AlertDialog.Builder
      */
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -71,11 +73,11 @@ public abstract class SuperFragmentEditUser extends SuperFragmentGetUser {
         setTextFieldListeners();
 
         builder.setView(view);
+        builder.setTitle(titelID);
+        builder.setPositiveButton(R.string.button_send, null);
+        builder.setNegativeButton(R.string.button_abort, null);
 
-        Dialog dialog = builder.create();
-        dialog.setTitle(titelID);
-
-        return dialog;
+        return builder.create();
     }
 
     protected void initElements(View view) {

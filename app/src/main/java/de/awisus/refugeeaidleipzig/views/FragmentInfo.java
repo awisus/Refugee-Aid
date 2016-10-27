@@ -21,10 +21,10 @@ package de.awisus.refugeeaidleipzig.views;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.TextView;
 
 import de.awisus.refugeeaidleipzig.R;
 
@@ -41,27 +41,15 @@ public class FragmentInfo extends DialogFragment {
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    private int inhaltID;
-
     private String titel;
-
-    private String inhalt;
 
       ////////////////////////////////////////////////////////////////////////////////
      // Constructor /////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    public static FragmentInfo newInstance(String titel, int inhaltID) {
+    public static FragmentInfo newInstance(String titel) {
         FragmentInfo frag = new FragmentInfo();
         frag.titel = titel;
-        frag.inhaltID = inhaltID;
-        return frag;
-    }
-
-    public static FragmentInfo newInstance(String titel, String inhalt) {
-        FragmentInfo frag = new FragmentInfo();
-        frag.titel = titel;
-        frag.inhalt = inhalt;
         return frag;
     }
 
@@ -76,26 +64,17 @@ public class FragmentInfo extends DialogFragment {
      * @param savedInstanceState Bundle of saved instance state
      * @return dialogue created by the AlertDialog.Builder
      */
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_info, null);
-
-        TextView tvInfo = (TextView) view.findViewById(R.id.tvContent);
-
-        if(inhalt == null) {
-            tvInfo.setText(inhaltID);
-        } else {
-            tvInfo.setText(inhalt);
-        }
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialogue_info, null);
 
         builder.setView(view);
+        builder.setTitle(titel);
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setPositiveButton(R.string.button_ok, null);
 
-        Dialog dialog;
-        dialog = builder.create();
-
-        dialog.setTitle(titel);
-
-        return dialog;
+        return builder.create();
     }
 }

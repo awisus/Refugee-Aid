@@ -49,7 +49,7 @@ public class FragmentSelectRole extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_select_user_role, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialogue_select_user_role, null);
 
         setButtonListeners(view);
 

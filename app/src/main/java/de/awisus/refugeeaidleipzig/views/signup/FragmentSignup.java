@@ -20,6 +20,8 @@
 package de.awisus.refugeeaidleipzig.views.signup;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,8 +34,8 @@ import org.json.JSONObject;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.LoginData;
+import de.awisus.refugeeaidleipzig.R;
 import de.awisus.refugeeaidleipzig.ViewModel;
 import de.awisus.refugeeaidleipzig.models.Nutzer;
 import de.awisus.refugeeaidleipzig.models.Unterkunft;
@@ -75,7 +77,7 @@ public class FragmentSignup extends SuperFragmentEditUser {
         FragmentSignup frag = new FragmentSignup();
         frag.model = model;
         frag.isRefugee = isRefugee;
-        frag.layoutID = R.layout.fragment_signup;
+        frag.layoutID = R.layout.dialogue_signup;
         frag.titelID = R.string.titel_signup;
         return frag;
     }
@@ -99,15 +101,23 @@ public class FragmentSignup extends SuperFragmentEditUser {
     }
 
     @Override
-    protected void setButtonListeners(View view) {
-        Button btExecute = (Button) view.findViewById(R.id.btExecute);
-        btExecute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signup();
-            }
-        });
+    public void onStart() {
+        super.onStart();
+        final AlertDialog dialog = (AlertDialog) getDialog();
+
+        if(dialog != null) {
+            Button positiveButton = dialog.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    signup();
+                }
+            });
+        }
     }
+
+    @Override
+    protected void setButtonListeners(View view) {}
 
     /**
      * Private method that creates an Array Adapter the spinner uses to show accommodation names
@@ -156,7 +166,7 @@ public class FragmentSignup extends SuperFragmentEditUser {
 
     private class NutzerPost extends NutzerGet {
 
-        public NutzerPost(Activity context, int textID, LoginData login) {
+        NutzerPost(Activity context, int textID, LoginData login) {
             super(context, textID, login);
         }
 

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="@dimen/frag_margin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:autoLink="email"
+        android:text="@string/label_address"
+        android:textAllCaps="true"
+        android:id="@+id/tvHeaderAddress"
+        android:textStyle="normal|bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="[ADRESSE]"
+        android:id="@+id/tvAddress"
+        android:textColor="@color/abc_primary_text_material_light"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/tvSpace"
+        android:layout_alignStart="@+id/tvSpace"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:autoLink="email"
+        android:text="@string/label_plaetze"
+        android:textAllCaps="true"
+        android:id="@+id/tvHeaderDescription"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/frag_margin"
+        android:layout_marginBottom="4dp"
+        android:layout_below="@+id/tvAddress"
+        android:textStyle="normal|bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:autoLink="email"
+        android:text="[PLAETZE]"
+        android:id="@+id/tvSpace"
+        android:textColor="@color/abc_primary_text_material_light"
+        android:layout_alignTop="@+id/tvHeaderDescription"
+        android:layout_toRightOf="@+id/tvHeaderDescription"
+        android:layout_toEndOf="@+id/tvHeaderDescription"
+        android:layout_marginLeft="64dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:autoLink="email"
+        android:text="@string/label_bewohner"
+        android:textAllCaps="true"
+        android:id="@+id/tvHeaderResidents"
+        android:layout_below="@+id/tvHeaderDescription"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="4dp"
+        android:textStyle="normal|bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:autoLink="email"
+        android:text="[BEWOHNER]"
+        android:id="@+id/tvResidents"
+        android:textColor="@color/abc_primary_text_material_light"
+        android:layout_alignTop="@+id/tvHeaderResidents"
+        android:layout_alignLeft="@+id/tvContent"
+        android:layout_alignStart="@+id/tvSpace"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:autoLink="email"
+        android:text="@string/label_bedarfe"
+        android:textAllCaps="true"
+        android:id="@+id/tvHeaderNeeds"
+        android:layout_below="@+id/tvHeaderResidents"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="4dp"
+        android:textStyle="normal|bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="[BEDARF]"
+        android:id="@+id/tvNeeds"
+        android:textColor="@color/abc_primary_text_material_light"
+        android:layout_below="@+id/tvHeaderNeeds"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+</RelativeLayout>

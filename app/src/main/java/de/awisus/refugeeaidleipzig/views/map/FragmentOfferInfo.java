@@ -67,7 +67,7 @@ public class FragmentOfferInfo extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_show_offer, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialogue_show_offer, null);
 
         ImageView ivImage = (ImageView) view.findViewById(R.id.ivImage);
         TextView tvContent = (TextView) view.findViewById(R.id.tvContent);
