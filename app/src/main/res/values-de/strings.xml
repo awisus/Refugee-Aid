@@ -5,8 +5,8 @@
     <string name="about1"><b>Refugee Aid</b> ist die Plattform, die Geflüchtete
         und helfende Bürger zusammenbringt.
     </string>
-    <string name="about2">Sie sind Geflüchteter? Seien Sie willkommen und
-        <b>registrieren</b> Sie sich kostenlos!
+    <string name="about2">Seien Sie willkommen und <b>registrieren</b> Sie sich
+        kostenlos!
     </string>
     <string name="about_from">Mit ♥ aus Leipzig von Jens Awisus - 2016</string>
 
@@ -45,7 +45,7 @@
     <string name="label_passwort">Passwort</string>
     <string name="label_confirmation">Passwort wiederholen</string>
     <string name="label_description_details">
-        Bitte geben Sie Details zu Ihren Angebot und Kontakdaten an
+        Bitte geben Sie Details zu Ihrem Angebot und Kontakdaten an
     </string>
 
     <string name="warnung_name">Nutzername zu lang</string>

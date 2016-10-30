@@ -47,7 +47,7 @@
         android:layout_alignParentEnd="true"
         android:inputType="textPassword"
         android:layout_below="@+id/tvPasswort"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin" />
+        />
 
     <Button
         style="?android:attr/borderlessButtonStyle"
@@ -70,6 +70,6 @@
         android:id="@+id/btAnmelden"
         android:layout_below="@+id/etPassword"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/frag_margin" />
+        android:layout_marginTop="@dimen/activity_margin" />
 
 </RelativeLayout>

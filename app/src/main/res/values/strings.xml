@@ -5,8 +5,7 @@
     <string name="about1"><b>Refugee</b> Aid the platform for bringing together
         refugee people and helping citizens.
     </string>
-    <string name="about2">You are refugee? Feel welcome and <b>register</b> for
-        free!
+    <string name="about2">Feel welcome and <b>register</b> for free!
     </string>
     <string name="about_from">With ♥ from Leipzig by Jens Awisus - 2016</string>
     <string name="about_contact" translatable="false">Mail: <a href="mailto:awisus.gdev@gmail.com">awisus.gdev@gmail.com</a></string>
