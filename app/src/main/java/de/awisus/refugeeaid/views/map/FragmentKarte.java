@@ -20,6 +20,10 @@
 package de.awisus.refugeeaid.views.map;
 
 import android.app.Activity;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -53,6 +57,8 @@ import de.awisus.refugeeaid.models.Nutzer;
 import de.awisus.refugeeaid.models.Unterkunft;
 import de.awisus.refugeeaid.util.BackgroundTask;
 import de.awisus.refugeeaid.util.LocationUtility;
+
+import static de.awisus.refugeeaid.R.id.map;
 
 /**
  * Created on 11.01.16.
@@ -142,14 +148,28 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         super.onActivityCreated(savedInstanceState);
 
         SupportMapFragment mapFragment;
-        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(map);
         mapFragment.getMapAsync(this);
 
-        // ask user for permission to read gps location on start
-        if(!LocationUtility.haveGPSPermission(getActivity())) {
-            LocationUtility.requestGPSPermission(getActivity());
+        if(LocationUtility.isGPSOn(getActivity())) {
+            if (!LocationUtility.haveGPSPermission(getActivity())) {
+                LocationUtility.requestGPSPermission(getActivity());
+            }
         }
     }
+
+//    @TargetApi(23)
+//    private void zoomToUser() {
+//        karte.setMyLocationEnabled(true);
+//        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+//        Criteria criteria = new Criteria();
+//
+//        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+//        if (location != null) {
+//            LatLng coords = new LatLng(location.getLatitude(), location.getLongitude());
+//            karte.moveCamera(CameraUpdateFactory.newLatLngZoom(coords, 11f));
+//        }
+//    }
 
       ////////////////////////////////////////////////////////////////////////////////
      // Google Map //////////////////////////////////////////////////////////////////
@@ -165,30 +185,74 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     public void onMapReady(GoogleMap karte) {
         this.karte = karte;
 
+        // tap on marker info box shows accommodation detail
+        karte.setOnInfoWindowClickListener(this);
         karte.setOnMarkerClickListener(this);
         karte.setOnMapClickListener(this);
         setMarkers();
 
-        // Zoom on users accommodation, if logged in
-        if(model.angemeldet()) {
-            Nutzer nutzer = model.getNutzer();
-            if(nutzer.isRefugee()) {
-                karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                        nutzer.getUnterkunft().getLatLng(), 11f)
-                );
+        // Show Germany as default
+        defaultZoom();
+
+        // Zoom to user location, if possible
+        if(LocationUtility.isGPSOn(getActivity())) {
+            setupLocationListener();
+
+            // if not, then visit a refugee's accommocation
+            if(LocationUtility.haveGPSPermission(getActivity())) {
+                LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                LatLng coords = new LatLng(location.getLatitude(), location.getLongitude());
+                karte.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 13f));
             } else {
-                defaultZoom();
+                // Zoom on users accommodation, if logged in
+                zoomToAccommocation();
             }
         } else {
-            defaultZoom();
+            zoomToAccommocation();
         }
+    }
 
-        // tap on marker info box shows accommodation detail
-        karte.setOnInfoWindowClickListener(this);
+    private void zoomToAccommocation() {
+        // Zoom on users accommodation, if logged in
+        if (model.angemeldet()) {
+            Nutzer nutzer = model.getNutzer();
+            if (nutzer.isRefugee()) {
+                karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                        nutzer.getUnterkunft().getLatLng(), 13f)
+                );
+            }
+        }
+    }
+
+    private void setupLocationListener() {
+        // Acquire a reference to the system Location Manager
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        // Define a listener that responds to location updates
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                LatLng coords = new LatLng(location.getLatitude(), location.getLongitude());
+                karte.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 13f));
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+        // ask user for permission to read gps location on start
+        if(LocationUtility.haveGPSPermission(getActivity())) {
+            // Register the listener with the Location Manager to receive location updates
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        }
     }
 
     private void defaultZoom() {
-        // Zoom to arbitrary accommodation
+        // Zoom to Germany
         karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
                 new LatLng(51.5, 10.5), 5.8f)
         );

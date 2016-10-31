@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.LocationManager;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -26,6 +27,11 @@ public class LocationUtility {
     /*
      * GPS Permissions
      */
+
+    public static boolean isGPSOn(Activity activity) {
+        LocationManager manager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE );
+        return manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
 
     @TargetApi(23)
     public static boolean haveGPSPermission(Activity activity) {
