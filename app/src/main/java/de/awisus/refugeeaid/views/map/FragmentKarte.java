@@ -32,7 +32,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -61,7 +65,11 @@ import de.awisus.refugeeaid.models.ILocationDataObject;
 import de.awisus.refugeeaid.models.Nutzer;
 import de.awisus.refugeeaid.models.Unterkunft;
 import de.awisus.refugeeaid.util.BackgroundTask;
+import de.awisus.refugeeaid.util.Datei;
 import de.awisus.refugeeaid.util.LocationUtility;
+import de.awisus.refugeeaid.views.profile.FragmentEditOffer;
+import de.awisus.refugeeaid.views.profile.FragmentEditUser;
+import de.awisus.refugeeaid.views.profile.FragmentKategorieList;
 
 import static de.awisus.refugeeaid.R.id.map;
 
@@ -123,6 +131,31 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_map_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itZoom:
+                if(LocationUtility.isGPSOn(getActivity())) {
+                    if (LocationUtility.haveGPSPermission(getActivity())) {
+                        zoomToUserLocation();
+                    } else {
+                        LocationUtility.requestGPSPermission(getActivity());
+                    }
+                }
+                return true;
+            default:
+                break;
+        }
+
+        return false;
     }
 
     /**
@@ -209,23 +242,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
                 // Zoom on users accommodation, if logged in
                 zoomToAccommocation();
             }
-        } else {
-            askForGPSActivation();
         }
-    }
-
-    private void askForGPSActivation() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?");
-        builder.setCancelable(false);
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-        });
-        builder.setNegativeButton("No", null);
-        builder.create().show();
     }
 
     private void defaultZoom() {
