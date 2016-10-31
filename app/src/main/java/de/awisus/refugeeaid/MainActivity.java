@@ -24,6 +24,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -43,18 +44,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 
-import de.awisus.refugeeaid.views.login.FragmentAnmelden;
-import de.awisus.refugeeaid.views.FragmentInfo;
-import de.awisus.refugeeaid.views.map.FragmentKarte;
-import de.awisus.refugeeaid.views.profile.FragmentProfil;
 import de.awisus.refugeeaid.models.Nutzer;
 import de.awisus.refugeeaid.net.WebFlirt;
 import de.awisus.refugeeaid.util.BackgroundTask;
 import de.awisus.refugeeaid.util.Datei;
+import de.awisus.refugeeaid.views.FragmentInfo;
+import de.awisus.refugeeaid.views.login.FragmentAnmelden;
+import de.awisus.refugeeaid.views.map.FragmentKarte;
+import de.awisus.refugeeaid.views.profile.FragmentProfil;
 
 /**
  * Created on 11.01.16.
@@ -340,5 +342,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+        }
     }
 }

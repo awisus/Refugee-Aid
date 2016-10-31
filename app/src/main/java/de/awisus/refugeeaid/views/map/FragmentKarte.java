@@ -21,12 +21,17 @@ package de.awisus.refugeeaid.views.map;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +81,10 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
     ////////////////////////////////////////////////////////////////////////////////
 
     private MainActivity context;
+
+    private LocationManager locationManager;
+
+    private LocationListener locationListener;
 
     private GoogleMap karte;
 
@@ -158,22 +167,16 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         }
     }
 
-//    @TargetApi(23)
-//    private void zoomToUser() {
-//        karte.setMyLocationEnabled(true);
-//        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-//        Criteria criteria = new Criteria();
-//
-//        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-//        if (location != null) {
-//            LatLng coords = new LatLng(location.getLatitude(), location.getLongitude());
-//            karte.moveCamera(CameraUpdateFactory.newLatLngZoom(coords, 11f));
-//        }
-//    }
-
       ////////////////////////////////////////////////////////////////////////////////
      // Google Map //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
+
+    private void setMarkers() {
+        for(MarkerOptions markerOption : model.getMarkerOptionen()) {
+            Marker marke = karte.addMarker(markerOption);
+            model.addMarke(marke, markerOption);
+        }
+    }
 
     /**
      * Automatically called when Google Map is ready
@@ -196,21 +199,47 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
 
         // Zoom to user location, if possible
         if(LocationUtility.isGPSOn(getActivity())) {
+
             setupLocationListener();
 
             // if not, then visit a refugee's accommocation
             if(LocationUtility.haveGPSPermission(getActivity())) {
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                LatLng coords = new LatLng(location.getLatitude(), location.getLongitude());
-                karte.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 13f));
+                zoomToUserLocation();
             } else {
                 // Zoom on users accommodation, if logged in
                 zoomToAccommocation();
             }
         } else {
-            zoomToAccommocation();
+            askForGPSActivation();
         }
+    }
+
+    private void askForGPSActivation() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("No", null);
+        builder.create().show();
+    }
+
+    private void defaultZoom() {
+        // Zoom to Germany
+        karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                new LatLng(51.5, 10.5), 5.8f)
+        );
+    }
+
+    private void zoomToUserLocation() {
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        LatLng coords = new LatLng(location.getLatitude(), location.getLongitude());
+        karte.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 13f));
     }
 
     private void zoomToAccommocation() {
@@ -227,41 +256,34 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
 
     private void setupLocationListener() {
         // Acquire a reference to the system Location Manager
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         // Define a listener that responds to location updates
-        LocationListener locationListener = new LocationListener() {
+        locationListener = new LocationListener() {
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            public void onProviderDisabled(String provider) {}
+            public void onProviderEnabled(String provider) {}
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
                 LatLng coords = new LatLng(location.getLatitude(), location.getLongitude());
                 karte.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 13f));
             }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-            public void onProviderEnabled(String provider) {}
-
-            public void onProviderDisabled(String provider) {}
         };
 
         // ask user for permission to read gps location on start
-        if(LocationUtility.haveGPSPermission(getActivity())) {
-            // Register the listener with the Location Manager to receive location updates
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        if(!LocationUtility.haveGPSPermission(getActivity())) {
+            LocationUtility.requestGPSPermission(getActivity());
         }
     }
 
-    private void defaultZoom() {
-        // Zoom to Germany
-        karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(51.5, 10.5), 5.8f)
-        );
-    }
-
-    private void setMarkers() {
-        for(MarkerOptions markerOption : model.getMarkerOptionen()) {
-            Marker marke = karte.addMarker(markerOption);
-            model.addMarke(marke, markerOption);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(LocationUtility.haveGPSPermission(getActivity())) {
+            // Register the listener with the Location Manager to receive location updates
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+            zoomToUserLocation();
         }
     }
 
