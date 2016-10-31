@@ -1,6 +1,10 @@
 package de.awisus.refugeeaid.util;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 
@@ -13,11 +17,42 @@ import java.util.Locale;
 /**
  * Created on 07.08.16.
  *
- * @author jens
+ * @author Jens Awisus
  */
 public class LocationUtility {
 
     private LocationUtility() {}
+
+    /*
+     * GPS Permissions
+     */
+
+    @TargetApi(23)
+    public static boolean haveGPSPermission(Activity activity) {
+        boolean haveFine =
+                activity.checkSelfPermission(
+                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        boolean haveCoarse =
+                activity.checkSelfPermission(
+                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        return haveFine && haveCoarse;
+    }
+
+    @TargetApi(23)
+    public static void requestGPSPermission(Activity activity) {
+        final int MY_PERMISSION_LOCATION = 122;
+        final String[] LOCATION_PERMISSTION = new String[] {
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+        };
+
+        activity.requestPermissions(LOCATION_PERMISSTION, MY_PERMISSION_LOCATION);
+    }
+
+    /*
+     * Address <-> coordinates
+     */
 
     public static LatLng getLocationFromAddress(String strAddress, Context context) throws IOException {
         Geocoder coder = new Geocoder(context);

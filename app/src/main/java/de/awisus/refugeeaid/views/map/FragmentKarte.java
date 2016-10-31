@@ -52,6 +52,7 @@ import de.awisus.refugeeaid.models.ILocationDataObject;
 import de.awisus.refugeeaid.models.Nutzer;
 import de.awisus.refugeeaid.models.Unterkunft;
 import de.awisus.refugeeaid.util.BackgroundTask;
+import de.awisus.refugeeaid.util.LocationUtility;
 
 /**
  * Created on 11.01.16.
@@ -143,6 +144,11 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         SupportMapFragment mapFragment;
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // ask user for permission to read gps location on start
+        if(!LocationUtility.haveGPSPermission(getActivity())) {
+            LocationUtility.requestGPSPermission(getActivity());
+        }
     }
 
       ////////////////////////////////////////////////////////////////////////////////
