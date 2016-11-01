@@ -26,7 +26,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -154,7 +153,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         if(LocationUtility.isGPSOn(getActivity())) {
             getPermission();
         } else {
-            Snackbar.make(fabUpdate, "It is useful to turn on GPS and restart the app after.", Snackbar.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.warnung_gps, Toast.LENGTH_SHORT).show();
         }
     }
 

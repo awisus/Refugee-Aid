@@ -93,4 +93,5 @@
     <string name="button_ok">In Ordnung</string>
     <string name="button_abort">Abbrechen</string>
     <string name="button_send">Absenden</string>
+    <string name="warnung_gps">Bitte GPS aktivieren und App neustarten</string>
 </resources>

@@ -79,6 +79,7 @@
     <string name="warnung_title">Please enter a title</string>
     <string name="warnung_address">Please enter valid address</string>
 
+    <string name="warnung_gps">Please, turn on GPS and restart the app</string>
     <string name="warnung_netz">Activate network and restart</string>
     <string name="warnung_laden">Cannot load information</string>
     <string name="warnung_signup">Check your input data</string>
