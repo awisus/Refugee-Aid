@@ -20,23 +20,15 @@
 package de.awisus.refugeeaid.views.map;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -65,12 +57,9 @@ import de.awisus.refugeeaid.models.ILocationDataObject;
 import de.awisus.refugeeaid.models.Nutzer;
 import de.awisus.refugeeaid.models.Unterkunft;
 import de.awisus.refugeeaid.util.BackgroundTask;
-import de.awisus.refugeeaid.util.Datei;
 import de.awisus.refugeeaid.util.LocationUtility;
-import de.awisus.refugeeaid.views.profile.FragmentEditOffer;
-import de.awisus.refugeeaid.views.profile.FragmentEditUser;
-import de.awisus.refugeeaid.views.profile.FragmentKategorieList;
 
+import static android.content.Context.LOCATION_SERVICE;
 import static de.awisus.refugeeaid.R.id.map;
 
 /**
@@ -127,37 +116,6 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
      // View creation ///////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_map_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.itZoom:
-                if(LocationUtility.isGPSOn(getActivity())) {
-                    if (LocationUtility.haveGPSPermission(getActivity())) {
-                        zoomToUserLocation();
-                    } else {
-                        LocationUtility.requestGPSPermission(getActivity());
-                    }
-                }
-                return true;
-            default:
-                break;
-        }
-
-        return false;
-    }
-
     /**
      * Automatically called method inflating the xml-layout
      * Sets actovoty title to Map
@@ -194,9 +152,9 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         mapFragment.getMapAsync(this);
 
         if(LocationUtility.isGPSOn(getActivity())) {
-            if (!LocationUtility.haveGPSPermission(getActivity())) {
-                LocationUtility.requestGPSPermission(getActivity());
-            }
+            getPermission();
+        } else {
+            Snackbar.make(fabUpdate, "It is useful to turn on GPS and restart the app after.", Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -227,13 +185,13 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         karte.setOnMapClickListener(this);
         setMarkers();
 
+        setupLocationListener();
+
         // Show Germany as default
         defaultZoom();
 
         // Zoom to user location, if possible
         if(LocationUtility.isGPSOn(getActivity())) {
-
-            setupLocationListener();
 
             // if not, then visit a refugee's accommocation
             if(LocationUtility.haveGPSPermission(getActivity())) {
@@ -242,21 +200,31 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
                 // Zoom on users accommodation, if logged in
                 zoomToAccommocation();
             }
+        } else {
+            // Zoom on users accommodation, if logged in
+            zoomToAccommocation();
         }
     }
 
     private void defaultZoom() {
         // Zoom to Germany
-        karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(51.5, 10.5), 5.8f)
-        );
+        karte.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(51.5, 10.5)));
+        karte.animateCamera(CameraUpdateFactory.zoomTo(5.8f));
     }
 
+    @SuppressWarnings({"ResourceType"})
     private void zoomToUserLocation() {
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
         LatLng coords = new LatLng(location.getLatitude(), location.getLongitude());
-        karte.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 13f));
+
+        karte.setMyLocationEnabled(true);
+
+        // Zoom in the Google Map
+        karte.moveCamera(CameraUpdateFactory.newLatLng(coords));
+        karte.animateCamera(CameraUpdateFactory.zoomTo(13f));
+
     }
 
     private void zoomToAccommocation() {
@@ -264,20 +232,28 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         if (model.angemeldet()) {
             Nutzer nutzer = model.getNutzer();
             if (nutzer.isRefugee()) {
-                karte.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                        nutzer.getUnterkunft().getLatLng(), 13f)
-                );
+                karte.moveCamera(CameraUpdateFactory.newLatLng(nutzer.getUnterkunft().getLatLng()));
+                karte.animateCamera(CameraUpdateFactory.zoomTo(13f));
             }
         }
     }
 
     private void setupLocationListener() {
+        if(locationManager != null) {
+            getPermission();
+            return;
+        }
+
         // Acquire a reference to the system Location Manager
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+
+        if(locationListener != null) {
+            getPermission();
+            return;
+        }
 
         // Define a listener that responds to location updates
         locationListener = new LocationListener() {
-
             public void onStatusChanged(String provider, int status, Bundle extras) {}
             public void onProviderDisabled(String provider) {}
             public void onProviderEnabled(String provider) {}
@@ -287,13 +263,16 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
                 karte.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 13f));
             }
         };
+    }
 
+    private void getPermission() {
         // ask user for permission to read gps location on start
         if(!LocationUtility.haveGPSPermission(getActivity())) {
             LocationUtility.requestGPSPermission(getActivity());
         }
     }
 
+    @SuppressWarnings({"ResourceType"})
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -360,7 +339,7 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
 
     private class Updater extends BackgroundTask<String, Integer, ViewModel> {
 
-        public Updater(Activity context, int textID) {
+        Updater(Activity context, int textID) {
             super(context, textID);
         }
 
