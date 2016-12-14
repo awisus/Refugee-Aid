@@ -68,8 +68,10 @@ import de.awisus.refugeeaid.views.profile.FragmentProfil;
  * second is a login mask, that pops up, if no user is signed in.
  * @author Jens Awisus
  */
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Observer {
-
+public class MainActivity
+        extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, Observer
+{
       ////////////////////////////////////////////////////////////////////////////////
      // Attributes //////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
@@ -109,7 +111,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private boolean connected() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager;
+        connectivityManager = (ConnectivityManager) getSystemService(
+                Context.CONNECTIVITY_SERVICE
+        );
+
         NetworkInfo nwInfo = connectivityManager.getActiveNetworkInfo();
         return nwInfo != null && nwInfo.isConnectedOrConnecting();
     }
@@ -127,8 +133,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initContainer();
     }
 
-    private class Initialiser extends BackgroundTask<String, Integer, ViewModel> {
-
+    private class Initialiser
+            extends BackgroundTask<String, Integer, ViewModel>
+    {
         Initialiser(Activity context, int textID) {
             super(context, textID);
         }
@@ -137,7 +144,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         protected void doPostExecute(ViewModel result) {
 
             if(result == null) {
-                Toast.makeText(MainActivity.this, R.string.warnung_laden, Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        MainActivity.this, R.string.warnung_laden,
+                        Toast.LENGTH_SHORT
+                ).show();
             } else {
                 model = result;
                 initialise();
@@ -157,7 +167,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 model.setUnterkuenfte(Loader.getUnterkuenfte());
 
                 return model;
-            } catch (IOException | JSONException | InterruptedException | ExecutionException e) {
+            } catch (IOException | JSONException |
+                    InterruptedException | ExecutionException e)
+            {
                 return null;
             }
         }
