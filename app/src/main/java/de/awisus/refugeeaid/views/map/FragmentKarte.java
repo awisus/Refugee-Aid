@@ -216,12 +216,12 @@ public class FragmentKarte extends Fragment implements OnMapReadyCallback, Googl
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-        LatLng coords = new LatLng(location.getLatitude(), location.getLongitude());
+        // LatLng coords = new LatLng(location.getLatitude(), location.getLongitude());
 
         karte.setMyLocationEnabled(true);
 
         // Zoom in the Google Map
-        karte.moveCamera(CameraUpdateFactory.newLatLng(coords));
+        // karte.moveCamera(CameraUpdateFactory.newLatLng(coords));
         karte.animateCamera(CameraUpdateFactory.zoomTo(13f));
 
     }
