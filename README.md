@@ -20,12 +20,7 @@ See the LICENSE file for detailed information.
 ## Now you...
 Please, feel free and welcome to collaborate to improve user experience and maintain the project.
 
-##Mailto
-
-awisus.gdev@gmail.com
-
-With &hearts; from Leipzig by [Jens Awisus] - 2016 - [Web]
+With &hearts; from Leipzig by [Jens Awisus] - 2016
 
 [here]: https://github.com/awisus/Refugee-Aid/releases
-[Web]: http://refugee-aid.de/
-[Jens Awisus]: http://jens.awisus.me/
+[Jens Awisus]: https://awisus.me/
